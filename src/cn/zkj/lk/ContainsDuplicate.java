@@ -27,6 +27,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ContainsDuplicate {
+    public static void main(String[] args) {
+
+        int i =0;
+        System.out.println(i++);
+        System.out.println(i);
+    }
     public boolean containsDuplicate(int[] nums) {
         Set set = new HashSet();
         for (int x=0;x<nums.length;x++){
