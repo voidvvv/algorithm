@@ -21,7 +21,7 @@ public class SparsearrayDemo {
         arr[2][3]=2;
         int[][] ints = s.array2Sparsearray(arr);
         //写数据
-        /*FileOutputStream fos = new FileOutputStream(pathName);
+      /*  FileOutputStream fos = new FileOutputStream(pathName,true);
         BufferedWriter bf = new BufferedWriter(new OutputStreamWriter(fos));
         for (int[] is :ints){
             for (int i:is){
@@ -31,6 +31,7 @@ public class SparsearrayDemo {
             bf.newLine();
         }
         bf.close();*/
+
 
         FileInputStream fis = new FileInputStream(pathName);
         BufferedReader bw =new BufferedReader(new InputStreamReader(fis));

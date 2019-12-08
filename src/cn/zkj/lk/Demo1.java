@@ -1,11 +1,8 @@
 package cn.zkj.lk;
 
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Date;
+
+
 
 public class Demo1 {
     public static void main(String[] args) {
