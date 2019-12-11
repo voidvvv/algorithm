@@ -7,9 +7,9 @@ public class SelectOrder {
 
     public static void main(String[] args) {
         SelectOrder s= new SelectOrder();
-        int[]arr = new int[100000];
+        int[]arr = new int[80000];
         for (int x=0;x<arr.length;x++){
-            arr[x]=(int)(Math.random()*90000);
+            arr[x]=(int)(Math.random()*100000);
         }
         SimpleDateFormat sim=new SimpleDateFormat("hh:mm:ss");
         System.out.println(sim.format(new Date()));
