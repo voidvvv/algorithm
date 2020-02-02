@@ -16,7 +16,7 @@ public class ShellSort {
 
 //        SimpleDateFormat sim=new SimpleDateFormat("hh:mm:ss");
         System.out.println(Arrays.toString(arr));
-        s.shellSort4(arr);
+        s.shellSort7(arr);
         System.out.println(Arrays.toString(arr));
 
 
@@ -123,11 +123,70 @@ public class ShellSort {
                         index-=n;
                     }
                     arr[index+n]=val;
-
                 }
 
             }
             n=n/2;
+        }
+    }
+    //2019.12.13
+    public void shellSort5(int[]arr){
+        int n =arr.length/2;
+        while (n>0){
+            for (int x=n;x<n*2;x++){
+                for (int y =x;y<arr.length;y+=n){
+                    int val = arr[y];
+                    int index=y-n;
+                    while (index>=0&&arr[index]>val){
+                        arr[index+n]=arr[index];
+                        index-=n;
+                    }
+                    arr[index+n]=val;
+                }
+            }
+            n/=2;
+        }
+    }
+
+    public void shellSort6(int[]arr){
+        int n=arr.length/2;
+
+        while (n>0){
+            for (int x=n;x<n*2;x++){
+                for (int y=x;y<arr.length;y+=n){
+                    int val =arr[y];
+                    int index=y-n;
+
+                    while (index>=0&&arr[index]>val){
+                        arr[index+n]=arr[index];
+                        index-=n;
+                    }
+                    arr[index+n]=val;
+                }
+            }
+            n/=2;
+        }
+    }
+
+    //2020.1.15
+    public void shellSort7(int[]arr){
+        int n=arr.length/2;
+
+        while (n>0){
+            for (int x=n;x<2*n;x++){
+                for (int y=x;y<arr.length;y+=n){
+                    int val=arr[y];
+                    int index =y-n;
+
+                    while (index>=0&&arr[index]>val){
+                        arr[index+n]=arr[index];
+                        index=index-n;
+                    }
+
+                    arr[index+n]=val;
+                }
+            }
+            n/=2;
         }
     }
 }

@@ -16,7 +16,7 @@ public class QuickSort {
         System.out.println(Arrays.toString(arr));
 
 
-        q.quickSort3(arr,0,arr.length-1);
+        q.quickSort4(arr,0,arr.length-1);
         System.out.println(Arrays.toString(arr));
 
     }
@@ -148,6 +148,47 @@ public class QuickSort {
         }
         if (r>left){
             quickSort3(arr,left,r);
+        }
+    }
+
+    public void quickSort4(int[] arr,int left,int right){
+        int le= left;
+        int r= right;
+
+        int pivot=arr[(left+right)/2];
+        int temp;
+        while (le<r){
+            while (arr[le]<pivot){
+                le++;
+            }
+            while (arr[r]>pivot){
+                r--;
+            }
+
+            if (le>=r){
+                break;
+            }
+
+            temp=arr[le];
+            arr[le]=arr[r];
+            arr[r]=temp;
+
+            if (arr[le]==pivot){
+                r--;
+            }
+            if (arr[r]==pivot){
+                le++;
+            }
+        }
+        if (le==r){
+            le++;
+            r--;
+        }
+        if (le<right){
+            quickSort4(arr,le,right);
+        }
+        if (r>left){
+            quickSort4(arr,left,r);
         }
     }
 
