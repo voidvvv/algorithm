@@ -25,7 +25,7 @@ package cn.zkj.lk;
         链接：https://leetcode-cn.com/problems/baseball-game
         著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。*/
 
-public class CalPoint {
+public class CalPoint  implements Comparable<Object>{
 
     public int calPoints(String[] ops) {
         int [] temp = new int[ops.length];
@@ -54,5 +54,10 @@ public class CalPoint {
             sum+=temp[x];
         }
         return sum;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

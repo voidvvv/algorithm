@@ -1,5 +1,8 @@
 package cn.zkj.algorithm;
 
+import java.util.List;
+import java.util.Vector;
+
 public class ArrayQueue {
     private int maxSize;
     private int front;
@@ -23,10 +26,16 @@ public class ArrayQueue {
 
     public void add(int n){
         if (isFully()){
+            synchronized (this){
+                System.out.println("aaaaaa");
+            }
             throw new RuntimeException("队列已满，不能加入");
         }
         rear++;
         arr[rear]=n;
+
+        Vector v =new Vector();
+
     }
 
     public int get(){

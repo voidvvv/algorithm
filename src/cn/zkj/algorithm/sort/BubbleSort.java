@@ -14,9 +14,14 @@ public class BubbleSort   {
         System.out.println(Arrays.toString(arr));
     }
 
+    //冒泡排序方法，以升序排序为例子：
     public void bubbleSort(int[] arr){
+        //获取数组的长度
         int len=arr.length;
+
+        //从1开始，双重遍历数组
         for (int x=1;x<len;x++){
+            //将第二重循环，将每一项与之后的比较，将较大的放在后面，达成升序
             for (int y=0;y<len-x;y++){
                 if (arr[y]>arr[y+1]){
                     int temp=arr[y];
@@ -24,6 +29,7 @@ public class BubbleSort   {
                     arr[y+1]=temp;
                 }
             }
+            //依次循环，达成冒泡排序
         }
     }
 }
