@@ -172,4 +172,28 @@ public class SortSolution {
 
         }
     }
+
+    /**
+     * 归并排序
+     * @param arr
+     */
+    public void mergeOrder(int[] arr){
+
+    }
+
+    /**
+     * 基数排序
+     * @param arr
+     */
+    public void radixOrder(int[] arr){
+
+    }
+
+    /**
+     * 堆排序
+     * @param arr
+     */
+    public void heapOrder(int[] arr){
+
+    }
 }
