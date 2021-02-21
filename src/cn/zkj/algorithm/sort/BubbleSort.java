@@ -32,4 +32,27 @@ public class BubbleSort   {
             //依次循环，达成冒泡排序
         }
     }
+
+    //冒泡排序方法，以升序排序为例子：
+    public void bubbleSort2(int[] arr){
+        if(arr==null||arr.length==0){
+            return;
+        }
+
+        for (int x=1;x<arr.length;x++){
+            for (int y=0;y<arr.length-x;y++){
+                if (arr[y]>arr[y+1]){
+                    swap(arr,y,y+1);
+                }
+            }
+        }
+    }
+
+    private void swap(int[] arr, int y, int i) {
+        int i1 = arr[y];
+        arr[y] = arr[i];
+        arr[i] = i1;
+
+    }
+
 }
