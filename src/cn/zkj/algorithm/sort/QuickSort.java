@@ -1,195 +1,287 @@
 package cn.zkj.algorithm.sort;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 
 public class QuickSort {
     public static void main(String[] args) {
         QuickSort q = new QuickSort();
-        int [] arr =new int[20];
-        for (int x=0;x<arr.length;x++){
-            arr[x]=(int)(Math.random()*100);
+        int[] arr = new int[20];
+        for (int x = 0; x < arr.length; x++) {
+            arr[x] = (int) (Math.random() * 100);
         }
 //        SimpleDateFormat sim=new SimpleDateFormat("hh:mm:ss");
         System.out.println(Arrays.toString(arr));
 
 
-        q.quickSort4(arr,0,arr.length-1);
+        q.myQuickSort2(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
 
     }
+
     //12.10
-    public void quickSort(int[] arr,int left,int right){
-        int le=left;
-        int r=right;
-
-        int pivot = (left+right)/2;
-        int pval = arr[pivot];
-
-        while (le<r){
-            while (arr[le]<pval){
-                le++;
-            }
-            while (arr[r]>pval){
-                r--;
-            }
-
-            if(le>=r){
-                break;
-            }
-
-            int temp = arr[le];
-            arr[le]=arr[r];
-            arr[r]=temp;
-
-            if (arr[le]==pval){
-                r--;
-            }
-            if (arr[r]==pval){
-                le++;
-            }
-
-
-
-        }
-        if (r==le){
-            le++;
-            r--;
-        }
-        if (le<right){
-            quickSort(arr,le,right);
-        }
-
-        if (left<r){
-            quickSort(arr,left,r);
-        }
-    }
-    //12.10
-    public void quickSort2(int[] arr,int left,int right){
-        int le =left;
+    public void quickSort(int[] arr, int left, int right) {
+        int le = left;
         int r = right;
 
-        int pivot = arr[(left+right)/2];
-        while (le<r){
-            while (arr[le]<pivot){
+        int pivot = (left + right) / 2;
+        int pval = arr[pivot];
+
+        while (le < r) {
+            while (arr[le] < pval) {
                 le++;
             }
-            while (arr[r]>pivot){
+            while (arr[r] > pval) {
                 r--;
             }
 
-            if (le>=r){
+            if (le >= r) {
                 break;
             }
 
             int temp = arr[le];
-            arr[le]=arr[r];
-            arr[r]=temp;
+            arr[le] = arr[r];
+            arr[r] = temp;
 
-            if (arr[le]==pivot){
+            if (arr[le] == pval) {
                 r--;
             }
-            if (arr[r]==pivot){
+            if (arr[r] == pval) {
                 le++;
             }
+
+
         }
-        if (le==r){
+        if (r == le) {
             le++;
             r--;
         }
-        if (r>left){
-            quickSort2(arr,left,r);
+        if (le < right) {
+            quickSort(arr, le, right);
         }
-        if (le<right){
-            quickSort2(arr,le,right);
+
+        if (left < r) {
+            quickSort(arr, left, r);
+        }
+    }
+
+    //12.10
+    public void quickSort2(int[] arr, int left, int right) {
+        int le = left;
+        int r = right;
+
+        int pivot = arr[(left + right) / 2];
+        while (le < r) {
+            while (arr[le] < pivot) {
+                le++;
+            }
+            while (arr[r] > pivot) {
+                r--;
+            }
+
+            if (le >= r) {
+                break;
+            }
+
+            int temp = arr[le];
+            arr[le] = arr[r];
+            arr[r] = temp;
+
+            if (arr[le] == pivot) {
+                r--;
+            }
+            if (arr[r] == pivot) {
+                le++;
+            }
+        }
+        if (le == r) {
+            le++;
+            r--;
+        }
+        if (r > left) {
+            quickSort2(arr, left, r);
+        }
+        if (le < right) {
+            quickSort2(arr, le, right);
         }
 
 
     }
+
     //12.11
-    public void quickSort3(int[] arr,int left,int right){
-        int le=left;
-        int r= right;
+    public void quickSort3(int[] arr, int left, int right) {
+        int le = left;
+        int r = right;
 
-        int pivot=arr[(left+right)/2];
+        int pivot = arr[(left + right) / 2];
         int temp = 0;
-        while (le<r){
-            while (arr[le]<pivot){
+        while (le < r) {
+            while (arr[le] < pivot) {
                 le++;
             }
-            while (arr[r]>pivot){
+            while (arr[r] > pivot) {
                 r--;
             }
 
-            if (le>=r){
+            if (le >= r) {
                 break;
             }
-            temp=arr[le];
-            arr[le]=arr[r];
-            arr[r]=temp;
+            temp = arr[le];
+            arr[le] = arr[r];
+            arr[r] = temp;
 
-            if (arr[le]==pivot){
+            if (arr[le] == pivot) {
                 r--;
             }
-            if (arr[r]==pivot){
+            if (arr[r] == pivot) {
                 le++;
             }
 
         }
-        if (le==r){
+        if (le == r) {
             le++;
             r--;
         }
 
-        if (le<right){
-            quickSort3(arr,le,right);
+        if (le < right) {
+            quickSort3(arr, le, right);
         }
-        if (r>left){
-            quickSort3(arr,left,r);
+        if (r > left) {
+            quickSort3(arr, left, r);
         }
     }
 
-    public void quickSort4(int[] arr,int left,int right){
-        int le= left;
-        int r= right;
+    public void quickSort4(int[] arr, int left, int right) {
+        int le = left;
+        int r = right;
 
-        int pivot=arr[(left+right)/2];
+        int pivot = arr[(left + right) / 2];
         int temp;
-        while (le<r){
-            while (arr[le]<pivot){
+        while (le < r) {
+            while (arr[le] < pivot) {
                 le++;
             }
-            while (arr[r]>pivot){
+            while (arr[r] > pivot) {
                 r--;
             }
 
-            if (le>=r){
+            if (le >= r) {
                 break;
             }
 
-            temp=arr[le];
-            arr[le]=arr[r];
-            arr[r]=temp;
+            temp = arr[le];
+            arr[le] = arr[r];
+            arr[r] = temp;
 
-            if (arr[le]==pivot){
+            if (arr[le] == pivot) {
                 r--;
             }
-            if (arr[r]==pivot){
+            if (arr[r] == pivot) {
                 le++;
             }
         }
-        if (le==r){
+        if (le == r) {
             le++;
             r--;
         }
-        if (le<right){
-            quickSort4(arr,le,right);
+        if (le < right) {
+            quickSort4(arr, le, right);
         }
-        if (r>left){
-            quickSort4(arr,left,r);
+        if (r > left) {
+            quickSort4(arr, left, r);
         }
     }
 
+
+    public void quickSort5(int[] arr, int low, int high) {
+
+        if (low < high) {
+            // 找寻基准数据的正确索引
+            int index = getIndex(arr, low, high);
+
+            // 进行迭代对index之前和之后的数组进行相同的操作使整个数组变成有序
+            //quickSort(arr, 0, index - 1); 之前的版本，这种姿势有很大的性能问题，谢谢大家的建议
+            quickSort5(arr, low, index - 1);
+            quickSort5(arr, index + 1, high);
+        }
+
+    }
+
+    private static int getIndex(int[] arr, int low, int high) {
+        // 基准数据
+        int tmp = arr[low];
+        while (low < high) {
+            // 当队尾的元素大于等于基准数据时,向前挪动high指针
+            while (low < high && arr[high] >= tmp) {
+                high--;
+            }
+            // 如果队尾元素小于tmp了,需要将其赋值给low
+            arr[low] = arr[high];
+            // 当队首元素小于等于tmp时,向前挪动low指针
+            while (low < high && arr[low] <= tmp) {
+                low++;
+            }
+            // 当队首元素大于tmp时,需要将其赋值给high
+            arr[high] = arr[low];
+
+        }
+        // 跳出循环时low和high相等,此时的low或high就是tmp的正确索引位置
+        // 由原理部分可以很清楚的知道low位置的值并不是tmp,所以需要将tmp赋值给arr[low]
+        arr[low] = tmp;
+        return low; // 返回tmp的正确位置
+    }
+
+    //20210223  01
+    public static void myQuickSort(int[] arr,int low,int high){
+        int left = low;
+        int right = high;
+
+
+
+        if (low<high) {
+            int temp = arr[left];
+            while (left < right) {
+                while (left < right && arr[right] >= temp) {
+                    right--;
+                }
+                arr[left] = arr[right];
+                while (left < right && arr[left] <= temp) {
+                    left++;
+                }
+                arr[right] = arr[left];
+
+            }
+
+            arr[left] = temp;
+
+            myQuickSort(arr, low, left - 1);
+            myQuickSort(arr, left + 1, high);
+        }
+    }
+
+
+    //20210223  02
+    public static void myQuickSort2(int[] arr,int low,int high){
+        if (low<high){
+            int index = getIndex2(arr,low,high);
+
+            myQuickSort2(arr,low,index-1);
+            myQuickSort2(arr,index+1,high);
+        }
+    }
+
+    private static int getIndex2(int[] arr, int low, int high) {
+        int temp = arr[low];
+        while (low<high){
+            while (low<high&&arr[high]>=temp){
+                high--;
+            }
+            arr[low] = arr[high];
+            while (low<high&&arr[low]<=temp){
+                low++;
+            }
+            arr[high] =arr[low];
+        }
+        arr[low] = temp;
+        return low;
+    }
 }

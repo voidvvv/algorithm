@@ -1,8 +1,8 @@
 package cn.zkj.algorithm.sort;
 
-import java.security.SecureRandom;
+import cn.zkj.algorithm.utils.MyArraysUtil;
+
 import java.util.Arrays;
-import java.util.Random;
 
 /**
  * 排序方法汇总。以下均为以从小到大排序为依据
@@ -14,17 +14,13 @@ import java.util.Random;
  */
 public class SortSolution {
     public static void main(String[] args) {
-        SortSolution s = new SortSolution();
+        int[] ints = MyArraysUtil.newArray(20, 20);
+        Arrays.sort(new double[2]);
+        System.out.println(Arrays.toString(ints));
+        insertOrder(ints);
+        System.out.println(Arrays.toString(ints));
 
-        int[] arr = new int[20];
-        Random r = new SecureRandom();
-        for (int x = 0; x < arr.length; x++) {
-            arr[x] = r.nextInt(100);
-        }
 
-        System.out.println("排序前:" + Arrays.toString(arr));
-        s.quickOrder(arr);
-        System.out.println("排序后:" + Arrays.toString(arr));
     }
 
     /**
@@ -90,19 +86,20 @@ public class SortSolution {
      *
      * @param arr
      */
-    public void insertOrder(int[] arr) {
+    public static void insertOrder(int[] arr) {
         //省略判断数组有效性步骤
 
         for (int x = 1; x < arr.length; x++) {
             int cur = arr[x];
-            for (int y = 0; y < x; y++) {
+            int y = x-1;
+            for (; y >=0; y--) {
                 if (arr[y] > cur) {
-                    int temp = arr[y];
-                    arr[y] = cur;
-                    arr[x] = temp;
+                    arr[y+1] = arr[y];
+                }else {
                     break;
                 }
             }
+            arr[y+1]=cur;
         }
     }
 
@@ -119,19 +116,23 @@ public class SortSolution {
      *
      * @param arr
      */
-    public void shellOrder(int[] arr) {
+    public static void shellOrder(int[] arr) {
         int buc = arr.length / 2;
         while (buc > 0) {
             for (int x = buc; x < arr.length; x++) {
                 int cur = arr[x];
-                for (int y = x - buc; y < x; y += buc) {
+                int y = x - buc;
+                for (; y >= 0; y -= buc) {
                     if (arr[y] > cur) {
                         int temp = arr[y];
+                        arr[y+buc] = temp;
                         arr[y] = cur;
-                        arr[x] = temp;
+
+                    }else {
                         break;
                     }
                 }
+                arr[y+buc] = cur;
             }
             buc = buc / 2;
         }
@@ -143,23 +144,23 @@ public class SortSolution {
      *
      * @param arr
      */
-    public void quickOrder(int[] arr) {
+    public static void quickOrder(int[] arr) {
         quickSort(arr,0,arr.length-1);
     }
 
-    private void quickSort(int[] arr, int low, int high) {
+    private static void quickSort(int[] arr, int low, int high) {
         int left = low;
         int right = high;
         if (low<high){
             int temp = arr[low];//基准值
             while (low<high){
-                if (low<high&&arr[high]>=temp){
+                while (low<high&&arr[high]>=temp){
                     high--;
                 }
 
                 arr[low] = arr[high];
 
-                if (low<high&&arr[low]<=temp){
+                while (low<high&&arr[low]<=temp){
                     low++;
                 }
                 arr[high] = arr[low];
@@ -178,22 +179,108 @@ public class SortSolution {
      * @param arr
      */
     public void mergeOrder(int[] arr){
+        //使用递归进行分
+        radixOrder(arr,0,arr.length-1,new int[arr.length]);
+    }
 
+    private static void radixOrder(int[] arr,int left,int right,int []temp){
+        if (left<right){
+            int mid = (left+right)/2;
+            radixOrder(arr,left,mid,temp);
+            radixOrder(arr,mid+1,right,temp);
+            merge(arr,left,right,mid,temp);
+        }
+    }
+
+    private static void merge(int[] arr,int left,int right,int mid,int[] temp){
+        int lstart = left;
+        int rstart = mid+1;
+
+        int t =0;
+
+        while (lstart<=mid&&rstart<=right){
+            if (arr[lstart]<arr[rstart]){
+                temp[t++] = arr[lstart++];
+            }else {
+                temp[t++] = arr[rstart++];
+            }
+        }
+
+        while (lstart<=mid){
+            temp[t++] = arr[lstart++];
+        }
+
+        while (rstart<=right){
+            temp[t++] = arr[rstart++];
+        }
+
+        t=0;
+        while (left<=right){
+            arr[left++] = temp[t++];
+        }
     }
 
     /**
      * 基数排序
      * @param arr
      */
-    public void radixOrder(int[] arr){
+    public static void radixOrder(int[] arr){
+        int max = Integer.MIN_VALUE;
+        for (int x=0;x<arr.length;x++){
+            max = Math.max(max,arr[x]);
+        }
+        int count = String.valueOf(max).length();
+        int[][] bucket = new int[10][arr.length];
+
+        int[] bucketCount = new int[10];
+        for (int x=1,n=1;x<=count;x++,n*=10){
+            for (int index=0;index<arr.length;index++){
+                int cur = (arr[index]/n) %10;
+
+                    bucket[cur][bucketCount[cur]++] = arr[index];
+
+            }
+            int arrIndex = 0;
+            for (int index=0;index<10;index++){
+                int curCount = bucketCount[index];
+                int[] b =bucket[index];
+                for (int in=0;in<curCount;in++){
+                    arr[arrIndex++] = b[in];
+                }
+                bucketCount[index] = 0;
+            }
+
+
+        }
+    }
+
+
+    /**
+     * 堆排序  2021/2/24 手撕堆排序
+     * @param arr
+     */
+    public static void heapOrder(int[] arr){
+        for (int x=(arr.length/2)-1;x>=0;x--){
+            treeFy01(arr,x,arr.length);
+        }
+
+        for (int x=arr.length-1;x>0;x--){
+            MyArraysUtil.swapVal(arr,0,x);
+            treeFy01(arr,0,x-1);
+        }
 
     }
 
-    /**
-     * 堆排序
-     * @param arr
-     */
-    public void heapOrder(int[] arr){
+    private static void treeFy01(int[] arr, int start, int length) {
+        for (int target = 2*start+1;target<length;target = target*2+1){
+            if (target<length-1&&arr[target]<arr[target+1]){
+                target++;
+            }
 
+            if (arr[start]<arr[target]){
+                MyArraysUtil.swapVal(arr,start,target);
+                start = target;
+            }
+        }
     }
 }
