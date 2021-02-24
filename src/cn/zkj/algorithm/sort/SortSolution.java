@@ -17,7 +17,7 @@ public class SortSolution {
         int[] ints = MyArraysUtil.newArray(20, 20);
         Arrays.sort(new double[2]);
         System.out.println(Arrays.toString(ints));
-        insertOrder(ints);
+        heapOrder(ints);
         System.out.println(Arrays.toString(ints));
 
 
@@ -266,7 +266,7 @@ public class SortSolution {
 
         for (int x=arr.length-1;x>0;x--){
             MyArraysUtil.swapVal(arr,0,x);
-            treeFy01(arr,0,x-1);
+            treeFy01(arr,0,x);
         }
 
     }

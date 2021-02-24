@@ -14,7 +14,7 @@ public class RadixSort {
         RadixSort r = new RadixSort();
 
         System.out.println(Arrays.toString(arr));
-        r.redixSort1(arr);
+        r.radixSort02(arr);
         System.out.println(Arrays.toString(arr));
     }
     public void redixSort(int[] arr){
@@ -147,5 +147,34 @@ public class RadixSort {
             }
         }
 
+    }
+
+    public static void radixSort02(int[]arr){
+        int max = arr[0];
+        for (int x=1;x<arr.length;x++){
+            max = Math.max(max,arr[x]);
+        }
+
+        int count = String.valueOf(max).length();
+
+        int[][] buckets = new int[10][arr.length];
+
+        int[] bucketCount = new int[10];
+
+        for (int x=0,n=1;x<count;x++,n*=10){
+            for (int index=0;index<arr.length;index++){
+                int cur = (arr[index]/n)%10;
+                buckets[cur][bucketCount[cur]++] = arr[index];
+            }
+            int arrIndex=0;
+            for (int index=0;index<10;index++){
+                int curIndex = bucketCount[index];
+                for (int mx =0;mx<curIndex;mx++){
+                    arr[arrIndex++] = buckets[index][mx];
+                }
+                bucketCount[index] = 0;
+            }
+
+        }
     }
 }

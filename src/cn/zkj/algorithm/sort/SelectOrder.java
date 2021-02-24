@@ -1,20 +1,17 @@
 package cn.zkj.algorithm.sort;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import cn.zkj.algorithm.utils.MyArraysUtil;
+import cn.zkj.algorithm.utils.MyPrinter;
 
 public class SelectOrder {
 
     public static void main(String[] args) {
         SelectOrder s= new SelectOrder();
-        int[]arr = new int[80000];
+        int[]arr = new int[20];
         for (int x=0;x<arr.length;x++){
-            arr[x]=(int)(Math.random()*100000);
+            arr[x]=(int)(Math.random()*20);
         }
-        SimpleDateFormat sim=new SimpleDateFormat("hh:mm:ss");
-        System.out.println(sim.format(new Date()));
-        s.order(arr);
-        System.out.println(sim.format(new Date()));
+        MyPrinter.printArrays(s::selectOrder,arr);
     }
 
     public void order(int[]arr){
@@ -39,4 +36,17 @@ public class SelectOrder {
     }
 
 
+    public void selectOrder(int[]arr){
+        for (int x=0;x<arr.length-1;x++){
+            int min = arr[x];
+            int minIndex = x;
+            for (int y=x+1;y<arr.length;y++){
+                if (arr[y]<min){
+                    min = arr[y];
+                    minIndex = y;
+                }
+            }
+            MyArraysUtil.swapVal(arr,x,minIndex);
+        }
+    }
 }

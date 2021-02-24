@@ -1,5 +1,7 @@
 package cn.zkj.algorithm.sort;
 
+import cn.zkj.algorithm.utils.MyArraysUtil;
+
 import java.util.Arrays;
 
 public class HeapSortDemo {
@@ -51,5 +53,30 @@ public class HeapSortDemo {
             }
         }
         arr[i]=temp;
+    }
+
+
+    public static void myHeapSort02(int[]arr){
+        for (int x= (arr.length/2)-1;x>=0;x--){
+            heapFy02(arr,x,arr.length);
+        }
+
+        for (int x=0;x<arr.length;x++){
+            MyArraysUtil.swapVal(arr,0,arr.length-x-1);
+            heapFy02(arr,0,arr.length-x-1);
+        }
+    }
+
+    private static void heapFy02(int[] arr, int start, int length) {
+        for (int target = start*2+1;target<length;target = target*2+1){
+            if (arr[target]<arr[target+1]){
+                target++;
+            }
+
+            if (arr[start]<arr[target]){
+                MyArraysUtil.swapVal(arr,start,target);
+            }
+            start = target;
+        }
     }
 }
