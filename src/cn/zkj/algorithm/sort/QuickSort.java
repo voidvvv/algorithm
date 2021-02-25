@@ -1,20 +1,11 @@
 package cn.zkj.algorithm.sort;
 
-import java.util.Arrays;
+import cn.zkj.algorithm.utils.MyPrinter;
 
 public class QuickSort {
     public static void main(String[] args) {
         QuickSort q = new QuickSort();
-        int[] arr = new int[20];
-        for (int x = 0; x < arr.length; x++) {
-            arr[x] = (int) (Math.random() * 100);
-        }
-//        SimpleDateFormat sim=new SimpleDateFormat("hh:mm:ss");
-        System.out.println(Arrays.toString(arr));
-
-
-        q.quickSort03(arr);
-        System.out.println(Arrays.toString(arr));
+        MyPrinter.printDefaultArrays(q::quickSort05);
 
     }
 
@@ -313,4 +304,63 @@ public class QuickSort {
         arr[left] = tmp;
         return left;
     }
+
+    public static void quickSort04(int[] arr){
+        quickSort04(arr,0,arr.length-1);
+    }
+
+    private static void quickSort04(int[] arr, int left, int right) {
+        if (left<right){
+            int pivot = getPivot04(arr,left,right);
+            quickSort04(arr,left,pivot-1);
+            quickSort04(arr,pivot+1,right);
+        }
+    }
+
+    private static int getPivot04(int[] arr, int left, int right) {
+        int tmp = arr[left];
+
+        while (left<right){
+            while (left<right&&arr[right]>=tmp){
+                right--;
+            }
+            arr[left] = arr[right];
+            while (left<right&&arr[left]<=tmp){
+                left++;
+            }
+            arr[right] = arr[left];
+        }
+
+        arr[left] = tmp;
+        return left;
+    }
+
+    public void quickSort05(int[]arr){
+        quickSort05(arr,0,arr.length-1);
+    }
+
+    private void quickSort05(int[] arr, int left, int right) {
+        if (left<right){
+            int pivot = getPivot(arr,left,right);
+            quickSort05(arr,left,pivot);
+            quickSort05(arr,pivot+1,right);
+        }
+    }
+
+    private int getPivot(int[] arr, int left, int right) {
+        int tmp = arr[left];
+        while (left<right){
+            while (left<right&&arr[right]>=tmp){
+                right--;
+            }
+            arr[left] = arr[right];
+            while (left<right&&arr[left]<=tmp){
+                left++;
+            }
+            arr[right] = arr[left];
+        }
+        arr[left] = tmp;
+        return left;
+    }
+
 }

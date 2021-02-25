@@ -1,26 +1,11 @@
 package cn.zkj.algorithm.sort;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
+import cn.zkj.algorithm.utils.MyPrinter;
 
 public class MergeSort {
     public static void main(String[] args) {
-        QuickSort q = new QuickSort();
-        int [] arr =new int[10];
-        int[] temp =new int[10];
-        for (int x=0;x<arr.length;x++){
-            arr[x]=(int)(Math.random()*100);
-        }
-        MergeSort m = new MergeSort();
-        /*SimpleDateFormat s= new SimpleDateFormat("hh:mm:ss");
-
-        System.out.println(new Date().getTime());
-        m.divide1(arr,0,arr.length-1,temp);
-        System.out.println(new Date().getTime());*/
-        System.out.println(Arrays.toString(arr));
-        m.divide2(arr,0,arr.length-1,temp);
-        System.out.println(Arrays.toString(arr));
+        MergeSort q = new MergeSort();
+        MyPrinter.printDefaultArrays(q::mergeSort05);
     }
     //分+合
     public void divide(int[]arr,int left,int right,int[] temp){
@@ -183,5 +168,82 @@ public class MergeSort {
         }
     }
 
+    public void mergeSort04(int[] arr){
+        int[] tmp = new int[arr.length];
+        divide04(arr,0,arr.length-1,tmp);
+    }
 
+    private void divide04(int[] arr, int left, int right,int[] tmp) {
+        if (left<right){
+            int mid = (right+left)/2;
+            divide04(arr,left,mid,tmp);
+            divide04(arr,mid+1,right,tmp);
+            merge04(arr,left,mid,right,tmp);
+        }
+    }
+
+    private void merge04(int[] arr, int left, int mid, int right, int[] tmp) {
+        int indexL = left;
+        int indexR = mid+1;
+        int concur=0;
+        while (indexL<=mid&&indexR<=right){
+            if (arr[indexL]<arr[indexR]){
+                tmp[concur++] = arr[indexL++];
+            }else {
+                tmp[concur++] = arr[indexR++];
+            }
+        }
+
+        while (indexL<=mid){
+            tmp[concur++] = arr[indexL++];
+        }
+        while (indexR<=right){
+            tmp[concur++] = arr[indexR++];
+        }
+        concur=0;
+
+        while (left<=right){
+            arr[left++] = tmp[concur++];
+        }
+    }
+
+    public void mergeSort05(int[]arr){
+        int[] tmp = new int[arr.length];
+        divide05(arr,0,arr.length-1,tmp);
+    }
+
+    private void divide05(int[] arr, int left, int right,int[] tmp) {
+        if (left<right){
+            int mid = (left+right)/2;
+            divide05(arr,left,mid,tmp);
+            divide05(arr,mid+1,right,tmp);
+            merge05(arr,left,mid,right,tmp);
+        }
+    }
+
+    private void merge05(int[] arr, int left, int mid, int right, int[] tmp) {
+        int indexL = left;
+        int indexR = mid+1;
+
+        int t=0;
+
+        while (indexL<=mid&&indexR<=right){
+            if (arr[indexL]<arr[indexR]){
+                tmp[t++] = arr[indexL++];
+            }else {
+                tmp[t++] = arr[indexR++];
+            }
+        }
+
+        while (indexL<=mid){
+            tmp[t++] = arr[indexL++];
+        }
+        while (indexR<=right){
+            tmp[t++] = arr[indexR++];
+        }
+        t=0;
+        while (left<=right){
+            arr[left++] = tmp[t++];
+        }
+    }
 }

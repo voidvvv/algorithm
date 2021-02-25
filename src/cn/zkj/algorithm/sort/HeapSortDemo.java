@@ -1,14 +1,12 @@
 package cn.zkj.algorithm.sort;
 
 import cn.zkj.algorithm.utils.MyArraysUtil;
-
-import java.util.Arrays;
+import cn.zkj.algorithm.utils.MyPrinter;
 
 public class HeapSortDemo {
     public static void main(String[] args) {
-        int []arr={5,4,3,1,-33,99,44,999,9,10,55,9,0,-1,86};
-        heapSort(arr);
-        System.out.println(Arrays.toString(arr));
+        HeapSortDemo h = new HeapSortDemo();
+        MyPrinter.printDefaultArrays(h::heapSort03);
     }
 
     public static void heapSort(int[]arr){
@@ -78,5 +76,31 @@ public class HeapSortDemo {
             }
             start = target;
         }
+    }
+
+    public void heapSort03(int[] arr){
+        for (int x=arr.length/2-1;x>=0;x--){
+            heapFy03(arr,x,arr.length);
+        }
+        for (int x=arr.length-1;x>=0;x--){
+            MyArraysUtil.swapVal(arr,0,x);
+            heapFy03(arr,0,x);
+        }
+    }
+
+    private void heapFy03(int[] arr, int cur, int length) {
+        int curVal = arr[cur];
+        for (int target = cur*2 +1;target<length;target = target*2+1){
+            if (target+1<length&&arr[target]<arr[target+1]){
+                target++;
+            }
+            if (arr[target]>curVal){
+                arr[cur] = arr[target];
+                cur = target;
+            }else {
+                break;
+            }
+        }
+        arr[cur] = curVal;
     }
 }

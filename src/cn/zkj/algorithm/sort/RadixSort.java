@@ -1,21 +1,13 @@
 package cn.zkj.algorithm.sort;
 
-import java.util.Arrays;
+import cn.zkj.algorithm.utils.MyPrinter;
 
 public class RadixSort {
     //基数排序
     public static void main(String[] args) {
-        int [] arr =new int[20];
-
-        for (int x=0;x<arr.length;x++){
-            arr[x]=(int)(Math.random()*100);
-        }
-
         RadixSort r = new RadixSort();
 
-        System.out.println(Arrays.toString(arr));
-        r.radixSort02(arr);
-        System.out.println(Arrays.toString(arr));
+        MyPrinter.printDefaultArrays(r::radixSort03);
     }
     public void redixSort(int[] arr){
         //先遍历数组，取出最大的数，算出其位数
@@ -176,5 +168,37 @@ public class RadixSort {
             }
 
         }
+    }
+
+    public void radixSort03(int[]arr){
+        int max = getMax(arr);
+        int count = String.valueOf(max).length();
+
+        int[][] buckets = new int[10][arr.length];
+        int[] buckteCount = new int[10];
+
+        for (int curP = 0,n=1;curP<count;curP++,n*=10){
+            for (int x=0;x<arr.length;x++){
+                int val = arr[x];
+                int radix = val/n%10;
+                buckets[radix][buckteCount[radix]++] = val;
+            }
+            int arrIndex = 0;
+            for (int x=0;x<10;x++){
+                int i = buckteCount[x];
+                for (int m=0;m<i;m++){
+                    arr[arrIndex++] = buckets[x][m];
+                }
+                buckteCount[x] = 0;
+            }
+        }
+    }
+
+    private int getMax(int[]arr){
+        int max = arr[0];
+        for (int x=1;x<arr.length;x++){
+            max = Math.max(max,arr[x]);
+        }
+        return max;
     }
 }

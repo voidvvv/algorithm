@@ -1,23 +1,13 @@
 package cn.zkj.algorithm.sort;
 
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
+import cn.zkj.algorithm.utils.MyPrinter;
 
 public class ShellSort {
     public static void main(String[] args) {
         ShellSort s= new ShellSort();
 
-        int[]arr = new int[20];
-        for (int x=0;x<arr.length;x++){
-            arr[x]=(int)(Math.random()*100);
-        }
-
-//        SimpleDateFormat sim=new SimpleDateFormat("hh:mm:ss");
-        System.out.println(Arrays.toString(arr));
-        s.shellSort7(arr);
-        System.out.println(Arrays.toString(arr));
+        MyPrinter.printDefaultArrays(s::shellSort08);
 
 
     }
@@ -187,6 +177,20 @@ public class ShellSort {
                 }
             }
             n/=2;
+        }
+    }
+
+    public void shellSort08(int[]arr){
+        for (int gap = arr.length/2;gap>0;gap/=2){
+            for (int x=gap;x<arr.length;x++){
+                int y = x-gap;
+                int curVal = arr[x];
+                while (y>=0&&arr[y]>curVal){
+                    arr[y+gap] = arr[y];
+                    y-=gap;
+                }
+                arr[y+gap] = curVal;
+            }
         }
     }
 }
