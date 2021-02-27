@@ -8,7 +8,7 @@ import java.util.Set;
 public class Demo1 {
     public static void main(String[] args) {
         //map entryset 何时初始化
-        HashMap<String,String> map = new HashMap<>();
+        HashMap<String,String> map = new HashMap<>(1);
         String key01 = "key";
 
         map.put(key01,"key01");

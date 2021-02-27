@@ -7,11 +7,8 @@ public class SelectOrder {
 
     public static void main(String[] args) {
         SelectOrder s= new SelectOrder();
-        int[]arr = new int[20];
-        for (int x=0;x<arr.length;x++){
-            arr[x]=(int)(Math.random()*20);
-        }
-        MyPrinter.printArrays(s::selectOrder,arr);
+
+        MyPrinter.printDefaultArrays(s::selectSort02);
     }
 
     public void order(int[]arr){
@@ -47,6 +44,20 @@ public class SelectOrder {
                 }
             }
             MyArraysUtil.swapVal(arr,x,minIndex);
+        }
+    }
+
+    public void selectSort02(int[] arr){
+        for (int x=0;x<arr.length;x++){
+            int curVal = arr[x];
+            int minIndex = x;
+            for (int y=x+1;y<arr.length;y++){
+                if (arr[y]<curVal){
+                    curVal = arr[y];
+                    minIndex = y;
+                }
+            }
+            MyArraysUtil.swapVal(arr,minIndex,x);
         }
     }
 }

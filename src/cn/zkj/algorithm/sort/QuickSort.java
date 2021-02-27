@@ -5,7 +5,7 @@ import cn.zkj.algorithm.utils.MyPrinter;
 public class QuickSort {
     public static void main(String[] args) {
         QuickSort q = new QuickSort();
-        MyPrinter.printDefaultArrays(q::quickSort05);
+        MyPrinter.printDefaultArrays(q::quickSort06);
 
     }
 
@@ -348,6 +348,38 @@ public class QuickSort {
     }
 
     private int getPivot(int[] arr, int left, int right) {
+        int tmp = arr[left];
+        while (left<right){
+            while (left<right&&arr[right]>=tmp){
+                right--;
+            }
+            arr[left] = arr[right];
+            while (left<right&&arr[left]<=tmp){
+                left++;
+            }
+            arr[right] = arr[left];
+        }
+        arr[left] = tmp;
+        return left;
+    }
+
+    /**
+     * 快速排序  判断交换的时候，只有大于小于，没有等于。造成了死循环
+     * @param arr
+     */
+    public void quickSort06(int[] arr){
+        quickSort06(arr,0,arr.length-1);
+    }
+
+    private void quickSort06(int[] arr, int left, int right) {
+        if (left<right){
+            int pivot = getPivot06(arr,left,right);
+            quickSort06(arr,left,pivot);
+            quickSort06(arr,pivot+1,right);
+        }
+    }
+
+    private int getPivot06(int[] arr, int left, int right) {
         int tmp = arr[left];
         while (left<right){
             while (left<right&&arr[right]>=tmp){

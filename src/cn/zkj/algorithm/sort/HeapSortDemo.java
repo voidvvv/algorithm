@@ -6,7 +6,7 @@ import cn.zkj.algorithm.utils.MyPrinter;
 public class HeapSortDemo {
     public static void main(String[] args) {
         HeapSortDemo h = new HeapSortDemo();
-        MyPrinter.printDefaultArrays(h::heapSort03);
+        MyPrinter.printDefaultArrays(h::heapSort04);
     }
 
     public static void heapSort(int[]arr){
@@ -97,6 +97,36 @@ public class HeapSortDemo {
             if (arr[target]>curVal){
                 arr[cur] = arr[target];
                 cur = target;
+            }else {
+                break;
+            }
+        }
+        arr[cur] = curVal;
+    }
+
+    /**
+     * 在堆化的过程中，赋值cur下标的时候错用成了curVal
+     * @param arr
+     */
+    public void heapSort04(int[] arr){
+        for (int x=arr.length/2-1;x>=0;x--){
+            heapFy04(arr,x,arr.length);
+        }
+        for (int x=arr.length-1;x>=0;x--){
+            MyArraysUtil.swapVal(arr,0,x);
+            heapFy04(arr,0,x);
+        }
+    }
+
+    private void heapFy04(int[] arr, int cur, int length) {
+        int curVal = arr[cur];
+        for (int t = 2*cur+1;t<length;t= t*2+1){
+            if (t+1<length&&arr[t]<arr[t+1]){
+                t++;
+            }
+            if (arr[t]>curVal){
+                arr[cur] = arr[t];
+                cur = t;
             }else {
                 break;
             }

@@ -17,12 +17,23 @@ public class MyPrinter {
     }
 
     public static void printArrays(MySortArrayInterFace sort,int[] arr){
-        if (arr.length>1000){
+        if (arr==null||arr.length==0||arr.length>1000){
             throw new RuntimeException("!!!");
         }
-        System.out.println(Arrays.toString(arr));
+        System.out.println("排序前："+Arrays.toString(arr));
         sort.sort(arr);
-        System.out.println(Arrays.toString(arr));
+        checkSotStatus(arr);
+        System.out.println("排序后："+Arrays.toString(arr));
+    }
+
+    private static void checkSotStatus(int[] arr) {
+        for (int x=1;x<arr.length;x++){
+            if (arr[x]<arr[x-1]){
+                System.out.println("排序失败！");
+                return;
+            }
+        }
+        System.out.println("排序成功");
     }
 
     public static void printTimeConsuming(MySortArrayInterFace sort,int[] arr){

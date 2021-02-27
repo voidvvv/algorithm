@@ -1,22 +1,12 @@
 package cn.zkj.algorithm.sort;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
+import cn.zkj.algorithm.utils.MyPrinter;
 
 public class InsertSort {
 
     public static void main(String[] args) {
         InsertSort i = new InsertSort();
-        int[]arr = new int[80000];
-        for (int x=0;x<arr.length;x++){
-            arr[x]=(int)(Math.random()*100000);
-        }
-        SimpleDateFormat sim=new SimpleDateFormat("hh:mm:ss");
-        System.out.println(sim.format(new Date()));
-
-        i.insertSort(arr);
-        System.out.println(sim.format(new Date()));
+        MyPrinter.printDefaultArrays(i::insertSort02);
 
     }
 
@@ -33,6 +23,18 @@ public class InsertSort {
             }
             arr[insertIndex+1]=insertVal;
             index1++;
+        }
+    }
+
+    public void insertSort02(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            int y = x-1;
+            int curVal = arr[x];
+            while (y>=0&&arr[y]>curVal){
+                arr[y+1]= arr[y];
+                y--;
+            }
+            arr[y+1] = curVal;
         }
     }
 
