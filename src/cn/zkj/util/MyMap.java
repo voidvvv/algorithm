@@ -7,6 +7,7 @@ package cn.zkj.util;
  * @version: 01
  */
 public class MyMap<K, V> {
+
     private static final int defaultSize = 16;
 
     private boolean printFlag;
@@ -32,6 +33,7 @@ public class MyMap<K, V> {
     }
 
     private class MyNode<K, V> {
+
         private int kHash;
         private K key;
         private V value;
@@ -71,6 +73,7 @@ public class MyMap<K, V> {
         int hash = toHash(key);
         int i;
         MyNode<K, V> n = table[(i = hash & (size - 1))];
+        log(key + "存到了"+ i +"位置");
         if (n == null) {
             table[i] = new MyNode<>(key, value, hash);
         } else {
@@ -98,6 +101,9 @@ public class MyMap<K, V> {
     public V get(K key) {
         int hash = toHash(key);
         MyNode<K, V> node = table[hash & (size - 1)];
+        if (node==null){
+            return null;
+        }
         return node.findKey(key);
     }
 
@@ -107,4 +113,9 @@ public class MyMap<K, V> {
         return o == null ? 0 : o.hashCode();
     }
 
+    private  void log(String s){
+        if (printFlag){
+            System.out.println(s);
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package cn.zkj.util;
 
+import java.util.logging.Logger;
+
 /**
  * @Author: zhaoKaiJie
  * @Description:
@@ -9,7 +11,9 @@ package cn.zkj.util;
 public class UtilTest {
     public static void main(String[] args) {
         MyMap<String,String> map = new MyMap<>();
-        map.put("a","b");
-        System.out.println(map.get("a"));
+        map.put(null,"b");
+        map.put(null,"c");
+        System.out.println(map.get(null));
+        Logger.getLogger("a").info("{}");
     }
 }
