@@ -10,8 +10,11 @@ import java.util.*;
 
 public class Solution {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        int[] arr = {1, 1, 2, 2, 2, 1};
-        int a = findShortestSubArray(arr);
+        String[] words = {"aaaa", "asas", "able", "ability", "actt", "actor", "access"};
+        String[] puzzles = {"aboveyz", "abrodyz", "abslute", "absoryz", "actresz", "gaswxyz"};
+        Solution s = new Solution();
+        List<Integer> re = s.findNumOfValidWords(words, puzzles);
+        System.out.println(re);
     }
 
     public static String getSend(String urls) {
@@ -122,9 +125,6 @@ public class Solution {
         return "";
     }
 
-    public static void tt(Demo1 d) {
-        d = null;
-    }
 
     /**
      * 24. 两两交换链表中的节点
@@ -845,4 +845,94 @@ public class Solution {
         return map3.get(maxDegreeNum) - map2.get(maxDegreeNum) + 1;
 
     }
+
+    /**
+     * 1178. 猜字谜 --- 仍未知道为什么错误
+     * 外国友人仿照中国字谜设计了一个英文版猜字谜小游戏，请你来猜猜看吧。
+     * <p>
+     * 字谜的迷面 puzzle 按字符串形式给出，如果一个单词 word 符合下面两个条件，那么它就可以算作谜底：
+     * <p>
+     * 单词 word 中包含谜面 puzzle 的第一个字母。
+     * 单词 word 中的每一个字母都可以在谜面 puzzle 中找到。
+     * 例如，如果字谜的谜面是 "abcdefg"，那么可以作为谜底的单词有 "faced", "cabbage", 和 "baggage"；而 "beefed"（不含字母 "a"）以及 "based"（其中的 "s" 没有出现在谜面中）都不能作为谜底。
+     * 返回一个答案数组 answer，数组中的每个元素 answer[i] 是在给出的单词列表 words 中可以作为字谜迷面 puzzles[i] 所对应的谜底的单词数目。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/number-of-valid-words-for-each-puzzle
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param words
+     * @param puzzles
+     * @return
+     */
+    public List<Integer> findNumOfValidWords(String[] words, String[] puzzles) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int x = 0; x < words.length; x++) {
+            int mask = 0;
+            for (int y = 0; y < words[x].length(); y++) {
+                mask |= (1 << (words[x].charAt(y) - 'a'));
+            }
+            if (Integer.bitCount(mask) <= 7) {
+                map.put(mask, map.getOrDefault(mask, 0) + 1);
+                System.out.println(words[x] + "-放入：" + map.get(mask) + "====" + mask);
+            }
+        }
+        List<Integer> result = new ArrayList<>();
+        for (int x = 0; x < puzzles.length; x++) {
+            String puzzle = puzzles[x];
+            int mask = 0;
+            int count = 0;
+            for (int y = 0; y < puzzle.length(); y++) {
+                mask |= (1 << (puzzle.charAt(y) - 'a'));
+            }
+            int subset = mask;
+            do {
+                int s = subset | (1 << (puzzle.charAt(0) - 'a'));
+                if (map.containsKey(s)) {
+                    System.out.println(s);
+                    count += map.get(s);
+                    System.out.println("count：：" + puzzle);
+                }
+
+                subset = (subset - 1) & mask;
+            } while (subset != mask);
+            System.out.println(puzzle + "取出" + count);
+            result.add(count);
+        }
+        return result;
+    }
+
+    /**
+     * 395. 至少有K个重复字符的最长子串
+     * 给你一个字符串 s 和一个整数 k ，请你找出 s 中的最长子串， 要求该子串中的每一字符出现次数都不少于 k 。返回这一子串的长度。
+     *
+     * @param s
+     * @param k
+     * @return
+     */
+    public int longestSubstring(String s, int k) {
+        int[] arrCount = new int[s.length()];
+        char[] chars = s.toCharArray();
+
+        Map<Character, Integer> map = new HashMap<>();
+        for (Character c : chars) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+        for (int x = 0; x < arrCount.length; x++) {
+            arrCount[x] = map.get(chars[x]);
+        }
+        //此时将所有字符出现的次数放在了arrCount里了
+        int right = 0;
+        int left = 0;
+        int maxLength = 0;
+        while (right < arrCount.length && left < arrCount.length) {
+            while (right < arrCount.length && arrCount[right] >= k) {
+                right++;
+            }
+            maxLength = Math.max(maxLength, right - left + 1);
+            left = ++right;
+        }
+        return maxLength;
+    }
 }
+
