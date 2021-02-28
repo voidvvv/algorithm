@@ -18,6 +18,7 @@ public class UtilTest {
         map.put(null,"b");
         map.put(null,"c");
         System.out.println(map.get(null));
+
         Logger.getLogger("a").info("{}");
     }
 

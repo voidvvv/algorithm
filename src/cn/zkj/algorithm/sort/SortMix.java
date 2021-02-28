@@ -23,7 +23,6 @@ public class SortMix {
         }
     }
 
-    //快速排序(未成功独立写出)
     //将数组分成两部分，其中一部分比另一部分都要小
     public void quickSort(int[] arr,int left,int right){
         int le= left;
@@ -101,6 +100,7 @@ public class SortMix {
 
 
     }
+
     public void divid(int[]arr,int left,int right,int[] temp){
         if (left<right){
             int mid = (left+right)/2;

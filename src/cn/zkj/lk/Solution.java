@@ -934,5 +934,26 @@ public class Solution {
         }
         return maxLength;
     }
+
+    /**
+     * 896. 单调数列 送分题
+     * @param A
+     * @return
+     */
+    public boolean isMonotonic(int[] A) {
+        boolean inc = true;
+        boolean des = true;
+        for (int x=0;x<A.length;x++){
+            if (A[x]<A[x+1]){
+                inc = false;
+            }
+            if (A[x]>A[x+1]){
+                des = false;
+            }
+        }
+        return inc||des;
+    }
+
+
 }
 
