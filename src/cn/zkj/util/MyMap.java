@@ -20,16 +20,8 @@ public class MyMap<K, V> {
     }
 
     public MyMap(boolean flag) {
-        this(defaultSize);
-        this.printFlag = flag;
-    }
 
-    private MyMap(int size) {
-        if (size <= 0) {
-            size = defaultSize;
-        }
-        this.size = size;
-        this.table = (MyNode<K, V>[]) new MyNode[size];
+        this.printFlag = flag;
     }
 
     private class MyNode<K, V> {
@@ -72,6 +64,10 @@ public class MyMap<K, V> {
     public void put(K key, V value) {
         int hash = toHash(key);
         int i;
+        MyNode<K,V>[] t;
+        if ((t=table)==null||t.length==0){
+            resize();
+        }
         MyNode<K, V> n = table[(i = hash & (size - 1))];
         log(key + "存到了"+ i +"位置");
         if (n == null) {
@@ -85,7 +81,7 @@ public class MyMap<K, V> {
                     }
                     break;
                 }
-                if (p.key.equals(key)) {
+                if (p.key==key||p.key.equals(key)) {
                     p.value = value;
                     break;
                 }
@@ -96,6 +92,16 @@ public class MyMap<K, V> {
                 pre.next = new MyNode<>(key, value, hash);
             }
         }
+    }
+
+    private void resize() {
+        //扩容
+        if (size <= 0) {
+            size = defaultSize;
+            this.size = size;
+            this.table = (MyNode<K, V>[]) new MyNode[size];
+        }
+
     }
 
     public V get(K key) {
