@@ -6,7 +6,7 @@ import cn.zkj.algorithm.utils.MyPrinter;
 public class HeapSortDemo {
     public static void main(String[] args) {
         HeapSortDemo h = new HeapSortDemo();
-        MyPrinter.printDefaultArrays(h::heapSort05);
+        MyPrinter.printDefaultArrays(h::heapSort06);
     }
 
     public static void heapSort(int[]arr){
@@ -155,6 +155,30 @@ public class HeapSortDemo {
                 cur = t;
             }else {
                 break;
+            }
+        }
+        arr[cur] = curVal;
+    }
+
+    public void heapSort06(int[] arr){
+        for (int x=arr.length/2-1;x>=0;x--){
+            heapFy06(arr,x,arr.length);
+        }
+        for (int x=arr.length-1;x>=0;x--){
+            MyArraysUtil.swapVal(arr,0,x);
+            heapFy06(arr,0,x);
+        }
+    }
+
+    private void heapFy06(int[] arr, int cur, int length) {
+        int curVal = arr[cur];
+        for (int t =cur*2+1;t<length;t=t*2+1){
+            if (t+1<length&&arr[t+1]>arr[t]){
+                t++;
+            }
+            if (arr[t]>curVal){
+                arr[cur] = arr[t];
+                cur=t;
             }
         }
         arr[cur] = curVal;

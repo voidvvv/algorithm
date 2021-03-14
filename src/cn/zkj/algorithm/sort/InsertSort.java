@@ -6,7 +6,7 @@ public class InsertSort {
 
     public static void main(String[] args) {
         InsertSort i = new InsertSort();
-        MyPrinter.printDefaultArrays(i::insertSort03);
+        MyPrinter.printDefaultArrays(i::insertSort04);
 
     }
 
@@ -47,6 +47,18 @@ public class InsertSort {
                 y--;
             }
             arr[y+1] = curVal;
+        }
+    }
+
+    public void insertSort04(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            int y =x-1;
+            int cur = arr[x];
+            while (y>=0&&arr[y]>cur){
+                arr[y+1]=arr[y];
+                y--;
+            }
+            arr[y+1] = cur;
         }
     }
 

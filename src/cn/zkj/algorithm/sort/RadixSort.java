@@ -7,7 +7,7 @@ public class RadixSort {
     public static void main(String[] args) {
         RadixSort r = new RadixSort();
 
-        MyPrinter.printDefaultArrays(r::radixSort05);
+        MyPrinter.printDefaultArrays(r::radixSort06);
     }
 
     public void redixSort(int[] arr) {
@@ -241,6 +241,29 @@ public class RadixSort {
             for (int x = 0; x < 10; x++) {
                 int bucketCount = bucketCounts[x];
                 for (int m = 0; m <bucketCount;m++){
+                    arr[arrIndex++] = bucktes[x][m];
+                }
+                bucketCounts[x] = 0;
+            }
+        }
+    }
+
+    public void radixSort06(int[] arr){
+        int max = getMax(arr);
+        int count = String.valueOf(max).length();
+
+        int[][]bucktes = new int[10][arr.length];
+        int[] bucketCounts = new int[10];
+
+        for (int curP=0,n=1;curP<count;curP++,n*=10){
+            for (int x=0;x<arr.length;x++){
+                int radix = arr[x]/n%10;
+                bucktes[radix][bucketCounts[radix]++] = arr[x];
+            }
+            int arrIndex=0;
+            for (int x=0;x<10;x++){
+                int bucketCount = bucketCounts[x];
+                for (int m=0;m<bucketCount;m++){
                     arr[arrIndex++] = bucktes[x][m];
                 }
                 bucketCounts[x] = 0;

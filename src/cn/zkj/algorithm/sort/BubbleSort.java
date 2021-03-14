@@ -12,7 +12,7 @@ public class BubbleSort   {
         }
         BubbleSort b = new BubbleSort();
         System.out.println(Arrays.toString(arr));
-        b.bubleSort04(arr);
+        b.bubbleSort05(arr);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -85,6 +85,21 @@ public class BubbleSort   {
                 if (arr[y]>arr[y+1]){
                     MyArraysUtil.swapVal(arr,y,y+1);
                 }
+            }
+        }
+    }
+
+    public void bubbleSort05(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            boolean flag = true;
+            for (int y =0;y<arr.length-x;y++){
+                if (arr[y]>arr[y+1]){
+                    MyArraysUtil.swapVal(arr,y,y+1);
+                    flag=false;
+                }
+            }
+            if (flag){
+                return;
             }
         }
     }

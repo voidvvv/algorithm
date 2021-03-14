@@ -5,7 +5,7 @@ import cn.zkj.algorithm.utils.MyPrinter;
 public class MergeSort {
     public static void main(String[] args) {
         MergeSort q = new MergeSort();
-        MyPrinter.printDefaultArrays(q::mergeSort07);
+        MyPrinter.printDefaultArrays(q::mergeSort08);
     }
 
     //分+合
@@ -272,58 +272,95 @@ public class MergeSort {
 
     private void merge06(int[] arr, int left, int mid, int right, int[] tmp) {
         int indexL = left;
-        int indexR = mid+1;
+        int indexR = mid + 1;
 
-        int t =0;
-        while (indexL<=mid&&indexR<=right){
-            if (arr[indexL]<arr[indexR]){
+        int t = 0;
+        while (indexL <= mid && indexR <= right) {
+            if (arr[indexL] < arr[indexR]) {
                 tmp[t++] = arr[indexL++];
-            }else {
+            } else {
                 tmp[t++] = arr[indexR++];
             }
         }
-        while (indexL<=mid){
+        while (indexL <= mid) {
             tmp[t++] = arr[indexL++];
         }
-        while (indexR<=right){
+        while (indexR <= right) {
             tmp[t++] = arr[indexR++];
         }
-        t=0;
-        while (left<=right){
-            arr[left++]  = tmp[t++];
+        t = 0;
+        while (left <= right) {
+            arr[left++] = tmp[t++];
         }
     }
 
-    public void mergeSort07(int[] arr){
+    public void mergeSort07(int[] arr) {
         int[] tmp = new int[arr.length];
-        divide07(arr,0,arr.length-1,tmp);
+        divide07(arr, 0, arr.length - 1, tmp);
     }
 
-    private void divide07(int[] arr, int left, int right,int[] tmp) {
-        if (left<right){
-            int mid = (left+right)/2;
-            divide07(arr,left,mid,tmp);
-            divide07(arr,mid+1,right,tmp);
-            merge07(arr,left,mid,right,tmp);
+    private void divide07(int[] arr, int left, int right, int[] tmp) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            divide07(arr, left, mid, tmp);
+            divide07(arr, mid + 1, right, tmp);
+            merge07(arr, left, mid, right, tmp);
         }
     }
 
     private void merge07(int[] arr, int left, int mid, int right, int[] tmp) {
         int indexL = left;
-        int indexR = mid+1;
+        int indexR = mid + 1;
 
-        int t =0;
-        while (indexL<=mid&&indexR<=right){
-            if (arr[indexL]<arr[indexR]){
+        int t = 0;
+        while (indexL <= mid && indexR <= right) {
+            if (arr[indexL] < arr[indexR]) {
                 tmp[t++] = arr[indexL++];
-            }else {
+            } else {
                 tmp[t++] = arr[indexR++];
             }
         }
-        while (indexL<=mid){
+        while (indexL <= mid) {
             tmp[t++] = arr[indexL++];
         }
-        while (indexR<=right){
+        while (indexR <= right) {
+            tmp[t++] = arr[indexR++];
+        }
+        t = 0;
+        while (left <= right) {
+            arr[left++] = tmp[t++];
+        }
+    }
+
+    public void mergeSort08(int[] arr) {
+        divide08(arr, 0, arr.length - 1, new int[arr.length]);
+    }
+
+    private void divide08(int[] arr, int left, int right, int[] tmp) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            divide08(arr, left, mid, tmp);
+            divide08(arr, mid + 1, right, tmp);
+            merge08(arr, left, mid, right, tmp);
+        }
+    }
+
+    private void merge08(int[] arr, int left, int mid, int right, int[] tmp) {
+        int indexL = left;
+        int indexR = mid + 1;
+
+        int t = 0;
+        while (indexL <= mid && indexR <= right) {
+            if (arr[indexL] < arr[indexR]) {
+                tmp[t++] = arr[indexL++];
+            } else {
+                tmp[t++] = arr[indexR++];
+            }
+        }
+        while (indexL <= mid) {
+            tmp[t++] = arr[indexL++];
+        }
+        while (indexR <= right) {
             tmp[t++] = arr[indexR++];
         }
         t=0;
