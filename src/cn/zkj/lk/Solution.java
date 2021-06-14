@@ -994,5 +994,99 @@ public class Solution {
         return sb.toString();
     }
 
+    /**
+     * 781. 森林中的兔子、
+     * 森林中，每个兔子都有颜色。其中一些兔子（可能是全部）告诉你还有多少其他的兔子和自己有相同的颜色。我们将这些回答放在 answers 数组里。
+     * @param answers
+     * @return
+     */
+    public int numRabbits(int[] answers) {
+        int res =0;
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int x=0;x<answers.length;x++){
+            if (answers[x]==0){
+                res++;
+                continue;
+            }
+            if (!map.containsKey(answers[x])){
+                map.put(answers[x],answers[x]);
+                res+=answers[x];
+                res++;
+            }else {
+                if (map.get(answers[x])>0){
+                    map.put(answers[x],map.get(answers[x])-1);
+                }else {
+                    map.put(answers[x],answers[x]);
+                    res+=answers[x];
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 88. 合并两个有序数组
+     * 给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中，使 nums1 成为一个有序数组。
+     *
+     * 初始化 nums1 和 nums2 的元素数量分别为 m 和 n 。你可以假设 nums1 的空间大小等于 m + n，这样它就有足够的空间保存来自 nums2 的元素。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/merge-sorted-array
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param nums1
+     * @param m
+     * @param nums2
+     * @param n
+     */
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+
+        for (int x=m;x<nums1.length;x++){
+            nums1[x] = nums2[x-m];
+        }
+        Arrays.sort(nums1);
+    }
+
+    /**
+     * 153. 寻找旋转排序数组中的最小值
+     * @param nums
+     * @return
+     */
+    public int findMin(int[] nums) {
+        if (nums==null){
+            return 0;
+        }
+        if (nums.length==0){
+            return nums[0];
+        }
+        int start = nums[0];
+        int end = nums[nums.length-1];
+        int midI = nums.length/2;
+        int mid = nums[midI];
+
+        if (start<end){
+            return start;
+        }
+
+        if (mid>end){
+            int min = nums[midI];
+            while (midI<nums.length){
+                if (nums[midI]<min){
+                    return nums[midI];
+                }
+                midI++;
+            }
+        }else {
+            while (midI>=0){
+                int max = nums[midI];
+                if (nums[midI]>max){
+                    return nums[mid];
+                }
+                midI++;
+            }
+        }
+
+        return mid;
+    }
 }
 

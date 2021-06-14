@@ -19,27 +19,27 @@ public class MemoryTest {
     }
     public static CustRespDto makeDto(){
         CustRespDto respDto = new CustRespDto();
-        BaseInfoDto baseInfoDto = new BaseInfoDto();
-        baseInfoDto.setName("张三");
-        baseInfoDto.setAge("20");
-        baseInfoDto.setUserId("1001");
-        respDto.setBaseInfoDto(baseInfoDto);
-
-        WokInfoDto wokInfoDto = new WokInfoDto();
-        wokInfoDto.setWorkAddress("aaabsssbddd");
-        wokInfoDto.setWorkInfo("workworkmoney");
-        respDto.setWokInfoDto(wokInfoDto);
-
-        List<RelInfoDto> relInfoDtos = new ArrayList<>();
-        RelInfoDto relInfoDto = new RelInfoDto();
-        relInfoDto.setName("mick");
-        relInfoDto.setTel("1001a");
-        relInfoDto.setUserId("1001");
-        relInfoDtos.add(relInfoDto);
-        respDto.setRelInfoDtos(relInfoDtos);
-
-        respDto.setCode("200");
-        respDto.setUserId("100000x");
+//        BaseInfoDto baseInfoDto = new BaseInfoDto();
+//        baseInfoDto.setName("张三");
+//        baseInfoDto.setAge("20");
+//        baseInfoDto.setUserId("1001");
+//        respDto.setBaseInfoDto(baseInfoDto);
+//
+//        WokInfoDto wokInfoDto = new WokInfoDto();
+//        wokInfoDto.setWorkAddress("aaabsssbddd");
+//        wokInfoDto.setWorkInfo("workworkmoney");
+//        respDto.setWokInfoDto(wokInfoDto);
+//
+//        List<RelInfoDto> relInfoDtos = new ArrayList<>();
+//        RelInfoDto relInfoDto = new RelInfoDto();
+//        relInfoDto.setName("mick");
+//        relInfoDto.setTel("1001a");
+//        relInfoDto.setUserId("1001");
+//        relInfoDtos.add(relInfoDto);
+//        respDto.setRelInfoDtos(relInfoDtos);
+//
+//        respDto.setCode("200");
+//        respDto.setUserId("100000x");
         return respDto;
     }
 

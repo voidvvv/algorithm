@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * @Author: zhaoKaiJie
@@ -14,12 +13,7 @@ import java.util.logging.Logger;
  */
 public class UtilTest {
     public static void main(String[] args) {
-        MyMap<String,String> map = new MyMap<>();
-        map.put(null,"b");
-        map.put(null,"c");
-        System.out.println(map.get(null));
-
-        Logger.getLogger("a").info("{}");
+        System.out.println((int)Character.MIN_VALUE);
     }
 
     public List<Integer> findNumOfValidWords(String[] words, String[] puzzles) {
