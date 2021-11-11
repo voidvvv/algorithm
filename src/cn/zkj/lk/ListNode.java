@@ -1,7 +1,7 @@
 package cn.zkj.lk;
 
-import cn.zkj.bug.domain.BaseInfoDto;
-import cn.zkj.dtos.Mm;
+//import cn.zkj.bug.domain.BaseInfoDto;
+//import cn.zkj.dtos.Mm;
 
 public class ListNode {
     public int val;
@@ -10,22 +10,22 @@ public class ListNode {
     public ListNode(int x) {
         val = x;
     }
-
-    public static void main(String[] args) {
-        Mm mm = new Mm("a",new BaseInfoDto());
-
-        System.out.println(mm);
-        ttttt(mm);
-        System.out.println(mm);
-
-    }
-
-    public static void ttttt(Mm mm){
-        String name = mm.getName();
-        name = null;
-        BaseInfoDto baseInfoDto = mm.getBaseInfoDto();
-        baseInfoDto =null;
-    }
+//
+//    public static void main(String[] args) {
+//        Mm mm = new Mm("a",new BaseInfoDto());
+//
+//        System.out.println(mm);
+//        ttttt(mm);
+//        System.out.println(mm);
+//
+//    }
+//
+//    public static void ttttt(Mm mm){
+//        String name = mm.getName();
+//        name = null;
+//        BaseInfoDto baseInfoDto = mm.getBaseInfoDto();
+//        baseInfoDto =null;
+//    }
 
     @Override
     public String toString() {
