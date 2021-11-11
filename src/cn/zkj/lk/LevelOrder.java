@@ -1,6 +1,9 @@
 package cn.zkj.lk;
 //429. N叉树的层序遍历
 
+
+import cn.zkj.lk.sctruction.Node;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,20 +93,3 @@ public class LevelOrder {
 
 
 }
-class Node {
-    public int val;
-    public List<Node> children;
-
-    public Node() {}
-
-    public Node(int _val) {
-        val = _val;
-    }
-
-    public Node(int _val, List<Node> _children) {
-        val = _val;
-        children = _children;
-    }
-
-
-};
