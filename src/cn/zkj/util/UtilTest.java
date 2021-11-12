@@ -12,8 +12,11 @@ import java.util.Map;
  * @version: 01
  */
 public class UtilTest {
-    public static void main(String[] args) {
-        System.out.println((int)Character.MIN_VALUE);
+    public static void main(String[] args) throws InterruptedException {
+        List<String> list = new ArrayList<>();
+        list.add("aaa");
+        list.set(1,"bbb");
+        System.out.println(list);
     }
 
     public List<Integer> findNumOfValidWords(String[] words, String[] puzzles) {
