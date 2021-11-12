@@ -22,16 +22,16 @@ public class DPSolution {
 //            grid[x] = MyArraysUtil.newArray(l,30);
 //        }
 
-        int[][] grid = {{-73,61,43,-48,-36},
-                {3,30,27,57,10},
-                {96,-76,84,59,-15},
-                {5,-49,76,31,-7},
-                {97,91,61,-46,67}};
+        int[][] grid = {{-37,51,-36,34,-22},
+                {82,4,30,14,38},
+                {-68,-52,-92,65,-85},
+                {-49,-3,-77,8,-19},
+                {-60,-71,-21,-62,-73}};
 
-        // [[-73,61,43,-48,-36],[3,30,27,57,10],[96,-76,84,59,-15],[5,-49,76,31,-7],[97,91,61,-46,67]]
+        // [[-37,51,-36,34,-22],[82,4,30,14,38],[-68,-52,-92,65,-85],[-49,-3,-77,8,-19],[-60,-71,-21,-62,-73]]
         System.out.println("before:");
         MyPrinter.printBinaryArray(grid);
-        dp.minFallingPathSum02(grid);
+        dp.minFallingPathSum03(grid);
     }
 
 
@@ -341,6 +341,63 @@ public class DPSolution {
             System.out.println("第"+(x+1)+"次！");
             MyPrinter.printBinaryArray(grid);
             modPre = mod;
+
+        }
+        return min;
+    }
+
+    /**
+     * 1289. 下降路径最小和 II (重写)
+     *
+     * 给你一个整数方阵 arr ，定义「非零偏移下降路径」为：从 arr 数组中的每一行选择一个数字，且按顺序选出来的数字中，相邻数字不在原数组的同一列。
+     *
+     * 请你返回非零偏移下降路径数字和的最小值。
+     *
+     * 作者：宫水三叶
+     * 链接：https://leetcode-cn.com/leetbook/read/path-problems-in-dynamic-programming/r8oh2h/
+     * 来源：力扣（LeetCode）
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     * @param grid
+     * @return
+     */
+    public int minFallingPathSum03(int[][] grid) {
+        int n = grid.length;
+        if ( n==1){
+            return grid[0][0];
+        }
+        int[][] dp = new int[2][n];
+        int mod = 0;
+        int[][] minArr = {{Integer.MAX_VALUE,Integer.MAX_VALUE},{Integer.MAX_VALUE,Integer.MAX_VALUE}};
+        int[][] index ={{-1,-1},{-1,-1}};
+        int min = Integer.MAX_VALUE;
+        for (int x=0;x<n;x++){
+            mod = mod^1;
+            minArr[mod^1] = new int[]{Integer.MAX_VALUE,Integer.MAX_VALUE};
+            index[mod^1] = new int[]{-1,-1};
+            for (int y =0;y<n;y++){
+                if (x==0){
+                    dp[mod][y] = grid[x][y];
+
+                }else  {
+                    dp[mod][y] = (index[mod][0]==y?minArr[mod][1]:minArr[mod][0])  +grid[x][y];
+                }
+                if (dp[mod][y]<minArr[mod^1][0]){
+                    minArr[mod^1][1] = minArr[mod^1][0];
+                    index[mod^1][1] = index[mod^1][0];
+                    index[mod^1][0] = y;
+                    minArr[mod^1][0] = dp[mod][y];
+                }else if (dp[mod^1][y]<minArr[mod^1][1]){
+                    index[mod^1][1] = y;
+                    minArr[mod^1][1] = dp[mod][y];
+                }
+                grid[x][y] = dp[mod][y];
+
+                if (x==n-1){
+                    min = Math.min(min, dp[mod][y]);
+                }
+            }
+            System.out.println("第"+(x+1)+"次！");
+            MyPrinter.printBinaryArray(grid);
 
         }
         return min;
