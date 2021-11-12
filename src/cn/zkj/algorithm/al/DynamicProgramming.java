@@ -1,6 +1,5 @@
 package cn.zkj.algorithm.al;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +58,7 @@ public class DynamicProgramming {
      * @return a
      */
     public int
-    findMaxForm(@NotNull String[] strs, int m, int n) {
+    findMaxForm( String[] strs, int m, int n) {
         int[][] dp = new int[m + 1][n + 1];
         printarray(dp);
 

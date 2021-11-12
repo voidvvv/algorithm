@@ -1,5 +1,8 @@
 package cn.zkj.lk.dp;
 
+import cn.zkj.algorithm.utils.MyArraysUtil;
+import cn.zkj.algorithm.utils.MyPrinter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -10,6 +13,26 @@ import java.util.Stack;
  * Date: 2021/11/12 15:06
  */
 public class DPSolution {
+
+    public static void main(String[] args) {
+        DPSolution dp = new DPSolution();
+        int l = 10;
+//        int[][] grid = new int[l][l];
+//        for (int x=0;x<grid.length;x++){
+//            grid[x] = MyArraysUtil.newArray(l,30);
+//        }
+
+        int[][] grid = {{-73,61,43,-48,-36},
+                {3,30,27,57,10},
+                {96,-76,84,59,-15},
+                {5,-49,76,31,-7},
+                {97,91,61,-46,67}};
+
+        // [[-73,61,43,-48,-36],[3,30,27,57,10],[96,-76,84,59,-15],[5,-49,76,31,-7],[97,91,61,-46,67]]
+        System.out.println("before:");
+        MyPrinter.printBinaryArray(grid);
+        dp.minFallingPathSum02(grid);
+    }
 
 
     /**
@@ -228,6 +251,97 @@ public class DPSolution {
         List<Integer> listTmp =listArray[mod];
         for (int x=0;x<listTmp.size();x++){
             min = Math.min(min,listTmp.get(x));
+        }
+        return min;
+    }
+
+    /**
+     * 931. 下降路径最小和
+     *
+     * 给你一个 n x n 的 方形 整数数组 matrix ，请你找出并返回通过 matrix 的下降路径 的 最小和 。
+     *
+     * 下降路径 可以从第一行中的任何元素开始，并从每一行中选择一个元素。在下一行选择的元素和当前行所选元素最多相隔一列（即位于正下方或者沿对角线向左或者向右的第一个元素）。具体来说，位置 (row, col) 的下一个元素应当是 (row + 1, col - 1)、(row + 1, col) 或者 (row + 1, col + 1) 。
+     *
+     *  
+     *
+     * 作者：宫水三叶
+     * 链接：https://leetcode-cn.com/leetbook/read/path-problems-in-dynamic-programming/r85adr/
+     * 来源：力扣（LeetCode）
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     * @param matrix
+     * @return
+     */
+    public int minFallingPathSum(int[][] matrix) {
+        int n = matrix.length;
+        int[][] dp = new int[n][n];
+        int min = Integer.MAX_VALUE;
+        for (int x=0;x<n;x++){
+            for (int y =0;y<n;y++){
+                if (x==0){
+                    dp[x][y] = matrix[x][y];
+
+                }else {
+                    if (y==0){
+                        dp[x][y] = Math.min(dp[x-1][y],dp[x-1][y+1]) + matrix[x][y];
+                    }else if (y==n-1){
+                        dp[x][y] = Math.min(dp[x-1][y-1],dp[x-1][y]) + matrix[x][y];
+                    }else {
+                        dp[x][y] = Math.min(Math.min(dp[x-1][y-1],dp[x-1][y]),dp[x-1][y+1]) + matrix[x][y];
+                    }
+
+                }
+                if (x==n-1){
+                    min = Math.min(min,dp[x][y]);
+                }
+            }
+        }
+        return min;
+    }
+
+    /**
+     * 1289. 下降路径最小和 II
+     * todo 题意理解错误，应该是每一行任取一个，并不非要是相邻列的
+     * 给你一个整数方阵 arr ，定义「非零偏移下降路径」为：从 arr 数组中的每一行选择一个数字，且按顺序选出来的数字中，相邻数字不在原数组的同一列。
+     *
+     * 请你返回非零偏移下降路径数字和的最小值。
+     *
+     * 作者：宫水三叶
+     * 链接：https://leetcode-cn.com/leetbook/read/path-problems-in-dynamic-programming/r8oh2h/
+     * 来源：力扣（LeetCode）
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     * @param grid
+     * @return
+     */
+    public int minFallingPathSum02(int[][] grid) {
+        int n = grid.length;
+        if ( n==1){
+            return grid[0][0];
+        }
+        int[][] dp = new int[2][n];
+        int mod = 0;
+        int modPre = 0;
+        int min = Integer.MAX_VALUE;
+        for (int x=0;x<n;x++){
+            mod = (mod+1)%2;
+            for (int y =0;y<n;y++){
+                if (x==0){
+                    dp[mod][y] = grid[x][y];
+                }else if (y==0){
+                    dp[mod][y] = dp[modPre][y+1]+grid[x][y];
+                }else if (y==n-1){
+                    dp[mod][y] = dp[modPre][y-1]+grid[x][y];
+                }else {
+                    dp[mod][y] = Math.min(dp[modPre][y-1],dp[modPre][y+1])+grid[x][y];
+                }
+                grid[x][y] = dp[mod][y];
+                if (x==n-1){
+                    min = Math.min(min, dp[mod][y]);
+                }
+            }
+            System.out.println("第"+(x+1)+"次！");
+            MyPrinter.printBinaryArray(grid);
+            modPre = mod;
+
         }
         return min;
     }
