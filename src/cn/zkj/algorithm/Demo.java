@@ -9,8 +9,7 @@ import java.util.*;
 public class Demo {
     public static void main(String[] args) throws IOException {
 
-        String s="asd";
-        String s1 = s.toUpperCase();
+        System.out.println(1^1);
 
 
         /*MyHashTable myHashTable=new MyHashTable(13);

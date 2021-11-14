@@ -49,4 +49,14 @@ public class MyPrinter {
         arr[a] = arr[b];
         arr[b] = temp;
     }
+
+    public static void printBinaryArray(int[][] array){
+        for (int x=0;x<array.length;x++){
+            for (int y =0;y<array[x].length;y++){
+                System.out.print(array[x][y]);
+                System.out.print("\t\t");
+            }
+            System.out.println();
+        }
+    }
 }
