@@ -24,11 +24,11 @@ public class Solution02 {
             if (pop==null){
                 continue;
             }
-            if (pop.left!=null)
+            if (pop.left!=null){}
 
 
         }
-
+        return 0;
 
     }
 }
