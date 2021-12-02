@@ -1349,4 +1349,96 @@ public class Solution2 {
     }
 
 
+    /**
+     * 594. 最长和谐子序列
+     * 和谐数组是指一个数组里元素的最大值和最小值之间的差别 正好是 1 。
+     *
+     * 现在，给你一个整数数组 nums ，请你在所有可能的子序列中找到最长的和谐子序列的长度。
+     *
+     * 数组的子序列是一个由数组派生出来的序列，它可以通过删除一些元素或不删除元素、且不改变其余元素的顺序而得到。
+     *
+     *  
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/longest-harmonious-subsequence
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * eg
+     * 输入：nums = [1,3,2,2,5,2,3,7]
+     * 输出：5
+     * 解释：最长的和谐子序列是 [3,2,2,2,3]
+     * @param nums
+     * @return
+     */
+    public int findLHS(int[] nums) {
+        Map<Integer,Integer> mapping = new HashMap<>();
+        int re = 0;
+        for (int x=0;x<nums.length;x++){
+            int num = nums[x];
+            int i = mapping.getOrDefault(num, 0) + 1;
+            mapping.put(num,i);
+            re = Math.max(re,i);
+            if (num>1 && mapping.get(num-1)!=null){
+                i = mapping.get(num-1)+1;
+                re = Math.max(re,i);
+                mapping.put(num-1,i);
+            }
+            if (num<2*10000&& mapping.get(num+1)!=null){
+                i = mapping.get(num+1)+1;
+                re = Math.max(re,i);
+                mapping.put(num+1,i);
+            }
+
+        }
+        return re;
+    }
+
+
+    /**
+     * 506. 相对名次
+     * 给你一个长度为 n 的整数数组 score ，其中 score[i] 是第 i 位运动员在比赛中的得分。所有得分都 互不相同 。
+     *
+     * 运动员将根据得分 决定名次 ，其中名次第 1 的运动员得分最高，名次第 2 的运动员得分第 2 高，依此类推。运动员的名次决定了他们的获奖情况：
+     *
+     * 名次第 1 的运动员获金牌 "Gold Medal" 。
+     * 名次第 2 的运动员获银牌 "Silver Medal" 。
+     * 名次第 3 的运动员获铜牌 "Bronze Medal" 。
+     * 从名次第 4 到第 n 的运动员，只能获得他们的名次编号（即，名次第 x 的运动员获得编号 "x"）。
+     * 使用长度为 n 的数组 answer 返回获奖，其中 answer[i] 是第 i 位运动员的获奖情况。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/relative-ranks
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param score
+     * @return
+     */
+    public String[] findRelativeRanks(int[] score) {
+        int[] copy = Arrays.copyOf(score,score.length);
+        Arrays.sort(copy);
+
+        String[] re = new String[copy.length];
+
+        for (int x=0;x<copy.length;x++){
+            String s = "";
+            if (x==copy.length-1){
+                s = "Gold Medal";
+            }else if (x==copy.length-2){
+                s = "Silver Medal";
+            }else if (x==copy.length-3){
+                s = "Bronze Medal";
+            }else {
+                s = (copy.length-x)+"";
+            }
+            int t = copy[x];
+            for (int i =0;i<score.length;i++){
+                if (score[i]==t){
+                    re[i] = s;
+                    break;
+                }
+            }
+
+        }
+        return re;
+    }
+
 }
