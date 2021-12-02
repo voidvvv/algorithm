@@ -1350,6 +1350,71 @@ public class Solution2 {
 
 
     /**
+     * 391. 完美矩形
+     * 给你一个数组 rectangles ，其中 rectangles[i] = [xi, yi, ai, bi] 表示一个坐标轴平行的矩形。这个矩形的左下顶点是 (xi, yi) ，右上顶点是 (ai, bi) 。
+     *
+     * 如果所有矩形一起精确覆盖了某个矩形区域，则返回 true ；否则，返回 false 。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/perfect-rectangle
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param rectangles
+     * @return
+     */
+    public boolean isRectangleCover(int[][] rectangles) {
+        return false;
+    }
+
+    /*
+
+新版极速分配：
+
+订单处理时效=处理时间点-分配时间点
+
+取此代售点账号前10单的ordertype=1的订单处理时效，计算平均值，记为此代售点账号的“平均订单处理时效“
+
+
+
+预计处理完成时间点=代售点现有订单的预计处理完成时间点+新进入订单的预计处理时长
+
+即——预计处理完成时间点=代售点账号中现有订单里最早的分配时间点+平均订单处理时效×（现有订单数量+1）
+
+
+
+取当前可用代售点账号中计算预计处理完成时间点最早的1个，将订单分配给该代售点。
+
+若计算出订单分给多个代售点预计处理完成时间一致，则优先分给当前订单最少的代售点，若当前订单一致，则随机分配一个。
+     */
+
+    /**
+     * 397. 整数替换
+     * 给定一个正整数 n ，你可以做如下操作：
+     *
+     * 如果 n 是偶数，则用 n / 2替换 n 。
+     * 如果 n 是奇数，则可以用 n + 1或n - 1替换 n 。
+     * n 变为 1 所需的最小替换次数是多少？
+     *
+     *  11011
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/integer-replacement
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param n
+     * @return
+     */
+    public int integerReplacement(int n) {
+        int re = 0;
+        int pre = 0;
+        int now = 1;
+        while (now<n){
+            pre = now;
+            now*=2;
+            re++;
+        }
+        // pre(2^x-1) < n < now(2^x)
+        return re;
+    }
+
+    /**
      * 594. 最长和谐子序列
      * 和谐数组是指一个数组里元素的最大值和最小值之间的差别 正好是 1 。
      *
