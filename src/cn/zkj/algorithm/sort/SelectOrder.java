@@ -8,7 +8,7 @@ public class SelectOrder {
     public static void main(String[] args) {
         SelectOrder s= new SelectOrder();
 
-        MyPrinter.printDefaultArrays(s::selectSort04);
+        MyPrinter.printDefaultArrays(s::selectSort06);
     }
 
     public void order(int[]arr){
@@ -86,6 +86,41 @@ public class SelectOrder {
                 }
             }
             MyArraysUtil.swapVal(arr,x,minIndex);
+        }
+    }
+
+    public void selectSort05(int[] arr){
+        for (int x=0;x<arr.length-1;x++){
+            int minIndex = x;
+            int min = arr[x];
+            for (int y=x+1;y<arr.length;y++){
+                if (arr[y]<min){
+                    minIndex = y;
+                    min = arr[y];
+
+                }
+            }
+            MyArraysUtil.swapVal(arr,x,minIndex);
+        }
+    }
+
+    // 3 2 5 6 1 24 9
+    // 为每一位找到合适的数字。例如，从索引0开始，找最小的。遍历数组，找到最小的，最小的值与0号位互换，。然后从1开始，找到第二小的，与1互换。。。
+    public void selectSort06(int[] arr){
+        for (int x=0;x<arr.length-1;x++){
+            int minIndex = x;
+            int min = arr[x];
+
+            for (int y = x+1;y<arr.length;y++){
+                if (arr[y]<min){
+                    minIndex = y;
+                    min = arr[y];
+
+                }
+
+            }
+            MyArraysUtil.swapVal(arr,x,minIndex);
+
         }
     }
 }

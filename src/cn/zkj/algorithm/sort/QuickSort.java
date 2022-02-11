@@ -5,7 +5,7 @@ import cn.zkj.algorithm.utils.MyPrinter;
 public class QuickSort {
     public static void main(String[] args) {
         QuickSort q = new QuickSort();
-        MyPrinter.printDefaultArrays(q::quickSort08);
+        MyPrinter.printDefaultArrays(q::quickSort09);
 
     }
 
@@ -452,4 +452,33 @@ public class QuickSort {
         return left;
     }
 
+    public void quickSort09(int[] arr){
+        quick09(arr,0,arr.length-1);
+    }
+
+    private void quick09(int[] arr, int left, int right) {
+        if (left<right){
+            int pivot = getPivot09(arr,left,right);
+            quick09(arr,left,pivot);
+            quick09(arr,pivot+1,right);
+        }
+    }
+
+    private int getPivot09(int[] arr, int left, int right) {
+        int tmp = arr[left];
+        while (left<right){
+            while (left<right && arr[right] >=tmp){
+                right--;
+            }
+            arr[left] = arr[right];
+            while (left<right && arr[left] <=tmp){
+                left++;
+            }
+            arr[right] = arr[left];
+
+
+        }
+        arr[left] = tmp;
+        return left;
+    }
 }
