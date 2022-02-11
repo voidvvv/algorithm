@@ -167,6 +167,7 @@ public class HeapSortDemo {
         for (int x=arr.length-1;x>=0;x--){
             MyArraysUtil.swapVal(arr,0,x);
             heapFy06(arr,0,x);
+
         }
     }
 

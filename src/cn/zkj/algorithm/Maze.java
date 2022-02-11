@@ -37,6 +37,7 @@ public class Maze {
         }
     }
 
+
     public boolean solveMaze(int[][]map ,int x,int y) throws InterruptedException {
         if (map[6][5]==2){
             return true;
