@@ -12,7 +12,7 @@ public class BubbleSort   {
         }
         BubbleSort b = new BubbleSort();
         System.out.println(Arrays.toString(arr));
-        b.bubbleSort06(arr);
+        b.bubbleSort08(arr);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -124,6 +124,16 @@ public class BubbleSort   {
 
                 }
 
+            }
+        }
+    }
+
+    public void bubbleSort08(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            for (int y = 0;y<arr.length-x;y++){
+                if (arr[y]>arr[y+1]){
+                    MyArraysUtil.swapVal(arr,y,y+1);
+                }
             }
         }
     }
