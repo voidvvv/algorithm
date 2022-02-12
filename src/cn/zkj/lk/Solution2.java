@@ -1736,4 +1736,53 @@ public class Solution2 {
     }
 
 
+
+    /**
+     * 419. 甲板上的战舰
+     * 给你一个大小为 m x n 的矩阵 board 表示甲板，其中，每个单元格可以是一艘战舰 'X' 或者是一个空位 '.' ，返回在甲板 board 上放置的 战舰 的数量。
+     *
+     * 战舰 只能水平或者垂直放置在 board 上。换句话说，战舰只能按 1 x k（1 行，k 列）或 k x 1（k 行，1 列）的形状建造，其中 k 可以是任意大小。两艘战舰之间至少有一个水平或垂直的空位分隔 （即没有相邻的战舰）。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/battleships-in-a-board
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param board
+     * @return
+     */
+    public int countBattleships(char[][] board) {
+        int re = 0;
+        for (int x=0;x<board.length;x++){
+            for (int y = 0;y<board[x].length;y++){
+                if (board[x][y]=='X'){
+                    if (((x==0) || board[x-1][y]=='.') && ((y==0) || board[x][y-1]=='.')){
+                        re++;
+                    }
+                }
+
+            }
+        }
+        return re;
+    }
+
+
+    public int findRadius(int[] houses, int[] heaters) {
+        int heatIndex = 0;
+//        int heatRight = heaters.length-1;
+        int minRange = 0;
+        Arrays.sort(houses);
+        Arrays.sort(heaters);
+        for (int x=0;x<houses.length;x++){
+            int curMinRange = Integer.MAX_VALUE;
+            int house = houses[x];
+            while (heatIndex<heaters.length && heaters[heatIndex]<=house){
+                heatIndex++;
+            }
+            int left=heatIndex>0?heatIndex-1:0;
+            int right = heatIndex>=heaters.length-1?heaters.length-1 : heatIndex+1;
+
+            curMinRange = Math.min(Math.abs(heaters[left]-house),Math.abs(heaters[right]-house));
+            minRange = Math.max(minRange,curMinRange);
+        }
+        return minRange;
+    }
 }

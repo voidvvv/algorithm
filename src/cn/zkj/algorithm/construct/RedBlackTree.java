@@ -1,327 +1,224 @@
 package cn.zkj.algorithm.construct;
 
 /**
- * Author: KJ.ZHAO
- * Date: 2022/2/9 14:38
+ * 红黑树
+ * @Author: zhaoKaiJie
+ * @Description:
+ * @Date: 2022/1/31
+ * @version: 01
  */
 public class RedBlackTree<T extends Comparable> {
     private Node root;
 
-    private class Node {
-        boolean red;
-        Node parent;
-        Node left;
-        Node right;
-        T data;
-
-        public Node() {
-        }
-
-        public Node(T data) {
-            this.data = data;
-            this.red = true;
-        }
-
-        public boolean isLeftNode() {
-            return this.parent != null && this.parent.left == this;
-        }
-
-        public boolean isRightNode() {
-            return this.parent != null && this.parent.right == this;
-        }
-    }
-
-    private Node parentOf(Node node) {
-        return node == null ? null : node.parent;
-    }
-
-    private Node grandParentOf(Node node){
-        return parentOf(parentOf(node));
-    }
-
-    private Node leftOf(Node node) {
-        return node == null ? null : node.left;
-    }
-
-    private Node rightOf(Node node) {
-        return node == null ? null : node.right;
-    }
-
-    private void setColor(Node node, boolean red) {
-        if (node != null) {
-            node.red = red;
-        }
-    }
-
-    private boolean redOf(Node node) {
-        return node != null && node.red;
-    }
-
-    /**
-     * 左旋
-     *
-     * @param node
-     */
-    private void rotateLeft(Node node) {
-        if (node == null || node.right == null) {
-            return;
-        }
-        Node r = node.right;
-        Node p = node.parent;
-        Node rl = r.left;
-
-        node.right = rl;
-        if (rl != null) {
-            rl.parent = node;
-        }
-
-        r.left = node;
-
-        if (p != null) {
-            if (node.isLeftNode()) {
-                p.left = r;
-            } else {
-                p.right = r;
-            }
-        }
-        node.parent = r;
-        r.parent = p;
-    }
-
-    /**
-     * 右旋
-     *
-     * @param node
-     */
-    private void rotateRight(Node node) {
-        if (node == null || node.left == null) {
-            return;
-        }
-
-        Node l = node.left;
-
-        Node lr = l.right;
-
-        Node p = node.parent;
-
-
-        l.right = node;
-
-        node.left = lr;
-
-        l.parent = p;
-
-        if (p != null) {
-            if (node.isLeftNode()) {
-                p.left = l;
-            } else {
-                p.right = l;
-            }
-        }
-        node.parent = l;
-    }
-
     public boolean add(T data){
-        if (data==null){
-            return false;
-        }
         if (root==null){
-            root = new Node(data);
-            root.red = false;
-            return true;
-        }
-        Node p = null;
-        Node c = root;
-        while (c!=null){
-            p = c;
-            if (data.compareTo(c.data)>0){
-                c = c.right;
-            }else if (data.compareTo(c.data)<0){
-                c = c.left;
-            }else {
-                c.data = data;
-                return true;
-            }
-
-        }
-        Node x = new Node(data);
-        if (data.compareTo(p.data)>0){
-            p.right = x;
+            root = new Node(null,null,null,false,data);
         }else {
-            p.left = x;
-        }
-        x.parent = p;
+            Node parent = null;
+            Node now = root;
+            int c= 0;
+            while (now!=null){
+                parent = now;
+                c = parent.data.compareTo(data);
 
-        fixAfterInsert(x);
+                if (c>0){
+                    now = parent.left;
+                }else if (c<0){
+                    now = parent.right;
+                }else {
+                    break;
+                }
+            }
+            Node x = new Node(parent,null,null,false,data);
+            if (c>0){
+                parent.left = x;
+            }else if (c<0){
+                parent.right = x;
+            }else {
+                return false;
+            }
+            fixTreeAfterInsert(x);
+
+        }
         return true;
+
     }
 
-    /**
-     * 插入后修复红黑树
-     * @param x
-     */
-    private void fixAfterInsert(Node x) {
-        x.red = true; // 新插入的需要是红节点
-        while (x!=null && x!=root&& x.parent!=null && x.parent.red){
-            if (parentOf(x).isLeftNode()){
-                Node uncle = rightOf(grandParentOf(x));
+    private void fixTreeAfterInsert(Node x) {
+        x.red = true;
+
+        while (x!=null &&x!=root&& x.parent!=null && x.parent.red){ // 若父节点为黑色，则这里直接插入红节点即可，不需要调整
+
+            if (parentOf(x).isLeft()){
+                Node uncle= rightOf(grandfatherOf(x));
                 if (redOf(uncle)){
-                    parentOf(x).red = false;
+                    setColor(x.parent,false);
                     setColor(uncle,false);
-                    setColor(grandParentOf(x),true);
-                    x = grandParentOf(x);
+                    setColor(grandfatherOf(x),true);
+                    x = grandfatherOf(x);
                 }else {
-                    if (x.isRightNode()){
+                    if (x.isRight()){
                         x = parentOf(x);
                         rotateLeft(x);
                     }
                     setColor(parentOf(x),false);
-                    setColor(grandParentOf(x),true);
-                    rotateRight(grandParentOf(x));
+                    setColor(grandfatherOf(x),true);
+                    rotateRight(grandfatherOf(x));
                 }
-            }else { // symmetry
-                Node uncle = leftOf(grandParentOf(x));
+
+            }else {
+                Node uncle= leftOf(grandfatherOf(x));
                 if (redOf(uncle)){
-                    parentOf(x).red = false;
+                    setColor(parentOf(x),false);
                     setColor(uncle,false);
-                    setColor(grandParentOf(x),true);
-                    x = grandParentOf(x);
+                    setColor(grandfatherOf(x),true);
+                    x = grandfatherOf(x);
                 }else {
-                    if (x.isLeftNode()){
-                        x = parentOf(x);
+                    if (x.isLeft()){
+                        x= parentOf(x);
                         rotateRight(x);
                     }
-                    parentOf(x).red = false;
-                    setColor(grandParentOf(x),true);
-                    rotateLeft(grandParentOf(x));
+                    setColor(parentOf(x),false);
+                    setColor(grandfatherOf(x),true);
+                    rotateLeft(grandfatherOf(x));
                 }
             }
         }
-        while (this.root.parent!=null){
-            this.root = this.root.parent;
-        }
+
+
+        // 根节点永远为黑
         root.red = false;
     }
 
-    public void remove(T data){
-        if (root==null|| data==null){
-            return;
-        }
-        Node c = root;
-        while (c!=null && !(c.data==data || c.data.equals(data))){
-            if (c.data.compareTo(data)>0){
-                c = c.left;
-            }else {
-                c = c.right;
-            }
-        }
-        if (c==null){
-            return; // 没有该节点
-        }
-        if (c.left!=null && c.right!=null){
-            Node n=c.left;
-            while (n.right!=null){
-                n = n.right;
-            }
-            c.data = n.data;
-            c= n;
-        }
-        Node succeed = c.left==null?c.right:c.left;
+    private Node parentOf(Node p) {
+        return p == null ? null : p.parent;
+    }
 
-        if (succeed!=null){
-            Node p = c.parent;
-            if (c.isRightNode()){
-                p.right = succeed;
-            }else {
-                p.left = succeed;
-            }
-            succeed.parent = p;
-            if (!c.red){
-                fixAfterDelete(succeed);
-            }
-        }else if (this.root==c){
-            this.root = null;
-        }else {
-            Node p = c.parent;
-            if (!c.red){
-                fixAfterDelete(c);
-            }
-            if (c.isRightNode()){
-                p.left = null;
-            }else {
-                p.right = null;
-            }
-            c= null; // help GC
+    private Node grandfatherOf(Node p) {
+        return parentOf(parentOf(p));
+    }
+
+    private Node leftOf(Node p) {
+        return p == null ? null : p.left;
+    }
+
+    private Node rightOf(Node p) {
+        return p == null ? null : p.right;
+    }
+
+    private boolean redOf(Node p) {
+        return p != null && p.red;
+    }
+
+    private void setColor(Node p, boolean red) {
+        if (p != null) {
+            p.red = red;
         }
     }
 
     /**
-     * 删除后恢复红黑树
-     * @param x
+     * 左旋
+     * @param p
      */
-    private void fixAfterDelete(Node x) {
-        while (x!=null && !x.red && x!=root){
-            if (x.isLeftNode()){
-                Node s = rightOf(parentOf(x));
-                if (s.red){
-                    s.red = false;
-                    parentOf(x).red = true;
-                    rotateLeft(parentOf(x));
-                    s = rightOf(parentOf(x));
-                }
-                if (!redOf(leftOf(s)) && !redOf(leftOf(s))){
-                    setColor(s,true);
-                    x=  parentOf(x);
-                }else {
-                    if (!redOf(s.right)){
-                        s.left.red = false;
-                        s.red = true;
-                        rotateRight(s);
-                        s = rightOf(parentOf(x));
-                    }
-                    s.red = parentOf(x).red;
-                    parentOf(x).red = false;
-                    setColor(s.right,false);
-                    rotateLeft(parentOf(x));
-                }
-            }else { // symmetric
-                Node s=  leftOf(parentOf(x));
-                if (redOf(s)){
-                    setColor(s,false);
-                    setColor(parentOf(s),true);
-                    rotateRight(parentOf(s));
-                }
-                if (!redOf(leftOf(s)) && !redOf(rightOf(s))){
-                    setColor(s,true);
-                    x = x.parent;
-                }else {
-                    if (!redOf(leftOf(s))){
-                        setColor(rightOf(s),false);
-                        setColor(s,true);
-//                        setColor(parentOf(s),false);
-                        rotateLeft(s);
-                        s = leftOf(parentOf(x));
-                    }
-                    setColor(s,parentOf(s).red);
-                    setColor(leftOf(s),false);
-                    setColor(parentOf(s),false);
-                    rotateRight(parentOf(s));
-                }
-            }
+    private void rotateLeft(Node p){
+        if (p==null||p.right==null){
+            return;
         }
-        setColor(x,false);
+        Node r = p.right;
+        Node l = r.left;
+        Node parent = p.parent;
+
+        r.left = p;
+        if (parent==null){
+            this.root = r;
+        }else if (p==parent.left){
+            parent.left = r;
+        }else {
+            parent.right = r;
+        }
+
+        r.parent = parent;
+        p.parent = r;
+        p.right = l;
+
+
+
+    }
+
+    private void rotateRight(Node p){
+        if (p==null || p.left==null){
+            return;
+        }
+        Node parent = p.parent;
+        Node nh = p.left;
+        Node tr = nh.right;
+
+        p.left = tr;
+        nh.right = p;
+        nh.parent = parent;
+        if (parent==null){
+            this.root = nh;
+        }else if (p == parent.left){
+            parent.left = nh;
+        }else {
+            parent.right = nh;
+        }
+        p.parent = nh;
+    }
+
+    private  class Node  {
+        private Node parent;
+        private Node left;
+        private Node right;
+        private boolean red;
+        private T data;
+
+        public Node(T data) {
+            this(null,null,null,false,data);
+        }
+
+        public Node(Node parent, Node left, Node right, boolean red, T data) {
+            this.parent = parent;
+            this.left = left;
+            this.right = right;
+            this.red = red;
+            this.data = data;
+        }
+
+        public boolean isRoot(){
+            return this.parent==null;
+        }
+
+        public boolean isLeft(){
+            return this.parent != null && this == this.parent.left;
+        }
+
+        public boolean isRight(){
+            return this.parent != null && this == this.parent.right;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj.getClass() == Node.class) {
+                Node target = (Node) obj;
+                return data.equals(target.data) && left == target.left && right == target.right && parent == target.parent && red == target.red;
+            }
+            return false;
+
+        }
     }
 
     public static void main(String[] args) {
-        RedBlackTree<Integer> tree = new RedBlackTree<Integer>();
-        int[] arr  = new int[]{1,2,3,4,9,0,-2,63,-20};
-        for (int x=0;x<arr.length;x++){
-            tree.add(arr[x]);
-        }
-        System.out.println("========================");
-        for (int x=0;x<arr.length;x++){
-            tree.remove(arr[x]);
-        }
-        System.out.println("end");
+        RedBlackTree<Integer> myTree = new RedBlackTree<>();
+
+        myTree.add(5);
+        myTree.add(4);
+        myTree.add(3);
+        myTree.add(10);
+        System.out.println(myTree);
     }
+
 }
