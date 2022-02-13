@@ -709,6 +709,39 @@ public class Solution3 {
         int s= n/2;
         return (1+s)*s/2;
     }
+
+    /**
+     * 1189. “气球” 的最大数量
+     *
+     * 给你一个字符串 text，你需要使用 text 中的字母来拼凑尽可能多的单词 "balloon"（气球）。
+     *
+     * 字符串 text 中的每个字母最多只能被使用一次。请你返回最多可以拼凑出多少个单词 "balloon"。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/maximum-number-of-balloons
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param text
+     * @return
+     */
+    public int maxNumberOfBalloons(String text) {
+        Map<Character,Integer> map = new HashMap<>();
+//        int min = 0;
+        for (int x=0;x<text.length();x++){
+            char c = text.charAt(x);
+            if (c=='b' || c=='a' || c=='n' || c=='l' || c=='o' ){
+                int count = map.getOrDefault(c,0)+1;
+                map.put(c,count);
+            }
+        }
+
+        int b = map.get('b');
+        int a = map.get('a');
+        int n = map.get('n');
+        int l = map.get('l');
+        int o = map.get('o');
+
+        return Math.min(o/2,Math.min(l/2,Math.min(n,Math.min(b,a))));
+    }
     int notVisit = 0;
     int visited = -1;
     int yes = 1; // 是飞地

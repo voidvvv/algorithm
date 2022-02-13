@@ -1,6 +1,7 @@
 package cn.zkj.algorithm;
 
-import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Author: KJ.ZHAO
@@ -8,20 +9,9 @@ import java.util.HashMap;
  */
 public class MyTest {
     public static void main(String[] args) {
-        System.out.println("MyTest");
-        // a
-// I4HU16
-        System.out.println("fix issue!!!");
-
-        System.out.println("fix issue I4HU16!! !!!");
-
-        System.out.println("fix issue I4HU16 url!! !!!");
-
-        System.out.println("close issue I4HU16 url!! !!!");
-
-        System.out.println("link issue I4HU3R url!! !!!");
-
-        HashMap map = new HashMap();
-        map.remove("a");
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(null);
+        System.out.println(queue.isEmpty());
+        System.out.println(queue.size());
     }
 }
