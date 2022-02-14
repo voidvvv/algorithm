@@ -1,7 +1,8 @@
 package cn.zkj.algorithm;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.List;
 
 /**
@@ -10,6 +11,9 @@ import java.util.List;
  */
 public class MyTest {
     public static void main(String[] args) {
-
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(null);
+        System.out.println(queue.isEmpty());
+        System.out.println(queue.size());
     }
 }
