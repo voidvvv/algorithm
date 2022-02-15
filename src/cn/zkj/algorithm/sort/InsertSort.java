@@ -66,7 +66,7 @@ public class InsertSort {
         for (int x=1;x<arr.length;x++){
             int y = x-1;
             int curVal = arr[x];
-            while (y>=0&&arr[y]>=curVal){
+            while (y>=0&&arr[y]>curVal){
                 arr[y+1] = arr[y];
                 y--;
             }

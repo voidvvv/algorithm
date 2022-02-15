@@ -742,11 +742,61 @@ public class Solution3 {
 
         return Math.min(o/2,Math.min(l/2,Math.min(n,Math.min(b,a))));
     }
+
+    /**
+     * 1380. 矩阵中的幸运数
+     *
+     * 给你一个 m * n 的矩阵，矩阵中的数字 各不相同 。请你按 任意 顺序返回矩阵中的所有幸运数。
+     *
+     * 幸运数是指矩阵中满足同时下列两个条件的元素：
+     *
+     * 在同一行的所有元素中最小
+     * 在同一列的所有元素中最大
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/lucky-numbers-in-a-matrix
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param matrix
+     * @return
+     */
+    public List<Integer> luckyNumbers (int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int[] horizon = new int[n];
+        int[] vertical = new int[m];
+
+        for (int y=0;y<n;y++){
+            int[] tmp = matrix[y];
+            int minIndex = 0;
+            for (int x=0;x<m;x++){
+                if (tmp[x] <tmp[minIndex]){
+                    minIndex = x;
+                    int vm = matrix[vertical[x]][x];
+                    if (vm<tmp[x]){
+                        vertical[x] = y;
+                    }
+                }
+
+            }
+            horizon[y] = minIndex;
+        }
+        List<Integer> res = new ArrayList<>();
+        for (int i=0;i<n;i++){
+            for (int j =0;j<m;j++){
+                if (horizon[i] == j && vertical[j] == i){
+                    res.add(matrix[i][j]);
+                }
+            }
+        }
+        return res;
+
+    }
     int notVisit = 0;
     int visited = -1;
     int yes = 1; // 是飞地
     int not = 2; // 不是飞地
     int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
     public static void main(String[] args) throws IOException {
         Solution3 s3 = new Solution3();
         s3.numEnclaves(new int[][]{{0,1,1,0},{0,0,1,0},{0,0,1,0},{0,0,0,0},});
