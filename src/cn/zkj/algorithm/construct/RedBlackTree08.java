@@ -359,6 +359,8 @@ public class RedBlackTree08 <T extends Comparable<T>>{
     }
 
     public static void main(String[] args) {
+
+
         RedBlackTree08<Integer> tree = new RedBlackTree08<Integer>();
         int[] arr  = new int[]{1,2,3,4,9,0,-2,63,-20};
         for (int x=0;x<arr.length;x++){
