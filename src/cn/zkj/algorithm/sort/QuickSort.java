@@ -2,10 +2,12 @@ package cn.zkj.algorithm.sort;
 
 import cn.zkj.algorithm.utils.MyPrinter;
 
+import java.util.Stack;
+
 public class QuickSort {
     public static void main(String[] args) {
         QuickSort q = new QuickSort();
-        MyPrinter.printDefaultArrays(q::quickSort09);
+        MyPrinter.printDefaultArrays(q::quickSort10);
 
     }
 
@@ -480,5 +482,38 @@ public class QuickSort {
         }
         arr[left] = tmp;
         return left;
+    }
+
+    private void quickSort10(int[] arr){
+        Stack<Integer> stack = new Stack<>();
+        stack.push(arr.length-1);
+        stack.push(0);
+
+
+        while (!stack.isEmpty()){
+            int l = stack.pop();
+            int r = stack.pop();
+            if (l>=r){
+                continue;
+            }
+            int left = l;
+            int right = r;
+            int p = arr[left];
+            while (left<right){
+                while (left<right && arr[right]>=p){
+                    right--;
+                }
+                arr[left] = arr[right];
+                while (left<right && arr[left]<=p){
+                    left++;
+                }
+                arr[right] = arr[left];
+            }
+            arr[left] = p;
+            stack.push(r);
+            stack.push(right+1);
+            stack.push(right);
+            stack.push(l);
+        }
     }
 }

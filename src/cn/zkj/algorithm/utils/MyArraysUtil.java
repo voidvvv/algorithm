@@ -26,4 +26,11 @@ public class MyArraysUtil {
         arr[a] = arr[b];
         arr[b] = temp;
     }
+
+    public static void printArr(int[] arr) {
+        for (int x=0;x<arr.length;x++){
+            System.out.print(arr[x]+"\t");
+        }
+        System.out.println();
+    }
 }

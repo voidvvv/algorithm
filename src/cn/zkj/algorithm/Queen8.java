@@ -1,35 +1,29 @@
 package cn.zkj.algorithm;
 
-import java.sql.Date;
-import java.sql.Time;
-
 public class Queen8 {
-    int max ;
-    int[] arr;
-    int count;
-    int count2;
+    private int max;
 
-    public Queen8(){
-        max=8;
-        arr=new int[max];
-        count=0;
-        count2=0;
-    }
-    public void checkt(){
-        long l = System.currentTimeMillis();
-        check(0);
-        long l1 = System.currentTimeMillis();
-        long re = l1-l;
-        System.out.println("一共用时："+re+"毫秒");
-        System.out.println(count2);
+    private int arr[];
+
+    private int count;
+
+    public Queen8(int max) {
+        this.max = max;
+        this.arr = new int[max];
+        count = 0;
     }
 
-    public void check(int n){
+    public static void main(String[] args) {
+        Queen8 q = new Queen8(8);
+        q.check(0);
+        System.out.println(q.count);
+    }
+
+    private void check(int n){
         if (n==max){
             print();
             return;
         }
-
         for (int x=0;x<max;x++){
             arr[n]=x;
             if (judge(n)){
@@ -38,29 +32,20 @@ public class Queen8 {
         }
     }
 
-    public boolean judge(int n){
-        count2++;
-        for (int i=0;i<n;i++){
-            if (arr[i]==arr[n]||Math.abs(n-i)==Math.abs(arr[n]-arr[i])){
+    private boolean judge(int n){
+        for (int x=0;x<n;x++){
+            if (arr[x]==arr[n] || (Math.abs(n-x) == Math.abs(arr[n] - arr[x]))){
                 return false;
             }
         }
         return true;
     }
 
-    public void print(){
-        for (int x=0;x<arr.length;x++){
-            System.out.print(arr[x]+" ");
+    private void print(){
+        for (int x=0;x<max;x++){
+            System.out.print(arr[x]+"\t");
         }
-        count++;
-        System.out.println("这是第"+count+"次");
-    }
-
-    public void test(int n){
-        if(n==0){
-            System.out.println("出口");
-            return;
-        }
-        test(n-1);
+        this.count++;
+        System.out.println("");
     }
 }
