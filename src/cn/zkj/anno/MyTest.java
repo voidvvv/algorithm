@@ -11,6 +11,6 @@ public record MyTest(int age) {
     public static void main(String[] args) {
         MyTest m = new MyTest(20);
 
-        System.out.println(m);
+        System.out.println(m.toString());
     }
 }
