@@ -6,12 +6,11 @@ import cn.zkj.algorithm.utils.MyPrinter;
 public class HeapSortDemo {
     public static void main(String[] args) {
         HeapSortDemo h = new HeapSortDemo();
-        MyPrinter.printDefaultArrays(h::heapSort06);
+        MyPrinter.printDefaultArrays(h::heapSort10);
     }
 
     public static void heapSort(int[]arr){
         System.out.println("开始堆排序啦！！");
-
         int temp;
         //这里，因为是完全二叉树，所以arr.length/2-1其实就是所有的非叶子结点！！！！这里一定要记住
         for (int x=arr.length/2-1;x>=0;x--){
@@ -170,7 +169,7 @@ public class HeapSortDemo {
 
         }
     }
-
+//
     private void heapFy06(int[] arr, int cur, int length) {
         int curVal = arr[cur];
         for (int t =cur*2+1;t<length;t=t*2+1){
@@ -183,5 +182,127 @@ public class HeapSortDemo {
             }
         }
         arr[cur] = curVal;
+    }
+
+
+    public void heapSort07(int[] arr){
+        for (int x= (arr.length)/2-1;x>=0;x--){
+            heapFy07(arr,x,arr.length);
+        }
+
+        for (int x= arr.length-1;x>=0;x--){
+            MyArraysUtil.swapVal(arr,0,x);
+            heapFy07(arr,0,x);
+        }
+
+    }
+
+    private void heapFy07(int[] arr, int cur, int length) {
+        int curVal  = arr[cur];
+
+        for (int t = cur*2+1;t<length;t = t*2+1){
+            if (t+1<length && arr[t+1] >arr[t]){
+                t = t+1;
+            }
+
+            if (arr[t] >curVal){
+                arr[cur] = arr[t];
+                cur = t;
+            }
+        }
+        arr[cur] = curVal;
+
+    }
+
+    public void heapSort08(int[] arr){
+        for (int x=(arr.length/2)-1;x>=0;x--){
+            heapFy08(arr,x,arr.length); // 从最后一个非叶子节点开始，
+        }
+
+        for (int x=arr.length-1;x>=0;x--){
+            MyArraysUtil.swapVal(arr,0,x); // 已经堆化
+            heapFy08(arr,0,x);
+        }
+    }
+
+    private void heapFy08(int[] arr, int cur, int length) {
+        int curVal = arr[cur];
+
+        for (int t = cur*2+1;t<length;t = t*2+1){
+            if (t+1<length && arr[t+1]>arr[t]){
+                t = t+1;
+            }
+
+            if (arr[t]>curVal){
+                arr[cur] = arr[t];
+                cur = t;
+            }else {
+                break;
+            }
+
+            arr[cur] = curVal;
+
+        }
+    }
+
+    public void heapSort09(int[] arr){
+        for (int x= (arr.length/2)-1;x>=0;x--){
+            heapFy09(arr,x,arr.length);
+        }
+
+        for (int x= arr.length-1;x>=0;x--){
+            MyArraysUtil.swapVal(arr,0,x);
+            heapFy09(arr,0,x);
+        }
+    }
+
+    private void heapFy09(int[] arr, int cur, int length) {
+        int curVal = arr[cur];
+
+        for (int t = cur*2+1;t<length;t = t*2+1){
+            if (t+1<length && arr[t+1] >arr[t]){
+                t++;
+            }
+
+            if (arr[t] >curVal){
+                arr[cur] = arr[t];
+                arr[t] = curVal;
+                cur = t;
+            }else {
+                break;
+            }
+
+        }
+    }
+
+    public void heapSort10(int[] arr){
+        for (int x= (arr.length/2)-1;x>=0;x--){
+            heapFy10(arr,x,arr.length);
+        }
+
+        for (int x=arr.length-1;x>=0;x--){
+            MyArraysUtil.swapVal(arr,0,x);
+            heapFy10(arr,0,x);
+        }
+    }
+
+    private void heapFy10(int[] arr, int cur, int length) {
+//        int curVal = arr[cur];
+
+        for (int t = cur*2+1;t<length;t = t*2+1){
+            if(t+1 < length && arr[t+1] >arr[t]){
+                t++;
+            }
+
+            if (arr[t] >arr[cur]){
+                int curVal = arr[cur];
+                arr[cur] = arr[t];
+                arr[t] = curVal;
+                cur = t;
+            }else {
+                break;
+            }
+
+        }
     }
 }

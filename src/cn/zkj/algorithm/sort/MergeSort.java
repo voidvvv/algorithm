@@ -2,10 +2,12 @@ package cn.zkj.algorithm.sort;
 
 import cn.zkj.algorithm.utils.MyPrinter;
 
+import java.util.Stack;
+
 public class MergeSort {
     public static void main(String[] args) {
         MergeSort q = new MergeSort();
-        MyPrinter.printDefaultArrays(q::mergeSort08);
+        MyPrinter.printDefaultArrays(q::mergeSort09);
     }
 
     //分+合
@@ -366,6 +368,68 @@ public class MergeSort {
         t=0;
         while (left<=right){
             arr[left++] = tmp[t++];
+        }
+    }
+
+    public void mergeSort09(int[] arr){
+        int[] tmp = new int[arr.length];
+        divide09(arr,0,arr.length-1,tmp);
+    }
+
+    private void divide09(int[] arr, int left, int right, int[] tmp) {
+        if (left<right){
+            int mid = (left+right)/2;
+            divide09(arr,left,mid,tmp);
+            divide09(arr,mid+1,right,tmp);
+            merge09(arr,left,mid,right,tmp);
+        }
+    }
+
+    private void merge09(int[] arr, int left, int mid, int right, int[] tmp) {
+        int leftIndex = left;
+        int rightIndex = mid+1;
+        int t = 0;
+        while (leftIndex<=mid && rightIndex<=right){
+            if (arr[leftIndex]<arr[rightIndex]){
+                tmp[t++] = arr[leftIndex++];
+            }else {
+                tmp[t++] = arr[rightIndex++];
+            }
+        }
+
+        while (leftIndex<=mid){
+            tmp[t++] = arr[leftIndex++];
+        }
+        while (rightIndex<=right){
+            tmp[t++] = arr[rightIndex++];
+        }
+
+        t=0;
+        while (left<=right){
+            arr[left++] = tmp[t++];
+        }
+    }
+
+    public void mergeSort10(int[] arr){
+        int[] tmp = new int[arr.length];
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
+        stack.push(arr.length-1);
+
+        while (!stack.empty()){
+            int right = stack.pop();
+            int left = stack.pop();
+
+
+        }
+
+    }
+
+    private void divide10(int[] arr, int left, int right, int[] tmp) {
+
+        if (left<right){
+            int mid = (right+left)/2;
+
         }
     }
 }
