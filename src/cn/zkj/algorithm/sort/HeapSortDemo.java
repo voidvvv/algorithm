@@ -4,10 +4,7 @@ import cn.zkj.algorithm.utils.MyArraysUtil;
 import cn.zkj.algorithm.utils.MyPrinter;
 
 public class HeapSortDemo {
-    public static void main(String[] args) {
-        HeapSortDemo h = new HeapSortDemo();
-        MyPrinter.printDefaultArrays(h::heapSort10);
-    }
+
 
     public static void heapSort(int[]arr){
         System.out.println("开始堆排序啦！！");
@@ -304,5 +301,40 @@ public class HeapSortDemo {
             }
 
         }
+    }
+
+    public void heapSort11(int[]arr){
+        for (int x= arr.length/2-1;x>=0;x--){
+            heapFy11(arr,x,arr.length);
+        }
+
+        for (int x=arr.length-1;x>=0;x--){
+            MyArraysUtil.swapVal(arr,0,x);
+            heapFy11(arr,0,x);
+        }
+    }
+
+    private void heapFy11(int[] arr, int cur, int length) {
+        for (int t = cur*2+1;t<length;t = t*2+1){
+            if (t+1<length && arr[t+1] >arr[t]){
+                t++;
+            }
+
+            if (arr[t] >arr[cur]){
+                int curVal = arr[cur];
+                arr[cur] = arr[t];
+                arr[t] = curVal;
+                cur=t;
+
+            }else {
+                break;
+            }
+
+        }
+    }
+
+    public static void main(String[] args) {
+        HeapSortDemo h = new HeapSortDemo();
+        MyPrinter.printDefaultArrays(h::heapSort11);
     }
 }

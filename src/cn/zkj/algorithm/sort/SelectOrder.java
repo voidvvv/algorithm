@@ -8,7 +8,7 @@ public class SelectOrder {
     public static void main(String[] args) {
         SelectOrder s= new SelectOrder();
 
-        MyPrinter.printDefaultArrays(s::selectSort09);
+        MyPrinter.printDefaultArrays(s::selectSort10);
     }
 
     public void order(int[]arr){
@@ -190,6 +190,21 @@ public class SelectOrder {
             }
 
             MyArraysUtil.swapVal(arr,x,minIndex);
+
+        }
+    }
+
+
+    public void selectSort10(int[] arr){
+        for (int x=0;x<arr.length;x++){
+            int minIndex = x;
+            for (int y = x+1;y<arr.length;y++){
+                if (arr[y]<arr[minIndex]){
+                    minIndex = y;
+                }
+
+            }
+            MyPrinter.swap(arr,x,minIndex);
 
         }
     }

@@ -5,11 +5,7 @@ import cn.zkj.algorithm.utils.MyPrinter;
 import java.util.Stack;
 
 public class QuickSort {
-    public static void main(String[] args) {
-        QuickSort q = new QuickSort();
-        MyPrinter.printDefaultArrays(q::quickSort10);
 
-    }
 
     //12.10
     public void quickSort(int[] arr, int left, int right) {
@@ -515,5 +511,41 @@ public class QuickSort {
             stack.push(right);
             stack.push(l);
         }
+    }
+
+    public void quickSort11(int[]arr){
+        quick11(arr,0,arr.length-1);
+    }
+
+    private void quick11(int[] arr, int left, int right) {
+        if (left<right){
+            int pivot = getPivot11(arr,left,right);
+            quick11(arr,left,pivot);
+            quick11(arr,pivot+1,right);
+        }
+    }
+
+    private int getPivot11(int[] arr, int left, int right) {
+        int p = arr[left];
+
+        while (left<right){
+            while (left<right && arr[right] >=p){
+                right--;
+            }
+            arr[left] = arr[right];
+            while (left<right && arr[left]<=p){
+                left++;
+            }
+            arr[right] = arr[left];
+
+        }
+
+        arr[left] = p;
+        return left;
+    }
+
+    public static void main(String[] args) {
+        QuickSort q = new QuickSort();
+        MyPrinter.printDefaultArrays(q::quickSort11);
     }
 }

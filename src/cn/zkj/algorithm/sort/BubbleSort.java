@@ -1,19 +1,13 @@
 package cn.zkj.algorithm.sort;
 
 import cn.zkj.algorithm.utils.MyArraysUtil;
-
-import java.util.Arrays;
+import cn.zkj.algorithm.utils.MyPrinter;
 
 public class BubbleSort   {
     public static void main(String[] args) {
-        int[]arr=new int[15];
-        for (int x=0;x<arr.length;x++){
-            arr[x]=(int)(Math.random()*20);
-        }
+
         BubbleSort b = new BubbleSort();
-        System.out.println(Arrays.toString(arr));
-        b.bubbleSort08(arr);
-        System.out.println(Arrays.toString(arr));
+        MyPrinter.printDefaultArrays(b::bubleSort);
     }
 
     //冒泡排序方法，以升序排序为例子：
@@ -135,6 +129,33 @@ public class BubbleSort   {
                     MyArraysUtil.swapVal(arr,y,y+1);
                 }
             }
+        }
+    }
+
+    public void bubleSort09(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            boolean f = true;
+            for (int y =0;y<arr.length-x;y++){
+                if (arr[y]>arr[y+1]){
+                    f = false;
+                    MyArraysUtil.swapVal(arr,y,y+1);
+                }
+
+            }
+            if (f){
+                break;
+            }
+        }
+    }
+
+    public void bubleSort(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            for (int y = 0;y<arr.length-x;y++){
+                if (arr[y+1] <arr[y]){
+                    MyArraysUtil.swapVal(arr,y,y+1);
+                }
+            }
+
         }
     }
 
