@@ -791,6 +791,211 @@ public class Solution3 {
         return res;
 
     }
+
+    /**
+     * 688. 骑士在棋盘上的概率
+     * 在一个 n x n 的国际象棋棋盘上，一个骑士从单元格 (row, column) 开始，并尝试进行 k 次移动。行和列是 从 0 开始 的，所以左上单元格是 (0,0) ，右下单元格是 (n - 1, n - 1) 。
+     *
+     * 象棋骑士有8种可能的走法，如下图所示。每次移动在基本方向上是两个单元格，然后在正交方向上是一个单元格。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/knight-probability-in-chessboard
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param n
+     * @param k
+     * @param row
+     * @param column
+     * @return
+     */
+    public double knightProbability(int n, int k, int row, int column) {
+        if (k==0 ){
+            if ((row<0||row>=n || column<0 || column>=n)){
+                return 1d;
+            }else {
+                return 0;
+            }
+
+        }
+        Double res = (double) 0;
+        if ((res = kxyCount.getOrDefault(k,new HashMap<>()).getOrDefault(row,new HashMap<>()).get(column))!=null){
+            return res;
+        }
+        res = 0d;
+        for (int x=0;x<chessStep.length;x++){
+            int[] step = chessStep[x];
+            res+=knightProbability(n,k-1,row+step[0],column+step[1])/8;
+        }
+        Map<Integer,Map<Integer,Double>> xyCount = null;
+        if (kxyCount.containsKey(k)){
+            xyCount = kxyCount.get(k);
+        }else {
+            xyCount = new HashMap<>();
+            kxyCount.put(k,xyCount);
+        }
+        Map<Integer,Double> yCount  = null;
+        if (xyCount.containsKey(row)){
+            yCount = xyCount.get(row);
+        }else {
+            yCount = new HashMap<>();
+            xyCount.put(row,yCount);
+        }
+
+        yCount.put(column,res);
+
+        return res;
+
+    }
+
+    public String intToRoman(int num) {
+        StringBuilder sb = new StringBuilder();
+        if (num>1000){
+            int th = num%1000;
+            while ((th--)>0){
+                sb.append("M");
+            }
+            num/=1000;
+        }
+
+        if (num>100){
+            int hundr = num%100;
+            if (hundr==9){
+                sb.append("CM");
+            }else if (hundr>=5){
+                sb.append("D");
+                int t = hundr-5;
+                while ((t--)>0){
+                    sb.append("C");
+                }
+
+            }else if (hundr==4){
+                sb.append("CD");
+            }else {
+                while ((hundr--)>0){
+                    sb.append("C");
+                }
+            }
+            num/=100;
+        }
+
+        if (num>10){
+            int ten = num%10;
+            if (ten==9){
+                sb.append("XC");
+            }else if (ten>=5){
+                sb.append("L");
+                int t = ten-5;
+                while ((t--)>0){
+                    sb.append("X");
+                }
+
+            }else if (ten==4){
+                sb.append("XL");
+            }else {
+                while ((ten--)>0){
+                    sb.append("X");
+                }
+            }
+
+            num/=10;
+        }
+
+        if (num>0){
+            int s = num;
+            if (s==9){
+                sb.append("IX");
+            }else if (s>=5){
+                sb.append("V");
+                int t = s-5;
+                while ((t--)>0){
+                    sb.append("I");
+                }
+
+            }else if (s==4){
+                sb.append("IV");
+            }else {
+                while ((s--)>0){
+                    sb.append("I");
+                }
+            }
+
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 838. 推多米诺
+     *
+     * n 张多米诺骨牌排成一行，将每张多米诺骨牌垂直竖立。在开始时，同时把一些多米诺骨牌向左或向右推。
+     *
+     * 每过一秒，倒向左边的多米诺骨牌会推动其左侧相邻的多米诺骨牌。同样地，倒向右边的多米诺骨牌也会推动竖立在其右侧的相邻多米诺骨牌。
+     *
+     * 如果一张垂直竖立的多米诺骨牌的两侧同时有多米诺骨牌倒下时，由于受力平衡， 该骨牌仍然保持不变。
+     *
+     * 就这个问题而言，我们会认为一张正在倒下的多米诺骨牌不会对其它正在倒下或已经倒下的多米诺骨牌施加额外的力。
+     *
+     * 给你一个字符串 dominoes 表示这一行多米诺骨牌的初始状态，其中：
+     *
+     * dominoes[i] = 'L'，表示第 i 张多米诺骨牌被推向左侧，
+     * dominoes[i] = 'R'，表示第 i 张多米诺骨牌被推向右侧，
+     * dominoes[i] = '.'，表示没有推动第 i 张多米诺骨牌。
+     * 返回表示最终状态的字符串。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/push-dominoes
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param dominoes
+     * @return
+     */
+    public String pushDominoes(String dominoes) {
+        int lastPushIndex = -1;
+        int lastPushDir = 0;
+
+        char[] chars = dominoes.toCharArray();
+        int n = chars.length;
+        StringBuilder ans = new StringBuilder();
+        for (int x=0;x<n;x++){
+            if ('L'==chars[x]){
+                if (lastPushIndex==-1){
+                    ans.append('L');
+                    lastPushIndex = x;
+                    lastPushDir = -1;// 左
+                }else if (lastPushDir==1){
+                    int l = lastPushIndex;
+                    int r  = x;
+                    LinkedList<Character> list = new LinkedList<>();
+                    while (l<r){
+                        list.addFirst('R');
+                        list.addLast('L');
+                        l++;
+                        r--;
+                    }
+                    while (!list.isEmpty()){
+                        ans.append(list.pop());
+                    }
+                    lastPushIndex = x;
+                    lastPushDir = -1;// 左
+                }else {
+                    for (int i =0;i<(x-lastPushIndex);i++){
+                        ans.append('L');
+                    }
+                    lastPushIndex = x;
+                    lastPushDir = -1;// 左
+                }
+            }else if ('R'==chars[x]){
+                if (lastPushIndex==-1){
+                    ans.append('R');
+                    lastPushIndex = x;
+                    lastPushDir = 1;// 右
+                }
+            }
+
+        }
+        return "";
+    }
+
+    Map<Integer,Map<Integer,Map<Integer,Double>>>  kxyCount = new HashMap<>();
+    int[][] chessStep = new int[][]{{1,2},{2,1},{-1,2},{-2,1},{1,-2},{2,-1},{-1,-2},{-2,-1},};
+//    boolean s = chessStep.equals()
     int notVisit = 0;
     int visited = -1;
     int yes = 1; // 是飞地
@@ -799,6 +1004,7 @@ public class Solution3 {
 
     public static void main(String[] args) throws IOException {
         Solution3 s3 = new Solution3();
-        s3.numEnclaves(new int[][]{{0,1,1,0},{0,0,1,0},{0,0,1,0},{0,0,0,0},});
+//        s3.numEnclaves(new int[][]{{0,1,1,0},{0,0,1,0},{0,0,1,0},{0,0,0,0},});
+        s3.knightProbability(3,2,0,0);
     }
 }

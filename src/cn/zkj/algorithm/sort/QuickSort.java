@@ -1,5 +1,6 @@
 package cn.zkj.algorithm.sort;
 
+import cn.zkj.algorithm.utils.MyArraysUtil;
 import cn.zkj.algorithm.utils.MyPrinter;
 
 import java.util.Stack;
@@ -544,8 +545,40 @@ public class QuickSort {
         return left;
     }
 
+    public void quickSort12(int[] arr){
+        quick12(arr,0,arr.length-1);
+    }
+
+    private void quick12(int[] arr, int left, int right) {
+        if (left<right){
+            int pivot = getPivot12(arr,left,right);
+            quick12(arr,left,pivot-1);
+            quick12(arr,pivot+1,right);
+        }
+    }
+
+    private int getPivot12(int[] arr, int left, int right) {
+        int t = arr[(left+right)/2];
+
+        while (left<right){
+            while (left<right && arr[right]>t){
+                right--;
+            }
+            while (left<right && arr[left]< t){
+                left++;
+            }
+            if (left==right){
+                break;
+            }
+
+            MyArraysUtil.swapVal(arr,left,right);
+        }
+//        arr[left] = t;
+        return left;
+    }
+
     public static void main(String[] args) {
         QuickSort q = new QuickSort();
-        MyPrinter.printDefaultArrays(q::quickSort11);
+        MyPrinter.printDefaultArrays(q::quickSort12);
     }
 }

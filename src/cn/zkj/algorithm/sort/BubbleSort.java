@@ -7,7 +7,7 @@ public class BubbleSort   {
     public static void main(String[] args) {
 
         BubbleSort b = new BubbleSort();
-        MyPrinter.printDefaultArrays(b::bubleSort);
+        MyPrinter.printDefaultArrays(b::bubleSort10);
     }
 
     //冒泡排序方法，以升序排序为例子：
@@ -156,6 +156,22 @@ public class BubbleSort   {
                 }
             }
 
+        }
+    }
+
+    public void bubleSort10(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            boolean b = true;
+            for (int y = 0 ; y<arr.length-x;y++){
+                if (arr[y+1]<arr[y]){
+                    MyArraysUtil.swapVal(arr,y,y+1);
+                     b =false;
+                }
+
+            }
+            if (b){
+                break;
+            }
         }
     }
 

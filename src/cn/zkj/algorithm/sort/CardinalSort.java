@@ -94,8 +94,35 @@ public class CardinalSort {
 
     }
 
+    public void cardinalSort03(int[] arr){
+        int max = getMax(arr);
+        int count = String.valueOf(max).length();
+
+        int[][] buckets = new int[10][arr.length];
+        int[] cardinalCounts = new int[10];
+
+        for (int curP = 0,n=1;curP<count;curP++,n*=10){
+            for (int x=0;x<arr.length;x++){
+                int cardinal = (arr[x]/n)%10;
+                buckets[cardinal][cardinalCounts[cardinal]++] = arr[x];
+            }
+
+            int arrIndex = 0;
+
+            for (int c = 0;c<10;c++){
+                int nCount = cardinalCounts[c];
+
+                for (int x=0;x<nCount;x++){
+                    arr[arrIndex++] = buckets[c][x];
+                }
+                cardinalCounts[c] = 0;
+            }
+
+        }
+    }
+
     public static void main(String[] args) {
         CardinalSort cardinalSort = new CardinalSort();
-        MyPrinter.printDefaultArrays(cardinalSort::cardinalSort02);
+        MyPrinter.printDefaultArrays(cardinalSort::cardinalSort03);
     }
 }

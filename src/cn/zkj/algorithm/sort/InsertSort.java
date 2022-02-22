@@ -4,11 +4,6 @@ import cn.zkj.algorithm.utils.MyPrinter;
 
 public class InsertSort {
 
-    public static void main(String[] args) {
-        InsertSort i = new InsertSort();
-        MyPrinter.printDefaultArrays(i::insertSort09);
-
-    }
 
     //插入排序
     //101,39,119,7
@@ -126,5 +121,25 @@ public class InsertSort {
             arr[i+1] = minVal;
 
         }
+    }
+
+    public void insertSort10(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            int y = x-1;
+            int cur = arr[x];
+
+            while (y>=0 && arr[y]>cur){
+                arr[y+1] = arr[y];
+                y--;
+            }
+            arr[y+1] = cur;
+
+        }
+    }
+
+    public static void main(String[] args) {
+        InsertSort i = new InsertSort();
+        MyPrinter.printDefaultArrays(i::insertSort10);
+
     }
 }

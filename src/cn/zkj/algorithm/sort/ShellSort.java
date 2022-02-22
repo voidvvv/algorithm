@@ -7,7 +7,7 @@ public class ShellSort {
     public static void main(String[] args) {
         ShellSort s= new ShellSort();
 
-        MyPrinter.printDefaultArrays(s::shellSort12);
+        MyPrinter.printDefaultArrays(s::shellSort13);
 
 
     }
@@ -246,6 +246,21 @@ public class ShellSort {
                     y-=gap;
                 }
                 arr[y+gap] = minVal;
+
+            }
+        }
+    }
+
+    public void shellSort13(int[] arr){
+        for (int gap = arr.length/2;gap>0;gap/=2){
+            for (int x=gap;x<arr.length;x+=gap){
+                int y = x-gap;
+                int v = arr[x];
+                while (y>=0 && arr[y]>v){
+                    arr[y+gap] = arr[y];
+                    y-=gap;
+                }
+                arr[y+gap] = v;
 
             }
         }
