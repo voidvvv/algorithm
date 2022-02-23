@@ -5,10 +5,6 @@ import cn.zkj.algorithm.utils.MyPrinter;
 import java.util.Stack;
 
 public class MergeSort {
-    public static void main(String[] args) {
-        MergeSort q = new MergeSort();
-        MyPrinter.printDefaultArrays(q::mergeSort11);
-    }
 
     //分+合
     public void divide(int[] arr, int left, int right, int[] temp) {
@@ -476,4 +472,50 @@ public class MergeSort {
             arr[left++] = tmp[t++];
         }
     }
+
+    public void mergeSort12(int[] arr){
+        divide12(arr,0,arr.length-1,new int[arr.length]);
+    }
+
+    private void divide12(int[] arr, int left, int right,int[] tmp) {
+        if (left<right){
+            int mid = (left+right)/2;
+            divide12(arr,left,mid,tmp);
+            divide12(arr,mid+1,right,tmp);
+            merge12(arr,left,mid,right,tmp);
+        }
+    }
+
+    private void merge12(int[] arr, int left, int mid, int right, int[] tmp) {
+        int leftIndex = left;
+        int rightIndex = mid+1;
+        int t =0;
+
+        while (leftIndex<=mid && rightIndex<=right){
+            if (arr[leftIndex]<=arr[rightIndex]){
+                tmp[t++] = arr[leftIndex++];
+            }else {
+                tmp[t++] = arr[rightIndex++];
+            }
+        }
+
+        while (leftIndex<=mid ){
+            tmp[t++] = arr[leftIndex++];
+        }
+
+        while (rightIndex<=right){
+            tmp[t++] = arr[rightIndex++];
+        }
+        t = 0;
+
+        while (left<=right){
+            arr[left++] = tmp[t++];
+        }
+    }
+
+    public static void main(String[] args) {
+        MergeSort q = new MergeSort();
+        MyPrinter.printDefaultArrays(q::mergeSort12);
+    }
+
 }

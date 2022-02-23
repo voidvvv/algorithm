@@ -4,13 +4,6 @@ package cn.zkj.algorithm.sort;
 import cn.zkj.algorithm.utils.MyPrinter;
 
 public class ShellSort {
-    public static void main(String[] args) {
-        ShellSort s= new ShellSort();
-
-        MyPrinter.printDefaultArrays(s::shellSort12);
-
-
-    }
 
     //希尔排序12.8
     public void shellSort(int[] arr){
@@ -249,5 +242,27 @@ public class ShellSort {
 
             }
         }
+    }
+
+    public void shellSort13(int[] arr){
+        for (int gap = arr.length/2;gap>0;gap/=2){
+            for (int x=gap;x<arr.length;x++){
+                int y = x-gap;
+                int c= arr[x];
+                while (y>=0 && arr[y]>c){
+                    arr[y+gap] = arr[y];
+                    y-=gap;
+                }
+                arr[y+gap] = c;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        ShellSort s= new ShellSort();
+
+        MyPrinter.printDefaultArrays(s::shellSort13);
+
+
     }
 }

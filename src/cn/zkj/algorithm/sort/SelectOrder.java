@@ -5,11 +5,7 @@ import cn.zkj.algorithm.utils.MyPrinter;
 
 public class SelectOrder {
 
-    public static void main(String[] args) {
-        SelectOrder s= new SelectOrder();
 
-        MyPrinter.printDefaultArrays(s::selectSort10);
-    }
 
     public void order(int[]arr){
 
@@ -195,6 +191,7 @@ public class SelectOrder {
     }
 
 
+
     public void selectSort10(int[] arr){
         for (int x=0;x<arr.length;x++){
             int minIndex = x;
@@ -207,5 +204,23 @@ public class SelectOrder {
             MyPrinter.swap(arr,x,minIndex);
 
         }
+    }
+
+    public void selectSort11(int[] arr){
+        for (int x=0;x<arr.length;x++){
+            int min = x;
+            for (int y = x+1;y<arr.length;y++){
+                if (arr[y]<arr[min]){
+                    min = y;
+                }
+            }
+            MyArraysUtil.swapVal(arr,min,x);
+        }
+    }
+
+    public static void main(String[] args) {
+        SelectOrder s= new SelectOrder();
+
+        MyPrinter.printDefaultArrays(s::selectSort11);
     }
 }
