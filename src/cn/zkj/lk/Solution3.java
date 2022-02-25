@@ -792,6 +792,130 @@ public class Solution3 {
 
     }
 
+
+    /**
+     * 15. 三数之和
+     *
+     * 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。
+     *
+     * 注意：答案中不可以包含重复的三元组。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/3sum
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int first = 0; first<n;first++){
+            if (first>0 && nums[first] == nums[first-1]){
+                continue;
+            }
+
+            int third  = n-1;
+            int target = -nums[first];
+
+            for (int second = first+1;second<third;second++){
+                if (second>first+1 && nums[second] == nums[second-1]){
+                    continue;
+                }
+
+                while (second<third && (nums[second]+nums[third]) > target){
+                    third--;
+                }
+
+                if (second==third){
+                    break;
+                }
+
+                if (nums[second]+nums[third] == target){
+                    List<Integer> tmp = new ArrayList<>();
+                    tmp.add(first);
+                    tmp.add(second);
+                    tmp.add(third);
+
+                    ans.add(tmp);
+                }
+
+            }
+
+        }
+        return ans;
+    }
+
+
+    /**
+     * 838. 推多米诺
+     *
+     * n 张多米诺骨牌排成一行，将每张多米诺骨牌垂直竖立。在开始时，同时把一些多米诺骨牌向左或向右推。
+     *
+     * 每过一秒，倒向左边的多米诺骨牌会推动其左侧相邻的多米诺骨牌。同样地，倒向右边的多米诺骨牌也会推动竖立在其右侧的相邻多米诺骨牌。
+     *
+     * 如果一张垂直竖立的多米诺骨牌的两侧同时有多米诺骨牌倒下时，由于受力平衡， 该骨牌仍然保持不变。
+     *
+     * 就这个问题而言，我们会认为一张正在倒下的多米诺骨牌不会对其它正在倒下或已经倒下的多米诺骨牌施加额外的力。
+     *
+     * 给你一个字符串 dominoes 表示这一行多米诺骨牌的初始状态，其中：
+     *
+     * dominoes[i] = 'L'，表示第 i 张多米诺骨牌被推向左侧，
+     * dominoes[i] = 'R'，表示第 i 张多米诺骨牌被推向右侧，
+     * dominoes[i] = '.'，表示没有推动第 i 张多米诺骨牌。
+     * 返回表示最终状态的字符串。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/push-dominoes
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param dominoes
+     * @return
+     */
+    public String pushDominoes(String dominoes) {
+        int n = dominoes.length();
+
+        char[] chars = dominoes.toCharArray();
+        char[] ans = new char[n];
+        ans[0] = chars[0];
+        int lastIndex = 0;
+        int i = 1;
+        char now = chars[0]=='R'?'R':'.';
+        while (i<n){
+            if (chars[i] == '.'){
+                ans[i] = now;
+            }else if (chars[i] == 'R'){
+                ans[i] = 'R';
+                now = 'R';
+                lastIndex = i;
+            }else {
+                ans[i] = 'L';
+                now = '.';
+                int t = i;
+                if (chars[lastIndex]=='R'){
+                    while (lastIndex<t){
+                        ans[lastIndex] = 'R';
+                        ans[t] = 'L';
+                        lastIndex++;
+                        t--;
+                    }
+                    if (t==lastIndex){
+                        ans[t] = '.';
+                    }
+                    lastIndex = i;
+                }else {
+                    while (t>=lastIndex){
+                        ans[t--] = 'L';
+                    }
+                }
+            }
+            i++;
+
+        }
+
+
+        return new String(ans);
+    }
+
     /**
      * 688. 骑士在棋盘上的概率
      * 在一个 n x n 的国际象棋棋盘上，一个骑士从单元格 (row, column) 开始，并尝试进行 k 次移动。行和列是 从 0 开始 的，所以左上单元格是 (0,0) ，右下单元格是 (n - 1, n - 1) 。
@@ -1004,7 +1128,6 @@ public class Solution3 {
 
     public static void main(String[] args) throws IOException {
         Solution3 s3 = new Solution3();
-//        s3.numEnclaves(new int[][]{{0,1,1,0},{0,0,1,0},{0,0,1,0},{0,0,0,0},});
-        s3.knightProbability(3,2,0,0);
+        s3.numEnclaves(new int[][]{{0,1,1,0},{0,0,1,0},{0,0,1,0},{0,0,0,0},});
     }
 }
