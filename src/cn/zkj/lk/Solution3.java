@@ -1,5 +1,9 @@
 package cn.zkj.lk;
 
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -1067,56 +1071,316 @@ public class Solution3 {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/push-dominoes
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-     * @param dominoes
+     * @param
      * @return
      */
-    public String pushDominoes(String dominoes) {
-        int lastPushIndex = -1;
-        int lastPushDir = 0;
+//    public String pushDominoes(String dominoes) {
+//        int lastPushIndex = -1;
+//        int lastPushDir = 0;
+//
+//        char[] chars = dominoes.toCharArray();
+//        int n = chars.length;
+//        StringBuilder ans = new StringBuilder();
+//        for (int x=0;x<n;x++){
+//            if ('L'==chars[x]){
+//                if (lastPushIndex==-1){
+//                    ans.append('L');
+//                    lastPushIndex = x;
+//                    lastPushDir = -1;// 左
+//                }else if (lastPushDir==1){
+//                    int l = lastPushIndex;
+//                    int r  = x;
+//                    LinkedList<Character> list = new LinkedList<>();
+//                    while (l<r){
+//                        list.addFirst('R');
+//                        list.addLast('L');
+//                        l++;
+//                        r--;
+//                    }
+//                    while (!list.isEmpty()){
+//                        ans.append(list.pop());
+//                    }
+//                    lastPushIndex = x;
+//                    lastPushDir = -1;// 左
+//                }else {
+//                    for (int i =0;i<(x-lastPushIndex);i++){
+//                        ans.append('L');
+//                    }
+//                    lastPushIndex = x;
+//                    lastPushDir = -1;// 左
+//                }
+//            }else if ('R'==chars[x]){
+//                if (lastPushIndex==-1){
+//                    ans.append('R');
+//                    lastPushIndex = x;
+//                    lastPushDir = 1;// 右
+//                }
+//            }
+//
+//        }
+//        return "";
+//    }
 
-        char[] chars = dominoes.toCharArray();
-        int n = chars.length;
-        StringBuilder ans = new StringBuilder();
-        for (int x=0;x<n;x++){
-            if ('L'==chars[x]){
-                if (lastPushIndex==-1){
-                    ans.append('L');
-                    lastPushIndex = x;
-                    lastPushDir = -1;// 左
-                }else if (lastPushDir==1){
-                    int l = lastPushIndex;
-                    int r  = x;
-                    LinkedList<Character> list = new LinkedList<>();
-                    while (l<r){
-                        list.addFirst('R');
-                        list.addLast('L');
-                        l++;
-                        r--;
-                    }
-                    while (!list.isEmpty()){
-                        ans.append(list.pop());
-                    }
-                    lastPushIndex = x;
-                    lastPushDir = -1;// 左
-                }else {
-                    for (int i =0;i<(x-lastPushIndex);i++){
-                        ans.append('L');
-                    }
-                    lastPushIndex = x;
-                    lastPushDir = -1;// 左
-                }
-            }else if ('R'==chars[x]){
-                if (lastPushIndex==-1){
-                    ans.append('R');
-                    lastPushIndex = x;
-                    lastPushDir = 1;// 右
-                }
+    public String reverseOnlyLetters(String s) {
+        char[] ans = new char[s.length()];
+        char[] chars = s.toCharArray();
+        int i=0,j=s.length()-1;
+
+        while (i<j){
+            while (i<j && !isLetter(chars[i])){
+
+                i++;
             }
+            while (i<j && !isLetter(chars[j])){
 
+                j--;
+            }
+            char tmp = chars[i];
+            chars[i] = chars[j];
+            chars[j] = tmp;
+            i++;
+            j--;
         }
-        return "";
+
+        return new String(chars);
+    }
+    private boolean isLetter(char x){
+        return (x>='a' && x<='z') || (x>='A' && x<='Z');
     }
 
+    /**
+     * 1706. 球会落何处
+     *
+     * 用一个大小为 m x n 的二维网格 grid 表示一个箱子。你有 n 颗球。箱子的顶部和底部都是开着的。
+     *
+     * 箱子中的每个单元格都有一个对角线挡板，跨过单元格的两个角，可以将球导向左侧或者右侧。
+     *
+     * 将球导向右侧的挡板跨过左上角和右下角，在网格中用 1 表示。
+     * 将球导向左侧的挡板跨过右上角和左下角，在网格中用 -1 表示。
+     * 在箱子每一列的顶端各放一颗球。每颗球都可能卡在箱子里或从底部掉出来。如果球恰好卡在两块挡板之间的 "V" 形图案，或者被一块挡导向到箱子的任意一侧边上，就会卡住。
+     *
+     * 返回一个大小为 n 的数组 answer ，其中 answer[i] 是球放在顶部的第 i 列后从底部掉出来的那一列对应的下标，如果球卡在盒子里，则返回 -1 。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/where-will-the-ball-fall
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param grid
+     * @return
+     */
+    public int[] findBall(int[][] grid) {
+        int[][] tmp = new int[grid.length][grid[0].length];
+
+
+
+        int[] entrance = grid[0];
+        int n = entrance.length;
+        int[] ans = new int[n];
+        for (int x=0;x<n;x++){
+            int col = x;
+            int row = 0;
+
+            while (row<grid.length && col>=0 && col<grid[row].length){
+                int i = grid[row][col];
+                boolean ok = checkTrace(grid,tmp,col,row);
+                if (ok){
+                    row++;
+                    col+=i;
+                }else {
+                    while (!trace.empty()){
+                        int[] pop = trace.pop();
+                        tmp[pop[1]][pop[0]] = -1;
+                    }
+                    break;
+                }
+            }
+            if (row==grid.length){
+                ans[x] = col;
+                if (x<n-1){
+                    while (!trace.empty()){
+                        int[] pop = trace.pop();
+                        tmp[pop[1]][pop[0]] = 1;
+                    }
+                }
+            }else {
+                ans[x] = -1;
+            }
+        }
+        return ans;
+    }
+
+    private boolean checkTrace(int[][] grid, int[][] tmp, int col, int row) {
+        if (tmp[row][col]==-1){
+            return false;
+        }
+        if (tmp[row][col]==1){
+            return true;
+        }
+        trace.push(new int[]{col,row});
+
+        int x= grid[row][col]; // 1\  -1/
+        if (x==1){
+            // 判断右侧是不是-1或者墙壁
+            if (col+1>=grid[0].length){
+
+                return false;
+            }else if (grid[row][col+1] ==-1){
+
+                tmp[row][col+1] = -1;
+                return false;
+            }else {
+                tmp[row][col] = 1;
+                return true;
+            }
+        }else {
+            // 判断左侧是不是1或者墙壁
+            if (col-1<0){
+
+                return false;
+            }else if (grid[row][col-1] ==1){
+
+                tmp[row][col-1] = -1;
+                return false;
+            }else {
+
+                return true;
+            }
+        }
+
+    }
+
+
+    /**
+     * 1770. 执行乘法运算的最大分数
+     *
+     * 给你两个长度分别 n 和 m 的整数数组 nums 和 multipliers ，其中 n >= m ，数组下标 从 1 开始 计数。
+     *
+     * 初始时，你的分数为 0 。你需要执行恰好 m 步操作。在第 i 步操作（从 1 开始 计数）中，需要：
+     *
+     * 选择数组 nums 开头处或者末尾处 的整数 x 。
+     * 你获得 multipliers[i] * x 分，并累加到你的分数中。
+     * 将 x 从数组 nums 中移除。
+     * 在执行 m 步操作后，返回 最大 分数。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/maximum-score-from-performing-multiplication-operations
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param nums
+     * @param multipliers
+     * @return
+     */
+    public int maximumScore(int[] nums, int[] multipliers) {
+        int[] dp = new int[multipliers.length];
+        return 0;
+    }
+
+
+    /**
+     * 537. 复数乘法
+     * 复数 可以用字符串表示，遵循 "实部+虚部i" 的形式，并满足下述条件：
+     *
+     * 实部 是一个整数，取值范围是 [-100, 100]
+     * 虚部 也是一个整数，取值范围是 [-100, 100]
+     * i2 == -1
+     * 给你两个字符串表示的复数 num1 和 num2 ，请你遵循复数表示形式，返回表示它们乘积的字符串。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/complex-number-multiplication
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param num1
+     * @param num2
+     * @return
+     */
+    public String complexNumberMultiply(String num1, String num2) {
+        String[] num1Split = num1.split("\\+");
+        String[] num2Split = num2.split("\\+");
+
+        StringBuilder ans = new StringBuilder();
+
+        Integer n1z = Integer.valueOf(num1Split[0]);
+        Integer n1x = Integer.valueOf(num1Split[1].substring(0,num1Split[1].length()-1));
+        Integer n2z = Integer.valueOf(num2Split[0]);
+        Integer n2x = Integer.valueOf(num2Split[1].substring(0,num2Split[1].length()-1));
+
+        Integer z = n1z*n2z - n1x*n2x;
+        Integer x = n1z*n2x+n1x*n2z;
+
+        ans.append(z).append("+").append(x).append("i");
+        return ans.toString();
+    }
+
+
+    /**
+     * 914. 卡牌分组
+     *
+     * 给定一副牌，每张牌上都写着一个整数。
+     *
+     * 此时，你需要选定一个数字 X，使我们可以将整副牌按下述规则分成 1 组或更多组：
+     *
+     * 每组都有 X 张牌。
+     * 组内所有的牌上都写着相同的整数。
+     * 仅当你可选的 X >= 2 时返回 true。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/x-of-a-kind-in-a-deck-of-cards
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param deck
+     * @return
+     */
+    public boolean hasGroupsSizeX(int[] deck) {
+        int[] arr = new int[10000];
+
+        for (int x=0;x<deck.length;x++){
+            arr[deck[x]]++;
+        }
+
+        List<Integer> values = new ArrayList<Integer>();
+        for (int i = 0; i < 10000; ++i) {
+            if (arr[i] > 0) {
+                values.add(arr[i]);
+            }
+        }
+        int t =0;
+        int mr = values.get(t++);
+
+        while (mr>=2 && t<values.size()){
+            mr = modOf(values.get(t++),mr);
+        }
+
+        return mr>=2;
+    }
+
+    private int modOf(int integer, int mr) {
+
+
+        while (mr>0){
+            int m = integer %mr;
+            integer = mr;
+            mr = m;
+        }
+        return integer;
+    }
+
+
+    public void rotate(int[][] matrix) {
+        rotateArr(matrix,0,matrix.length-1);
+    }
+
+    private void rotateArr(int[][] matrix, int start, int end) {
+        if (start>=end){
+            return;
+        }
+        int length = end-start;
+        for (int i=0;i<=length;i++){
+            int t = matrix[start+i][start];
+            matrix[start+i][start] = matrix[end][start+i];
+            matrix[end][start+i] = matrix[end-i][end];
+            matrix[end-i][end] = matrix[start][end-i];
+            matrix[start][end-i] = t;
+        }
+        rotateArr(matrix,start+1,end-1);
+    }
+
+    Stack<int[]> trace = new Stack<>();
     Map<Integer,Map<Integer,Map<Integer,Double>>>  kxyCount = new HashMap<>();
     int[][] chessStep = new int[][]{{1,2},{2,1},{-1,2},{-2,1},{1,-2},{2,-1},{-1,-2},{-2,-1},};
 //    boolean s = chessStep.equals()
@@ -1126,8 +1390,9 @@ public class Solution3 {
     int not = 2; // 不是飞地
     int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Solution3 s3 = new Solution3();
+
         s3.numEnclaves(new int[][]{{0,1,1,0},{0,0,1,0},{0,0,1,0},{0,0,0,0},});
     }
 }
