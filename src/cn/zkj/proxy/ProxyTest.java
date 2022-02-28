@@ -5,6 +5,8 @@ import cn.zkj.proxy.dto.MyTest;
 import cn.zkj.proxy.dto.MyTestInterFace;
 import cn.zkj.proxy.handler.InvocationHandlerImpl;
 import cn.zkj.proxy.handler.NoObjInvocationHandler;
+import cn.zkj.proxy.test.Child;
+import cn.zkj.proxy.test.MyFather;
 import sun.misc.ProxyGenerator;
 
 import java.io.FileNotFoundException;
@@ -20,6 +22,13 @@ import java.util.Arrays;
  */
 public class ProxyTest {
     public static void main(String[] args) throws IOException {
+        Child c = new Child();
+        c.name = "aaa";
+        MyFather mf = c;
+        System.out.println(mf.name);
+        System.out.println(c.name);
+    }
+    public static void test02() throws IOException {
         MyOnlyInterFace o =(MyOnlyInterFace) Proxy.newProxyInstance(ProxyTest.class.getClassLoader(), new Class[]{MyOnlyInterFace.class}, new NoObjInvocationHandler());
         o.only();
         InvocationHandler invocationHandler = Proxy.getInvocationHandler(o);
@@ -31,7 +40,6 @@ public class ProxyTest {
         fos.write(myvoids);
         System.out.println(Arrays.toString(myvoids));
     }
-
     public static void test01(){
         MyTest myTest = new MyTest();
 
