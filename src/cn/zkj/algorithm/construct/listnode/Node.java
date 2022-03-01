@@ -8,9 +8,9 @@ package cn.zkj.algorithm.construct.listnode;
  */
 public class Node <T extends Comparable<T>>{
     public boolean red;
-    public Node left;
-    public Node right;
-    public Node parent;
+    public Node<T> left;
+    public Node<T> right;
+    public Node<T> parent;
     public T data;
 
     public Node(T data) {
