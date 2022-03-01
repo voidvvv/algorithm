@@ -915,6 +915,194 @@ public class Solution3 {
 
         return new String(ans);
     }
+
+    /**
+     * 1770. 执行乘法运算的最大分数
+     *
+     * 给你两个长度分别 n 和 m 的整数数组 nums 和 multipliers ，其中 n >= m ，数组下标 从 1 开始 计数。
+     *
+     * 初始时，你的分数为 0 。你需要执行恰好 m 步操作。在第 i 步操作（从 1 开始 计数）中，需要：
+     *
+     * 选择数组 nums 开头处或者末尾处 的整数 x 。
+     * 你获得 multipliers[i] * x 分，并累加到你的分数中。
+     * 将 x 从数组 nums 中移除。
+     * 在执行 m 步操作后，返回 最大 分数。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/maximum-score-from-performing-multiplication-operations
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param nums
+     * @param multipliers
+     * @return
+     */
+    public int maximumScore(int[] nums, int[] multipliers) {
+        int n = nums.length;
+        int m = multipliers.length;
+
+        int[][] dp = new int[m+5][m+5];
+        dp[0][0] = 0;
+
+        for (int x=1;x<=m;x++){
+            int v = multipliers[x-1];
+            for (int y = 0;y<=x;y++){
+                if (y==0){
+                    dp[y][x] = dp[y][x-1] + v*nums[nums.length-x];
+                }else {
+                    dp[y][x] = dp[y-1][x-1] + Math.max(v*nums[nums.length-x],v*nums[x-1]);
+                }
+            }
+
+        }
+        return 0;
+    }
+
+    /**
+     * 面试题 04.08. 首个共同祖先
+     *
+     * 设计并实现一个算法，找出二叉树中某两个节点的第一个共同祖先。不得将其他的节点存储在另外的数据结构中。注意：这不一定是二叉搜索树。
+     *
+     * 例如，给定如下二叉树: root = [3,5,1,6,2,0,8,null,null,7,4]
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/first-common-ancestor-lcci
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root==null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestor(root.left,p,q);
+        TreeNode right = lowestCommonAncestor(root.right,p,q);
+
+        if (left!=null && right!=null){
+            return root;
+        }
+
+        if (left==null){
+            return right;
+        }else {
+            return left;
+        }
+    }
+
+    /**
+     * 2016. 增量元素之间的最大差值
+     *
+     * 给你一个下标从 0 开始的整数数组 nums ，该数组的大小为 n ，请你计算 nums[j] - nums[i] 能求得的 最大差值 ，其中 0 <= i < j < n 且 nums[i] < nums[j] 。
+     *
+     * 返回 最大差值 。如果不存在满足要求的 i 和 j ，返回 -1 。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/maximum-difference-between-increasing-elements
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param nums
+     * @return
+     */
+    public int maximumDifference(int[] nums) {
+        int ans = -1;
+
+        int c = nums[0];
+
+        for (int x=1;x<nums.length;x++){
+            if (nums[x]>c){
+                ans = Math.max(ans,nums[x]-c);
+            }else {
+                c= nums[x];
+            }
+        }
+        return ans;
+    }
+
+
+    /**
+     * 剑指 Offer 03. 数组中重复的数字
+     * 找出数组中重复的数字。
+     *
+     *
+     * 在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param nums
+     * @return
+     */
+    public int findRepeatNumber(int[] nums) {
+        boolean[] arr = new boolean[100002];
+
+        for (int x=0;x< nums.length;x++){
+            if (arr[nums[x]]){
+                return nums[x];
+            }else {
+                arr[nums[x]] = true;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 剑指 Offer 47. 礼物的最大价值
+     *
+     * 在一个 m*n 的棋盘的每一格都放有一个礼物，每个礼物都有一定的价值（价值大于 0）。你可以从棋盘的左上角开始拿格子里的礼物，并每次向右或者向下移动一格、直到到达棋盘的右下角。给定一个棋盘及其上面的礼物的价值，请计算你最多能拿到多少价值的礼物？
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/li-wu-de-zui-da-jie-zhi-lcof
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param grid
+     * @return
+     */
+    public int maxValue(int[][] grid) {
+        int[][] dp = new int[grid.length+1][grid[0].length+1];
+
+        for (int y=1;y<=grid.length;y++){
+            for (int x=1;x<=grid[y-1].length;x++){
+                dp[y][x] = Math.max(dp[y-1][x],dp[y][x-1])+grid[y-1][x-1];
+
+            }
+
+        }
+
+        return dp[grid.length][grid[0].length];
+    }
+
+    public int divide(int a, int b) {
+        if (a==0){
+            return 0;
+        }
+        boolean negative = (a>0 && b<0)||(a<0 && b>0);
+
+        if (negative){
+            if (a<0){
+                a = -a;
+            }else {
+                b = -b;
+            }
+        }
+        if (a<0){
+            a = -a;
+            b=-b;
+        }
+        int ans = 0;
+        int bit = 0;
+        while (a>=b){
+            if ((a>>1) >b){
+                a = a>>1;
+                bit++;
+            }else {
+                a-=b;
+                ans++;
+            }
+        }
+        while (bit>0){
+            ans<<=1;
+            bit--;
+        }
+        return negative?-ans:ans;
+
+    }
+
     int notVisit = 0;
     int visited = -1;
     int yes = 1; // 是飞地
