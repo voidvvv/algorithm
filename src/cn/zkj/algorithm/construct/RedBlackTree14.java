@@ -302,7 +302,7 @@ public class RedBlackTree14 <T extends Comparable<T>>{
 
     public static void main(String[] args) {
         RedBlackTree14<Integer> tree = new RedBlackTree14<Integer>();
-        int[] arr  = new int[]{10,9,8,7,6,5,4,3,2,1,0};
+        int[] arr  = new int[]{1,2,3,4,9,0,-2,63,-20};
         for (int x=0;x<arr.length;x++){
             int t = arr[x];
             tree.add(arr[x]);
@@ -311,8 +311,13 @@ public class RedBlackTree14 <T extends Comparable<T>>{
         TreeNodeUtils.traverse(tree.root);
         System.out.println("========================");
         for (int x=0;x<arr.length;x++){
+
             tree.del(arr[x]);
+            System.out.println("===del:"+arr[x]+"===");
+            TreeNodeUtils.traverse(tree.root);
+            System.out.println("======");
         }
+
         System.out.println("end");
     }
 }

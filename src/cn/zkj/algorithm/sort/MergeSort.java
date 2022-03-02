@@ -513,9 +513,49 @@ public class MergeSort {
         }
     }
 
+    public void mergeSort13(int[] arr){
+        divide13(arr,0,arr.length-1,new int[arr.length]);
+    }
+
+    private void divide13(int[] arr, int left, int right, int[] tmp) {
+        if (left<right){
+            int mid = (left+right)/2;
+            divide13(arr,left,mid,tmp);
+            divide13(arr,mid+1,right,tmp);
+            merge13(arr,left,mid,right,tmp);
+        }
+    }
+
+    private void merge13(int[] arr, int left, int mid, int right, int[] tmp) {
+        int indexLeft = left;
+        int indexRight = mid+1;
+        int t = 0;
+
+        while (indexLeft<=mid && indexRight<=right){
+            if (arr[indexLeft]<arr[indexRight]){
+                tmp[t++] = arr[indexLeft++];
+            }else {
+                tmp[t++] = arr[indexRight++];
+            }
+
+        }
+
+        while (indexLeft<=mid){
+            tmp[t++] = arr[indexLeft++];
+        }
+        while (indexRight<=right) {
+            tmp[t++] = arr[indexRight++];
+        }
+
+        t = 0;
+        while (left<=right){
+            arr[left++] = tmp[t++];
+        }
+    }
+
     public static void main(String[] args) {
         MergeSort q = new MergeSort();
-        MyPrinter.printDefaultArrays(q::mergeSort12);
+        MyPrinter.printDefaultArrays(q::mergeSort13);
     }
 
 }

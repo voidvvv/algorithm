@@ -136,9 +136,21 @@ public class InsertSort {
         }
     }
 
+    public void insertSort11(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            int y = x-1;
+            int v = arr[x];
+            while (y>=0 && arr[y]>v){
+                arr[y+1] = arr[y];
+                y--;
+            }
+            arr[y+1] = v;
+        }
+    }
+
     public static void main(String[] args) {
         InsertSort i = new InsertSort();
-        MyPrinter.printDefaultArrays(i::insertSort10);
+        MyPrinter.printDefaultArrays(i::insertSort11);
 
     }
 }

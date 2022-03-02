@@ -361,8 +361,36 @@ public class HeapSortDemo {
         }
     }
 
+    public void heapSort13(int[]arr){
+        for (int x=arr.length/2-1;x>=0;x--){
+            heapFy13(arr,x,arr.length);
+        }
+
+        for (int x=arr.length-1;x>=0;x--){
+            MyArraysUtil.swapVal(arr,0,x);
+            heapFy13(arr,0,x);
+        }
+    }
+
+    private void heapFy13(int[] arr, int x, int length) {
+
+        for (int t = x*2+1;t<length;t = t*2+1){
+            if (t+1<length && arr[t+1]>arr[t]){
+                t++;
+            }
+            if (arr[t] >arr[x]){
+                int tmp = arr[x];
+                arr[x] = arr[t];
+                arr[t] = tmp;
+                x = t;
+            }else {
+                break;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         HeapSortDemo h = new HeapSortDemo();
-        MyPrinter.printDefaultArrays(h::heapSort12);
+        MyPrinter.printDefaultArrays(h::heapSort13);
     }
 }

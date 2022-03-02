@@ -4,11 +4,6 @@ import cn.zkj.algorithm.utils.MyArraysUtil;
 import cn.zkj.algorithm.utils.MyPrinter;
 
 public class BubbleSort   {
-    public static void main(String[] args) {
-
-        BubbleSort b = new BubbleSort();
-        MyPrinter.printDefaultArrays(b::bubleSort10);
-    }
 
     //冒泡排序方法，以升序排序为例子：
     public void bubbleSort(int[] arr){
@@ -168,6 +163,23 @@ public class BubbleSort   {
                 }
             }
         }
+    }
+
+
+    public void bubbleSort11(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            for (int y =0;y<arr.length-x;y++){
+                if (arr[y+1]<arr[y]){
+                    MyArraysUtil.swapVal(arr,y,y+1);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        BubbleSort b = new BubbleSort();
+        MyPrinter.printDefaultArrays(b::bubbleSort11);
     }
 
 }

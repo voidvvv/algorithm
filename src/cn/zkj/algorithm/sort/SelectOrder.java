@@ -218,9 +218,21 @@ public class SelectOrder {
         }
     }
 
+    public void selectSort12(int[] arr){
+        for (int x=0;x<arr.length;x++){
+            int minIndex = x;
+            for (int y =x+1;y<arr.length;y++){
+                if (arr[y]<arr[minIndex]){
+                    minIndex = y;
+                }
+            }
+            MyArraysUtil.swapVal(arr,x,minIndex);
+        }
+    }
+
     public static void main(String[] args) {
         SelectOrder s= new SelectOrder();
 
-        MyPrinter.printDefaultArrays(s::selectSort11);
+        MyPrinter.printDefaultArrays(s::selectSort12);
     }
 }
