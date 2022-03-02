@@ -1,5 +1,7 @@
 package cn.zkj.util;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -14,22 +16,22 @@ import java.util.*;
 public class UtilTest {
 
     public static void main(String[] args) throws InterruptedException {
-        String sql = "SELECT \n" +
-                "   pullState, sum(\n" +
-                "      CASE \n" +
-                "         WHEN o.urgentFlag = 0 THEN 1\n" +
-                "         ELSE 0\n" +
-                "      END) AS normal_count, sum(\n" +
-                "      CASE " +
-                "         WHEN o.urgentFlag > 0 THEN 1 " +
-                "         ELSE 0 " +
-                "      END) AS urgent_count " +
-                " FROM outlet_Deliveryorderpull  p " +
-                "   LEFT JOIN outlet_Deliveryorder  o ON p.partnerOrderId = o.partnerOrderId " +
-                " WHERE pullState IN ( 0, 1, 10 ) AND p.createTime > '2021-10-01' and o.orderType=1 " +
-                " GROUP BY pullState;";
+//        String sql = "SELECT \n" +
+//                "   pullState, sum(\n" +
+//                "      CASE \n" +
+//                "         WHEN o.urgentFlag = 0 THEN 1\n" +
+//                "         ELSE 0\n" +
+//                "      END) AS normal_count, sum(\n" +
+//                "      CASE " +
+//                "         WHEN o.urgentFlag > 0 THEN 1 " +
+//                "         ELSE 0 " +
+//                "      END) AS urgent_count " +
+//                " FROM outlet_Deliveryorderpull  p " +
+//                "   LEFT JOIN outlet_Deliveryorder  o ON p.partnerOrderId = o.partnerOrderId " +
+//                " WHERE pullState IN ( 0, 1, 10 ) AND p.createTime > '2021-10-01' and o.orderType=1 " +
+//                " GROUP BY pullState;";
 
-        System.out.println(sql);
+//        System.out.println(sql);
 
 
     }

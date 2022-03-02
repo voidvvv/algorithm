@@ -4,22 +4,30 @@ package cn.zkj.lk;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 
 public class Demo1 {
     public static void main(String[] args) {
-        //map entryset 何时初始化
-        HashMap<String,String> map = new HashMap<>(1);
-        String key01 = "key";
+        DelayQueue<MyDelayed> d = new DelayQueue<MyDelayed>();
 
-        map.put(key01,"key01");
+        d.add(new MyDelayed());
 
-        String v01 = map.get(key01);
+        MyDelayed poll = d.poll();
+    }
 
+    static class MyDelayed implements Delayed{
 
-        Set<Map.Entry<String, String>> entries = map.entrySet();
-        map.toString();
-        map.toString();
-        System.out.println(v01);
+        @Override
+        public long getDelay(TimeUnit unit) {
+            return unit.toSeconds(500000000);
+        }
+
+        @Override
+        public int compareTo(Delayed o) {
+            return 0;
+        }
     }
 
     public static void printOut(int i ){
