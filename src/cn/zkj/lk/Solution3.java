@@ -1103,6 +1103,132 @@ public class Solution3 {
 
     }
 
+    /**
+     * 2100. 适合打劫银行的日子
+     *
+     * 你和一群强盗准备打劫银行。给你一个下标从 0 开始的整数数组 security ，其中 security[i] 是第 i 天执勤警卫的数量。日子从 0 开始编号。同时给你一个整数 time 。
+     *
+     * 如果第 i 天满足以下所有条件，我们称它为一个适合打劫银行的日子：
+     *
+     * 第 i 天前和后都分别至少有 time 天。
+     * 第 i 天前连续 time 天警卫数目都是非递增的。
+     * 第 i 天后连续 time 天警卫数目都是非递减的。
+     * 更正式的，第 i 天是一个合适打劫银行的日子当且仅当：security[i - time] >= security[i - time + 1] >= ... >= security[i] <= ... <= security[i + time - 1] <= security[i + time].
+     *
+     * 请你返回一个数组，包含 所有 适合打劫银行的日子（下标从 0 开始）。返回的日子可以 任意 顺序排列。
+     *
+     *  
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/find-good-days-to-rob-the-bank
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param security
+     * @param time
+     * @return
+     */
+    public List<Integer> goodDaysToRobBank(int[] security, int time) {
+        int n = security.length;
+        int[] pre = new int[n];
+        int[] sub = new int[n];
+
+        for (int x=0;x<n;x++){
+            if (x==0){
+                pre[x] = 0;
+                sub[n-x-1] = 0;
+            }else {
+                if (security[x]<=security[x-1]){
+                    pre[x] = pre[x-1]+1;
+                }else {
+                    pre[x] = 0;
+                }
+
+                if (security[n-x-1] <= security[n-x]){
+                    sub[x] = sub[x-1]+1;
+                }else {
+                    sub[x]=0;
+                }
+            }
+
+        }
+        List<Integer> ans = new ArrayList<>();
+        for (int x=0;x<n;x++){
+            if (pre[x]>=time && sub[x] >=time){
+                ans.add(x);
+            }
+        }
+        return ans;
+    }
+
+    static {
+        synchronized (Solution.class){
+
+        }
+    }
+
+
+    /**
+     * 2055. 蜡烛之间的盘子
+     *
+     * 给你一个长桌子，桌子上盘子和蜡烛排成一列。给你一个下标从 0 开始的字符串 s ，它只包含字符 '*' 和 '|' ，其中 '*' 表示一个 盘子 ，'|' 表示一支 蜡烛 。
+     *
+     * 同时给你一个下标从 0 开始的二维整数数组 queries ，其中 queries[i] = [lefti, righti] 表示 子字符串 s[lefti...righti] （包含左右端点的字符）。对于每个查询，你需要找到 子字符串中 在 两支蜡烛之间 的盘子的 数目 。如果一个盘子在 子字符串中 左边和右边 都 至少有一支蜡烛，那么这个盘子满足在 两支蜡烛之间 。
+     *
+     * 比方说，s = "||**||**|*" ，查询 [3, 8] ，表示的是子字符串 "*||**|" 。子字符串中在两支蜡烛之间的盘子数目为 2 ，子字符串中右边两个盘子在它们左边和右边 都 至少有一支蜡烛。
+     * 请你返回一个整数数组 answer ，其中 answer[i] 是第 i 个查询的答案。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/plates-between-candles
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param s
+     * @param queries
+     * @return
+     */
+    public int[] platesBetweenCandles(String s, int[][] queries) {
+        int n = s.length();
+        char[] chars = s.toCharArray();
+        int il = -1;
+        int ir = -1;
+        int[] leftCandle = new int[n];
+        int[] rightCandle = new int[n];
+        int[] candles = new int[n];
+        for (int x=0;x<n;x++){
+            int l = n-1-x;
+            int r = x;
+
+            if (chars[l] == '*'){
+                leftCandle[l] = il;
+            }else {
+                il = l;
+                leftCandle[l] = il;
+            }
+
+            if (chars[r] == '*'){
+                rightCandle[r] = ir;
+            }else {
+                ir = r;
+                rightCandle[r] = ir;
+            }
+
+            if (x==0){
+                candles[x] = 0;
+            }else {
+                candles[x] = candles[x-1] + (chars[x-1]=='*'?1:0);
+            }
+        }
+        int m = queries.length;
+        int[] ans = new int[m];
+        for (int i= 0;i<m;i++){
+            int[] que = queries[i];
+            int l,r;
+            if ((l = leftCandle[que[0]])==-1 || (r = rightCandle[que[1]]) == -1){
+                continue;
+            }
+
+            ans[i] = candles[r] - candles[l];
+
+        }
+        return ans;
+    }
     int notVisit = 0;
     int visited = -1;
     int yes = 1; // 是飞地

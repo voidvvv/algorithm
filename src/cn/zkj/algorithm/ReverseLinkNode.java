@@ -86,6 +86,18 @@ public class ReverseLinkNode {
         return newHead;
     }
 
+    public LinkNodeDemo reservLinkNode04(LinkNodeDemo node){
+        LinkNodeDemo newHead = null;
+        while (node !=null){
+            LinkNodeDemo next = node.next;
+            LinkNodeDemo tmp = newHead;
+            newHead = node;
+            newHead.next = tmp;
+            node = next;
+        }
+        return newHead;
+    }
+
     public static void main(String[] args) {
         ReverseLinkNode l = new ReverseLinkNode();
         l.add(new LinkNodeDemo(1,"zs"));
@@ -94,7 +106,7 @@ public class ReverseLinkNode {
         l.add(new LinkNodeDemo(4,"zl"));
         l.show2(l.header);
         System.out.println("========");
-        l.show2(l.reverseLinkNode03(l.header));
+        l.show2(l.reservLinkNode04(l.header));
     }
 
 }
