@@ -17,4 +17,8 @@ public class Node <T extends Comparable<T>>{
         this.data = data;
         this.red = true;
     }
+
+    public static <R extends Comparable<R>> Node<R> leftOf(Node<R> node){
+        return null;
+    }
 }

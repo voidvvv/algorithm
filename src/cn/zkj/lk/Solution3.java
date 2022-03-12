@@ -1229,6 +1229,64 @@ public class Solution3 {
         }
         return ans;
     }
+
+    /**
+     * 给定一个 n 叉树的根节点 root ，返回 其节点值的 后序遍历 。
+     *
+     * n 叉树 在输入中按层序遍历进行序列化表示，每组子节点由空值 null 分隔（请参见示例）。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param root
+     * @return
+     */
+    public List<Integer> postorder(Node root) {
+        List<Integer> ans = new ArrayList<>();
+        if (root == null){
+            return ans;
+        }
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        Node pre = null;
+        while (!stack.isEmpty()){
+            Node pop = stack.peek();
+            if (pop.children == null || pop.children.size() == 0){
+                stack.pop();
+                pre = pop;
+                ans.add(pop.val);
+            }else {
+                if (pre!=null && pop.children.contains(pre)){
+                    stack.pop();
+                    pre = pop;
+                    ans.add(pop.val);
+                }else {
+                    for (int x=pop.children.size()-1;x>=0;x--){
+                        stack.push(pop.children.get(x));
+                    }
+
+                }
+
+            }
+        }
+        return ans;
+    }
+
+    class Node {
+        public int val;
+        public List<Node> children;
+
+        public Node() {}
+
+        public Node(int _val) {
+            val = _val;
+        }
+
+        public Node(int _val, List<Node> _children) {
+            val = _val;
+            children = _children;
+        }
+    };
     int notVisit = 0;
     int visited = -1;
     int yes = 1; // 是飞地
