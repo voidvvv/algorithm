@@ -1287,6 +1287,42 @@ public class Solution3 {
             children = _children;
         }
     };
+
+    int[][] utf8Arr = new int[][]{{0b10000000,0},{0b11100000,0b11000000},{0b11110000,0b11100000},{0b11111000,0b11110000},};
+
+    int d = 0b11000000,d1 = 0b10000000;
+
+    public boolean validUtf8(int[] data) {
+        for (int x=0;x<data.length;x++){
+            boolean err = true;
+            for (int t =0;t<utf8Arr.length;t++){
+                if ((utf8Arr[t][0]&data[x]) == utf8Arr[t][1]){
+                    err =false;
+                    int tmp = t;
+                    while (tmp>0 && x+1<data.length){
+                        if ((data[x+1] & d) == d1){
+                            tmp--;
+                            x++;
+                        }else {
+                            return false;
+                        }
+                    }
+                    if (tmp == 0){
+                        break;
+                    }else {
+                        return false;
+                    }
+
+                }
+            }
+            if (err){
+                return false;
+            }
+
+        }
+        return true;
+    }
+
     int notVisit = 0;
     int visited = -1;
     int yes = 1; // 是飞地
@@ -1295,6 +1331,7 @@ public class Solution3 {
 
     public static void main(String[] args) throws IOException {
         Solution3 s3 = new Solution3();
-        s3.numEnclaves(new int[][]{{0,1,1,0},{0,0,1,0},{0,0,1,0},{0,0,0,0},});
+        s3.validUtf8(new int[]{235,140,4});
+
     }
 }
