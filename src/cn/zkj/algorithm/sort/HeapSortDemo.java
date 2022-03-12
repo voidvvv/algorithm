@@ -389,8 +389,36 @@ public class HeapSortDemo {
         }
     }
 
+    public void heapSort14(int[] arr){
+        for (int x=arr.length/2-1;x>=0;x--){
+            heapFy14(arr,x,arr.length);
+        }
+
+        for (int x=arr.length-1;x>=0;x--){
+            MyArraysUtil.swapVal(arr,0,x);
+            heapFy14(arr,0,x);
+        }
+    }
+
+    private void heapFy14(int[] arr, int x, int length) {
+        for (int t = x*2+1;t<length;t = t*2+1){
+            if (t+1<length && arr[t+1] > arr[t]){
+                t++;
+            }
+            if (arr[t] >arr[x]){
+                int cur = arr[x];
+                arr[x] = arr[t];
+                arr[t] = cur;
+                x = t;
+            }else {
+                break;
+            }
+
+        }
+    }
+
     public static void main(String[] args) {
         HeapSortDemo h = new HeapSortDemo();
-        MyPrinter.printDefaultArrays(h::heapSort13);
+        MyPrinter.printDefaultArrays(h::heapSort14);
     }
 }

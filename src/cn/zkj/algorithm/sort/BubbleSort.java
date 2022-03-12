@@ -177,10 +177,21 @@ public class BubbleSort   {
         }
     }
 
+    public void bubleSort12(int[] arr){
+        for (int x=1;x<arr.length;x++){
+            for (int y = 0;y<arr.length-x;y++){
+                if (arr[y+1]<arr[y]){
+                    MyArraysUtil.swapVal(arr,y,y+1);
+                }
+            }
+
+        }
+    }
+
     public static void main(String[] args) {
 
         BubbleSort b = new BubbleSort();
-        MyPrinter.printDefaultArrays(b::bubbleSort11);
+        MyPrinter.printDefaultArrays(b::bubleSort12);
     }
 
 }

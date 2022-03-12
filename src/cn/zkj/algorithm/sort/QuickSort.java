@@ -601,8 +601,36 @@ public class QuickSort {
         return left;
     }
 
+    public void quickSort14(int[] arr){
+        quick14(arr,0,arr.length-1);
+    }
+
+    private void quick14(int[] arr, int left, int right) {
+        if (left<right){
+            int pivot = getPivot18(arr,left,right);
+            quick14(arr,left,pivot);
+            quick14(arr,pivot+1,right);
+        }
+    }
+
+    private int getPivot18(int[] arr, int left, int right) {
+        int t = arr[left];
+        while (left<right){
+            while (left<right && arr[right]>=t){
+                right--;
+            }
+            arr[left] = arr[right];
+            while (left<right && arr[left]<=t){
+                left ++ ;
+            }
+            arr[right] = arr[left];
+        }
+        arr[left] = t;
+        return left;
+    }
+
     public static void main(String[] args) {
         QuickSort q = new QuickSort();
-        MyPrinter.printDefaultArrays(q::quickSort13);
+        MyPrinter.printDefaultArrays(q::quickSort14);
     }
 }
