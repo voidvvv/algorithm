@@ -1323,6 +1323,119 @@ public class Solution3 {
         return true;
     }
 
+    /**
+     * 720. 词典中最长的单词
+     *
+     * 给出一个字符串数组 words 组成的一本英语词典。返回 words 中最长的一个单词，该单词是由 words 词典中其他单词逐步添加一个字母组成。
+     *
+     * 若其中有多个可行的答案，则返回答案中字典序最小的单词。若无答案，则返回空字符串。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/longest-word-in-dictionary
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param words
+     * @return
+     */
+    public String longestWord(String[] words) {
+        // 第一种方法，字典树
+        Trie t = new Trie();
+        for (int x=0;x<words.length;x++){
+            t.insert(words[x]);
+        }
+        int maxLength = 0;
+        String now = "";
+        for (int x=0;x<words.length;x++){
+            if(words[x].length()>maxLength || (words[x].length()==maxLength && words[x].compareTo(now)<0)){
+                if (t.search(words[x])){
+                    maxLength = words[x].length();
+                    now = words[x];
+                }
+            }
+        }
+        return now;
+    }
+    class Trie{
+        Trie[] children;
+        boolean end;
+
+        public Trie() {
+            this.children = new Trie[26];
+            this.end = false;
+        }
+
+        public void insert(String word){
+            Trie node = this;
+            for (int x=0;x<word.length();x++){
+                int i = word.charAt(x)-'a';
+                if (node.children[i]==null){
+                    node.children[i] = new Trie();
+
+                }
+                node = node.children[i];
+            }
+            node.end = true;
+        }
+
+        public boolean search(String word){
+            Trie node = this;
+            for (int x=0;x<word.length();x++){
+                int i = word.charAt(x)-'a';
+                if (node.children[i] == null || !node.children[i].end){
+                    return false;
+                }
+                node =node.children[i];
+            }
+            return node != null && node.end;
+        }
+
+    }
+
+    /**
+     * 606. 根据二叉树创建字符串
+     *
+     * 你需要采用前序遍历的方式，将一个二叉树转换成一个由括号和整数组成的字符串。
+     *
+     * 空节点则用一对空括号 "()" 表示。而且你需要省略所有不影响字符串与原始二叉树之间的一对一映射关系的空括号对。
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/construct-string-from-binary-tree
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param root
+     * @return
+     */
+    public String tree2str(TreeNode root) {
+        StringBuilder ans = new StringBuilder();
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        Set<TreeNode> visit = new HashSet<>();
+
+        while (!stack.isEmpty()){
+            TreeNode node = stack.peek();
+            if (!visit.add(node)){
+                if (node!=root){
+                    ans.append(")");
+                }
+                stack.pop();
+            }else {
+                if (node!=root){
+                    ans.append("(");
+                }
+                ans.append(node.val);
+                if (node.left == null && node.right!=null){
+                    ans.append("()");
+                }
+                if (node.right!=null){
+                    stack.push(node.right);
+                }
+                if (node.left!=null){
+                    stack.push(node.left);
+                }
+            }
+
+        }
+        return ans.toString();
+    }
+
     int notVisit = 0;
     int visited = -1;
     int yes = 1; // 是飞地
