@@ -1,6 +1,7 @@
 package cn.zkj.algorithm.construct;
 
 import cn.zkj.algorithm.construct.listnode.Node;
+import cn.zkj.algorithm.construct.listnode.TreeNodeUtils;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -12,6 +13,27 @@ import java.util.Queue;
  * @Created by zkj
  */
 public class TreeUtil {
+
+    public static void main(String[] args) {
+        RedBlackTree17<Integer> tree = new RedBlackTree17<Integer>();
+        int[] arr  = new int[]{1,2,3,4,9,0,-2,63,-20};
+        for (int x=0;x<arr.length;x++){
+            int t = arr[x];
+            tree.add(arr[x]);
+        }
+        System.out.println("========================");
+        TreeNodeUtils.traverse(tree.root);
+        System.out.println("========================");
+        for (int x=0;x<arr.length;x++){
+
+            tree.del(arr[x]);
+            System.out.println("===del:"+arr[x]+"===");
+            TreeNodeUtils.traverse(tree.root);
+            System.out.println("======");
+        }
+
+        System.out.println("end");
+    }
 
 
     static public void traverse(Node root){
