@@ -1,11 +1,9 @@
 package cn.zkj.util;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: zhaoKaiJie
@@ -32,8 +30,15 @@ public class UtilTest {
 //                " GROUP BY pullState;";
 
 //        System.out.println(sql);
+        System.out.println(Integer.toBinaryString(Integer.parseInt("e6",16)));
+        System.out.println(Integer.toBinaryString(Integer.parseInt("88",16)));
+        System.out.println(Integer.toBinaryString(Integer.parseInt("91",16)));
+        System.out.println(Integer.toBinaryString(Integer.parseInt("ffff",16)));
+        System.out.println(Integer.toBinaryString((int) Short.MAX_VALUE));
+    }
 
-
+    private static int findA() {
+        return 20;
     }
 
     public List<Integer> findNumOfValidWords(String[] words, String[] puzzles) {
@@ -70,4 +75,6 @@ public class UtilTest {
         return ans;
 
     }
+
+
 }

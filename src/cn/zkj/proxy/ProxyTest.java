@@ -3,8 +3,6 @@ package cn.zkj.proxy;
 import cn.zkj.proxy.dto.MyTest;
 import cn.zkj.proxy.dto.MyTestInterFace;
 import cn.zkj.proxy.handler.InvocationHandlerImpl;
-import cn.zkj.proxy.test.Child;
-import cn.zkj.proxy.test.MyFather;
 
 import java.io.IOException;
 import java.lang.reflect.Proxy;
@@ -15,11 +13,13 @@ import java.lang.reflect.Proxy;
  */
 public class ProxyTest {
     public static void main(String[] args) throws IOException {
-        Child c = new Child();
-        c.name = "aaa";
-        MyFather mf = c;
-        System.out.println(mf.name);
-        System.out.println(c.name);
+//        System.out.println(new File("").getAbsolutePath());
+//        System.out.println(new File("/").getAbsolutePath());
+//
+//        System.out.println(new File("abc").getAbsolutePath());
+//        System.out.println(new File("/abc").getAbsolutePath());
+
+        test02();
     }
     public static void test02() throws IOException {
 //        MyOnlyInterFace o =(MyOnlyInterFace) Proxy.newProxyInstance(ProxyTest.class.getClassLoader(), new Class[]{MyOnlyInterFace.class}, new NoObjInvocationHandler());
@@ -29,7 +29,7 @@ public class ProxyTest {
 //
 //        byte[] myvoids = ProxyGenerator.generateProxyClass("myvoid", new Class[]{MyTestInterFace.class});
 //
-//        FileOutputStream fos = new FileOutputStream("myvoids");
+//        FileOutputStream fos = new FileOutputStream("myvoids.class");
 //        fos.write(myvoids);
 //        System.out.println(Arrays.toString(myvoids));
     }
