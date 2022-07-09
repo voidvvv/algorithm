@@ -93,10 +93,36 @@ public class Solution5 {
         return false;
     }
 
+    public int numWays(int steps, int arrLen) {
+        // 0
+        int res = 0;
+        // res+= numWays(0-1;steps-1,arrLen);
+        res+= numWays(1,steps-1,arrLen);
+
+        return res%1000000007;
+    }
+
+    public long numWays(int i,int steps,int arrLen){
+        if(i<0 || i >= arrLen){
+            return 0;
+        }
+
+        if(steps == 0){
+            if(i == 0){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+
+        return numWays(i-1,steps-1,arrLen)+ numWays(i+1,steps-1,arrLen);
+    }
+
     public static void main(String[] args) {
         Solution5 s5 = new Solution5();
 //        s5.makesquare(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
-        s5.numUniqueEmails(new String[]{"test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"});
+//        s5.numUniqueEmails(new String[]{"test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"});
+        s5.minFlipsMonoIncr("000111");
     }
 
     public int numUniqueEmails(String[] emails) {
@@ -114,4 +140,23 @@ public class Solution5 {
         }
         return set.size();
     }
+
+    public int minFlipsMonoIncr(String s) {
+        int n = s.length();
+        int dp0 = 0, dp1 = 0;
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            int dp0New = dp0, dp1New = Math.min(dp0, dp1);
+            if (c == '1') {
+                dp0New++;
+            } else {
+                dp1New++;
+            }
+            dp0 = dp0New;
+            dp1 = dp1New;
+        }
+        return Math.min(dp0, dp1);
+    }
+
+
 }
