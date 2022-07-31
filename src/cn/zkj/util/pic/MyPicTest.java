@@ -1,6 +1,6 @@
 package cn.zkj.util.pic;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,6 +12,14 @@ import java.util.TimerTask;
  */
 public class MyPicTest {
     public static void main(String[] args) throws IOException, InterruptedException {
+        test20();;
+    }
+
+    public static void test20(){
+        System.out.println((-33)%10);
+    }
+
+    public static void test01() throws InterruptedException {
         Timer tm = new Timer();
 
         TimerTask task = new TimerTask() {
