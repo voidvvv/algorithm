@@ -4,6 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -1442,9 +1445,87 @@ public class Solution3 {
     int not = 2; // 不是飞地
     int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-    public static void main(String[] args) throws IOException {
-        Solution3 s3 = new Solution3();
-        s3.validUtf8(new int[]{235,140,4});
+    /**
+     * 648. 单词替换
+     *
+     * 在英语中，我们有一个叫做 词根(root) 的概念，可以词根后面添加其他一些词组成另一个较长的单词——我们称这个词为 继承词(successor)。例如，词根an，跟随着单词 other(其他)，可以形成新的单词 another(另一个)。
+     *
+     * 现在，给定一个由许多词根组成的词典 dictionary 和一个用空格分隔单词形成的句子 sentence。你需要将句子中的所有继承词用词根替换掉。如果继承词有许多可以形成它的词根，则用最短的词根替换它。
+     *
+     * 你需要输出替换之后的句子。
+     *
+     *  
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode.cn/problems/replace-words
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param dictionary
+     * @param sentence
+     * @return
+     */
+    public String replaceWords(List<String> dictionary, String sentence) {
+        DicTree dicTree = new DicTree();
 
+        for (int i = 0;i<dictionary.size();i++){
+            String w = dictionary.get(i);
+            DicTree dicTreeTmp = dicTree;
+
+            for(int j=0;j<w.length();j++){
+                char c = w.charAt(j);
+                if (dicTreeTmp.children[c-'a'] == null){
+                    dicTreeTmp.children[c-'a'] = new DicTree();
+                }
+                dicTreeTmp = dicTreeTmp.children[c-'a'];
+                if (j == w.length()-1){
+                    dicTreeTmp.end = true;
+                }
+            }
+        }
+
+        String[] arrs = sentence.split(" ");
+
+        for(int x=0;x<arrs.length;x++){
+            arrs[x] = dicTree.findreplaceWord(arrs[x],0);
+        }
+
+        return String.join(" ",arrs);
+    }
+
+    class DicTree{
+
+        public boolean end;
+        public DicTree[] children;
+
+        public DicTree() {
+
+            this.end = false;
+            children = new DicTree[26];
+        }
+
+        public String findreplaceWord(String s,int i){
+            if (end ){
+                return s.substring(0,i);
+            }
+            if (i>=s.length() || children[s.charAt(i)-'a'] == null){
+                return s;
+            }
+            return children[s.charAt(i)-'a'].findreplaceWord(s,i+1);
+        }
+    }
+
+
+
+    public static void main(String[] args) throws IOException {
+        LocalDateTime l = LocalDateTime.now().plusDays(100);
+        System.out.println(Timestamp.valueOf(l).getTime());
+
+    }
+
+    public static String test007() {
+        int a = 0;
+        int b = 1;
+//        int c= b/a;
+
+        return "111";
     }
 }
