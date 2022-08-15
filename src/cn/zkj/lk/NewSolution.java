@@ -1,7 +1,6 @@
 package cn.zkj.lk;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,28 +83,23 @@ public class NewSolution {
     }
 
     public static void main(String[] args) {
-        NewSolution ns = new NewSolution();
-        System.out.println("prepare:");
-        int[][] tmp = generateArray2("[[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]");
-        printArray(tmp);
-        System.out.println("prepare end:");
-        ns.pacificAtlantic(tmp);
+
     }
 
-    private static int[][] generateArray2(String s) {
-        JSONArray objects = JSONObject.parseArray(s);
-
-        int size = objects.size();
-        int[][] tmp = new int[size][];
-        for(int x=0;x<size;x++){
-            JSONArray jsonArray = objects.getJSONArray(x);
-            tmp[x] = new int[jsonArray.size()];
-            Iterator<Object> iterator = jsonArray.stream().iterator();
-            int i =0;
-            while (iterator.hasNext()){
-                tmp[x][i++]=(Integer) iterator.next();
-            }
-        }
-        return tmp;
-    }
+//    private static int[][] generateArray2(String s) {
+//        JSONArray objects = JSONObject.parseArray(s);
+//
+//        int size = objects.size();
+//        int[][] tmp = new int[size][];
+//        for(int x=0;x<size;x++){
+//            JSONArray jsonArray = objects.getJSONArray(x);
+//            tmp[x] = new int[jsonArray.size()];
+//            Iterator<Object> iterator = jsonArray.stream().iterator();
+//            int i =0;
+//            while (iterator.hasNext()){
+//                tmp[x][i++]=(Integer) iterator.next();
+//            }
+//        }
+//        return tmp;
+//    }
 }

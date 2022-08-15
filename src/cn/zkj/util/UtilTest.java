@@ -14,27 +14,45 @@ import java.util.Map;
 public class UtilTest {
 
     public static void main(String[] args) throws InterruptedException {
-//        String sql = "SELECT \n" +
-//                "   pullState, sum(\n" +
-//                "      CASE \n" +
-//                "         WHEN o.urgentFlag = 0 THEN 1\n" +
-//                "         ELSE 0\n" +
-//                "      END) AS normal_count, sum(\n" +
-//                "      CASE " +
-//                "         WHEN o.urgentFlag > 0 THEN 1 " +
-//                "         ELSE 0 " +
-//                "      END) AS urgent_count " +
-//                " FROM outlet_Deliveryorderpull  p " +
-//                "   LEFT JOIN outlet_Deliveryorder  o ON p.partnerOrderId = o.partnerOrderId " +
-//                " WHERE pullState IN ( 0, 1, 10 ) AND p.createTime > '2021-10-01' and o.orderType=1 " +
-//                " GROUP BY pullState;";
-
-//        System.out.println(sql);
-        System.out.println(Integer.toBinaryString(Integer.parseInt("e6",16)));
-        System.out.println(Integer.toBinaryString(Integer.parseInt("88",16)));
-        System.out.println(Integer.toBinaryString(Integer.parseInt("91",16)));
-        System.out.println(Integer.toBinaryString(Integer.parseInt("ffff",16)));
-        System.out.println(Integer.toBinaryString((int) Short.MAX_VALUE));
+        String sql = "SELECT \n" +
+                "   ifnull(partner_name,'') as partner_name, agent_code, count(0) AS order_Count, sum(ticket_count) AS ticket_Count\n" +
+                " FROM \n" +
+                "   (\n" +
+                "      SELECT \n" +
+                "         o.partner_order_id, t.agent_code, 'Ctrip.Corp' AS partner_name, count(0) AS ticket_count\n" +
+                "      FROM after_order  o \n" +
+                "         JOIN after_ticket  t ON o.partner_order_id = t.partner_order_id\n" +
+                "      WHERE \n" +
+                "         partner_name = 'Ctrip.Corp' AND \n" +
+                "         t.success_time >= ? AND \n" +
+                "         t.success_time <= ? AND \n" +
+                "         state in (1,3)\n" +
+                "      GROUP BY o.partner_order_id, t.agent_code\n" +
+                "      UNION ALL\n" +
+                "      SELECT \n" +
+                "         o.partner_order_id, o.agent_code, 'shuntu' AS partner_name, count(0) AS ticket_count\n" +
+                "      FROM after_order  o \n" +
+                "         JOIN after_ticket  t ON o.partner_order_id = t.partner_order_id\n" +
+                "      WHERE \n" +
+                "         partner_name = 'shuntu' AND \n" +
+                "         t.success_time >= ? AND \n" +
+                "         t.success_time <= ? AND \n" +
+                "         state in (1,3)\n" +
+                "      GROUP BY o.partner_order_id, o.agent_code\n" +
+                "      UNION ALL\n" +
+                "      SELECT \n" +
+                "         o.partner_order_id, o.agent_code, apply_msg AS partner_name, count(0) AS ticket_count\n" +
+                "      FROM after_order  o \n" +
+                "         JOIN after_ticket  t ON o.partner_order_id = t.partner_order_id\n" +
+                "      WHERE \n" +
+                "         partner_name = 'Ctrip.XBind' AND \n" +
+                "         t.success_time >= ? AND \n" +
+                "         t.success_time <= ? AND \n" +
+                "         state in (1,3)\n" +
+                "      GROUP BY o.partner_order_id, o.agent_code\n" +
+                "   )  a\n" +
+                "GROUP BY partner_name, agent_code";
+        System.out.println(sql);
     }
 
     private static int findA() {
