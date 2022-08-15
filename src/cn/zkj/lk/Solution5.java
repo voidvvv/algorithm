@@ -157,14 +157,14 @@ public class Solution5 {
         return aspect;
     }
 
-    public static void main(String[] args) {
-        Solution5 s5 = new Solution5();
-//        s5.makesquare(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
-//        s5.numUniqueEmails(new String[]{"test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"});
-        Solution5.WordFilter wf = s5.new WordFilter(new String[]{"apple"});
-        int f = wf.f("a", "e");
-        System.out.println(f);
-    }
+//    public static void main(String[] args) {
+//        Solution5 s5 = new Solution5();
+////        s5.makesquare(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15});
+////        s5.numUniqueEmails(new String[]{"test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"});
+//        Solution5.WordFilter wf = s5.new WordFilter(new String[]{"apple"});
+//        int f = wf.f("a", "e");
+//        System.out.println(f);
+//    }
 
     public int numUniqueEmails(String[] emails) {
         Set<String> set = new HashSet<>();
