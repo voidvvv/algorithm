@@ -466,7 +466,36 @@ public class Solution5 {
         return res;
     }
 
-
+    /**
+     * 1302. 层数最深叶子节点的和
+     * 给你一棵二叉树的根节点 root ，请你返回 层数最深的叶子节点的和 。
+     * @param root
+     * @return
+     */
+    public int deepestLeavesSum(TreeNode root) {
+        int res = 0;
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
+        int c= 0;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            res = 0;
+            for(int x=0;x<size;x++){
+                TreeNode pop = queue.poll();
+                res+=pop.val;
+                System.out.println("val:"+pop.val);
+                if (pop.left!=null){
+                    queue.offer(pop.left);
+                }
+                if (pop.right!=null){
+                    queue.offer(pop.right);
+                }
+            }
+            System.out.println(c+"__"+size+"____"+res);
+            c++;
+        }
+        return res;
+    }
 
 
     public static void main(String[] args) {

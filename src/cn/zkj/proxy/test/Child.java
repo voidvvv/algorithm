@@ -9,4 +9,17 @@ public class Child extends MyFather{
     public Child() {
 
     }
+
+    public void test(){
+        super.test();
+    }
+
+    public void test2(String name) {
+        System.out.println("child test 2 "+name);
+    }
+
+    public static void main(String[] args) {
+        Child c= new Child();
+        c.test();
+    }
 }

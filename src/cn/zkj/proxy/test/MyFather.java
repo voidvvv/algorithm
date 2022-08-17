@@ -13,4 +13,15 @@ public class MyFather {
     private MyFather(String name){
 
     }
+
+
+    public void test(){
+        test2("name");
+    }
+
+    public void test2(String name) {
+        System.out.println("father test 2 "+name);
+    }
+
+
 }
