@@ -497,6 +497,49 @@ public class Solution5 {
         return res;
     }
 
+    /**
+     * 915. 分割数组
+     *
+     * 给定一个数组 nums ，将其划分为两个连续子数组 left 和 right， 使得：
+     *
+     * left 中的每个元素都小于或等于 right 中的每个元素。
+     * left 和 right 都是非空的。
+     * left 的长度要尽可能小。
+     * 在完成这样的分组后返回 left 的 长度 。
+     *
+     * 用例可以保证存在这样的划分方法。
+     *
+     *  
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode.cn/problems/partition-array-into-disjoint-intervals
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * @param nums
+     * @return
+     */
+    public int partitionDisjoint(int[] nums) {
+        int n = nums.length;
+        int[] lnums = new int[n];
+        int[] rnums = new int[n];
+
+        lnums[0] = nums[0];
+        rnums[n-1] = nums[n-1];
+        for(int x=1;x<n;x++){
+            int l = x;
+            int r = n-x-1;
+
+            lnums[l] = Math.max(nums[l],lnums[l-1]);
+            rnums[r] = Math.min(nums[r],rnums[r+1]);
+        }
+
+        for(int x=0;x<n;x++){
+            if (lnums[x]<rnums[x]){
+                return x+1;
+            }
+        }
+        return -1;
+    }
+
 
     public static void main(String[] args) {
         Solution5 s5 = new Solution5();
