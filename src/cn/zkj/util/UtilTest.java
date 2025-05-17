@@ -1,9 +1,23 @@
 package cn.zkj.util;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * @Author: zhaoKaiJie
@@ -13,46 +27,24 @@ import java.util.Map;
  */
 public class UtilTest {
 
-    public static void main(String[] args) throws InterruptedException {
-        String sql = "SELECT \n" +
-                "   ifnull(partner_name,'') as partner_name, agent_code, count(0) AS order_Count, sum(ticket_count) AS ticket_Count\n" +
-                " FROM \n" +
-                "   (\n" +
-                "      SELECT \n" +
-                "         o.partner_order_id, t.agent_code, 'Ctrip.Corp' AS partner_name, count(0) AS ticket_count\n" +
-                "      FROM after_order  o \n" +
-                "         JOIN after_ticket  t ON o.partner_order_id = t.partner_order_id\n" +
-                "      WHERE \n" +
-                "         partner_name = 'Ctrip.Corp' AND \n" +
-                "         t.success_time >= ? AND \n" +
-                "         t.success_time <= ? AND \n" +
-                "         state in (1,3)\n" +
-                "      GROUP BY o.partner_order_id, t.agent_code\n" +
-                "      UNION ALL\n" +
-                "      SELECT \n" +
-                "         o.partner_order_id, o.agent_code, 'shuntu' AS partner_name, count(0) AS ticket_count\n" +
-                "      FROM after_order  o \n" +
-                "         JOIN after_ticket  t ON o.partner_order_id = t.partner_order_id\n" +
-                "      WHERE \n" +
-                "         partner_name = 'shuntu' AND \n" +
-                "         t.success_time >= ? AND \n" +
-                "         t.success_time <= ? AND \n" +
-                "         state in (1,3)\n" +
-                "      GROUP BY o.partner_order_id, o.agent_code\n" +
-                "      UNION ALL\n" +
-                "      SELECT \n" +
-                "         o.partner_order_id, o.agent_code, apply_msg AS partner_name, count(0) AS ticket_count\n" +
-                "      FROM after_order  o \n" +
-                "         JOIN after_ticket  t ON o.partner_order_id = t.partner_order_id\n" +
-                "      WHERE \n" +
-                "         partner_name = 'Ctrip.XBind' AND \n" +
-                "         t.success_time >= ? AND \n" +
-                "         t.success_time <= ? AND \n" +
-                "         state in (1,3)\n" +
-                "      GROUP BY o.partner_order_id, o.agent_code\n" +
-                "   )  a\n" +
-                "GROUP BY partner_name, agent_code";
-        System.out.println(sql);
+    public static void main(String[] args) throws Exception {
+        String fileIn = "D:\\files\\vedio\\新建文件夹\\1.ts";
+        String fileOut = "D:\\files\\vedio\\新建文件夹\\de_out.ts";
+
+        FileInputStream is = new FileInputStream(fileIn);
+        FileOutputStream os = new FileOutputStream(fileOut);
+        byte[] buff = new byte[1024];
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        int i = -1;
+        while ((i = is.read(buff)) != -1){
+            bos.write(buff, 0, i);
+            bos.flush();
+        }
+        byte[] decrypt = Decrypt(bos.toByteArray(), 0, bos.size(), "0b2f1849aefdefaa");
+        os.write(decrypt, 0, i);
+        os.flush();
+        os.close();
+        is.close();
     }
 
     private static int findA() {
@@ -94,5 +86,79 @@ public class UtilTest {
 
     }
 
+    /*
+     * 解密方法
+     * content 需要解密的密文
+     * key 解密的秘钥
+     * return 解密后的内容
+     */
+    public static String Decrypt(String content, String key) throws Exception {
+        try {
+            byte[] encrypted1 = content.getBytes();//先用base64解密
+
+            // 判断Key是否正确
+            if (key == null) {
+                System.out.print("Key为空null");
+                return null;
+            }
+            // 判断Key是否为16位
+            if (key.length() != 16) {
+                System.out.print("Key长度不是16位");
+                return null;
+            }
+            byte[] raw = key.getBytes("ASCII"); //参数类型
+            SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+            Cipher cipher = Cipher.getInstance("AES");  //"算法/模式/补码方式"
+            //CBC模式需要配置偏移量，设置这个后，不会出来同一个明文加密为同一个密文的问题，达到密文唯一性
+            IvParameterSpec iv = new IvParameterSpec("0000000000000000".getBytes());
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+
+            try {
+                byte[] original = cipher.doFinal(encrypted1);
+                String originalString = new String(original);
+                return originalString;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public static byte[] Decrypt (byte[] encrypted1, int s, int l, String key) {
+        try {
+            // 判断Key是否正确
+            if (key == null) {
+                System.out.print("Key为空null");
+                return null;
+            }
+            // 判断Key是否为16位
+            if (key.length() != 16) {
+                System.out.print("Key长度不是16位");
+                return null;
+            }
+            byte[] raw = key.getBytes(); //参数类型
+            System.out.println(Arrays.toString(raw));
+            SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+            Cipher cipher = Cipher.getInstance("AES/CBC");  //"算法/模式/补码方式"
+            //CBC模式需要配置偏移量，设置这个后，不会出来同一个明文加密为同一个密文的问题，达到密文唯一性
+            IvParameterSpec iv = new IvParameterSpec("0000000000000000".getBytes());
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+
+            try {
+                byte[] original = cipher.doFinal(encrypted1, s, l);
+                return original;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
 }
