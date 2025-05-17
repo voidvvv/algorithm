@@ -2,9 +2,11 @@ package cn.zkj.algorithm.sort;
 
 import cn.zkj.algorithm.utils.MyPrinter;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 import static cn.zkj.algorithm.utils.MyPrinter.swap;
+import static cn.zkj.algorithm.utils.MyPrinter.swapAndPrint;
 
 public class QuickSort {
 
@@ -637,22 +639,34 @@ public class QuickSort {
     public void quickSort0517(int[] nums, int l, int r) {
         if (l < r) {
             int pivot = getPivot0517(nums, l , r);
-            quickSort0517(nums, l, pivot);
+            quickSort0517(nums, l, pivot-1);
             quickSort0517(nums, pivot + 1, r);
         }
     }
 
     private int getPivot0517(int[] nums, int l, int r) {
+        System.out.println("=================");
+        System.out.println("l: " + l);
+        System.out.println("r: " + r);
         while (l < r) {
+//            while (l < r && nums[l] <= nums[r]) {
+//                r--;
+//            }
+//            swap(nums, l , r);
             while (l < r && nums[l] <= nums[r]) {
                 l++;
             }
             swap(nums, l , r);
+// wrong !
             while (l < r && nums[l] <= nums[r]) {
                 r--;
             }
             swap(nums, l , r);
         }
+        System.out.println(Arrays.toString(nums));
+        System.out.println("l: " + l);
+        System.out.println("r: " + r);
+
         return l;
     }
 

@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class MyPrinter {
     public static void printDefaultArrays(MySortArrayInterFace sort){
-        int[] ints = MyArraysUtil.newArray(20, 90);
+        int[] ints = MyArraysUtil.newArray(500, 5000);
         printArrays(sort,ints);
     }
 
@@ -48,6 +48,13 @@ public class MyPrinter {
         int temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
+    }
+
+    public static void swapAndPrint(int[]arr,int a,int b){
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
+        System.out.println(Arrays.toString(arr));
     }
 
     public static void printBinaryArray(int[][] array){
