@@ -1,7 +1,9 @@
 package cn.zkj.algorithm.matrix;
 
 import java.security.SecureRandom;
+import java.util.Comparator;
 import java.util.Random;
+import java.util.TreeSet;
 
 public class MatrixDemo {
     public int[][] generateMatrix (int m, int n, int bound) {
@@ -59,5 +61,7 @@ public class MatrixDemo {
 //        int[][] matrix = demo.generateMatrix(7, 10, 500);
         printMatrix(demo.demoMatrix(3,3));
         printMatrix(multiWithTranspose(demo.demoMatrix(3,3)));
+
+
     }
 }
