@@ -1,7 +1,6 @@
 package cn.zkj.algorithm.matrix;
 
-import java.util.Comparator;
-import java.util.TreeSet;
+import java.util.*;
 
 public class DistToSchool {
 
@@ -37,14 +36,21 @@ public class DistToSchool {
                 ans++;
             }
         }
-
-
         return ans;
     }
 
     public static void main(String[] args) {
-        DistToSchool e = new DistToSchool();
-        int calculate = e.calculate(4, new int[]{5, 7, 8, 10}, new int[]{2, 3, 1, 5}, 15, 5);
-        System.out.println(calculate);
+//        PriorityQueue<Integer> heap = new PriorityQueue<>(Collections.reverseOrder());
+//
+//        TreeMap<Integer,Integer> treeMap = new TreeMap<>();
+//        treeMap.pollLastEntry();
+//        DistToSchool e = new DistToSchool();
+//        int calculate = e.calculate(4, new int[]{5, 7, 8, 10}, new int[]{2, 3, 1, 5}, 15, 5);
+//        System.out.println(calculate);
+
+        int [] a1 = {1,2};
+        int [] a2 = {1,2};
+        System.out.println(a1.equals(a2));
+
     }
 }

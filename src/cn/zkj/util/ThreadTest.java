@@ -1,5 +1,6 @@
 package cn.zkj.util;
 
+import java.net.URI;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -11,7 +12,7 @@ import java.util.concurrent.Executors;
  */
 public class ThreadTest {
     public static void main(String[] args) {
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        Executors.newFixedThreadPool(2);
+        URI originalUri = URI.create("lb://host-test/asd/fff");
+        System.out.println(originalUri.getHost());
     }
 }

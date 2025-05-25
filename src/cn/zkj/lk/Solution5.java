@@ -1,16 +1,6 @@
 package cn.zkj.lk;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @Classname Solution5
@@ -615,24 +605,24 @@ public class Solution5 {
 
 
     public long countBadPairs(int[] nums) {
-        Map<Integer,Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         int n = nums.length;
         if (n == 1) {
             return 0;
         }
-        for (int x = 0; x<n; x++) {
+        for (int x = 0; x < n; x++) {
             int c = map.getOrDefault(nums[x] - x, 0);
-            map.put(nums[x] - x, c+1);
+            map.put(nums[x] - x, c + 1);
         }
-        long totalPair = choice(n,2);
+        long totalPair = choice(n, 2);
         long goodPair = 0;
-        Set<Map.Entry<Integer,Integer>> set = map.entrySet();
-        for (var entry: set) {
+        Set<Map.Entry<Integer, Integer>> set = map.entrySet();
+        for (var entry : set) {
             Integer v = entry.getValue();
             Integer k = entry.getKey();
 
             if (v > 1) {
-                goodPair += choice(v,2);
+                goodPair += choice(v, 2);
             }
         }
         System.out.println("totalElements: " + n);
@@ -643,31 +633,153 @@ public class Solution5 {
         return totalPair - goodPair;
     }
 
-    public long choice (int n, int m) {
-        long a= stepMulti(n);
+    public long choice(int n, int m) {
+        long a = stepMulti(n);
         long b = stepMulti(m);
-        long c = stepMulti(n-m);
-        System.out.printf("n: %s, m : %s", n,m);
+        long c = stepMulti(n - m);
+        System.out.printf("n: %s, m : %s", n, m);
         System.out.println();
 
-        System.out.printf("a : %s, b: %s, c : %s", a,b,c);
+        System.out.printf("a : %s, b: %s, c : %s", a, b, c);
         System.out.println();
 
-        return (long)( a / (b * c) );
+        return (long) (a / (b * c));
     }
 
-    public long stepMulti (int v) {
+    public long stepMulti(int v) {
         long result = 1;
-        for (int x=1; x<=v; x++) {
-            result *= ((long)x);
+        for (int x = 1; x <= v; x++) {
+            result *= ((long) x);
         }
         return result;
+    }
+
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        TreeMap<Integer, Integer> mapping = new TreeMap<>();
+        int l = 0, r = 0;
+        int[] ans = new int[nums.length - k + 1];
+        while (r < k) {
+            int num = nums[r];
+            int c = mapping.getOrDefault(num, 0);
+            mapping.put(num, c + 1);
+            r++;
+        }
+        int index = 0;
+        while (r < nums.length) {
+            Map.Entry<Integer, Integer> entry = mapping.lastEntry();
+            ans[index++] = entry.getKey();
+
+            int lv = mapping.get(nums[l]);
+            if (lv > 1) {
+                mapping.put(nums[l], lv - 1);
+            } else {
+                mapping.remove(nums[l]);
+            }
+            l++;
+
+            r++;
+        }
+        return ans;
+    }
+
+    public List<Integer> findAnagrams(String s, String p) {
+        int[] bits = new int[26];
+        int pn = p.length();
+        int diff = 0;
+        for (int x = 0; x < pn; x++) {
+            int ori = bits[(p.charAt(x) - 'a')];
+            if (ori == 0) {
+                diff++;
+            }
+            bits[(p.charAt(x) - 'a')] = ori + 1;
+        }
+
+        List<Integer> ans = new ArrayList<>();
+        int r = 0;
+        while (r < pn) {
+            int ori = bits[(s.charAt(r) - 'a')];
+            bits[(s.charAt(r) - 'a')] = ori - 1;
+            if (ori - 1 == 0) {
+                diff--;
+            } else if (ori == 0) {
+                diff++;
+            }
+            r++;
+        }
+        if (diff == 0) {
+            ans.add(0);
+        }
+
+        while (r < s.length()) {
+            int ori = bits[(s.charAt(r) - 'a')];
+            bits[(s.charAt(r) - 'a')] = ori - 1;
+            if (ori - 1 == 0) {
+                diff--;
+            } else if (ori == 0) {
+                diff++;
+            }
+            int l = r - pn;
+            ori = bits[(s.charAt(l) - 'a')];
+            bits[(s.charAt(l) - 'a')] = ori + 1;
+            if (ori + 1 == 0) {
+                diff--;
+            } else if (ori == 0) {
+                diff++;
+            }
+            if (diff == 0) {
+                ans.add(l + 1);
+            }
+            r++;
+        }
+        return ans;
+    }
+
+
+    public int longestPalindrome(String[] words) {
+        Map<String, Integer> prefix = new HashMap<>();
+        Map<String, Integer> subffix = new HashMap<>();
+        int len = 0;
+        int[] middleNums = new int[26];
+        for (String w : words) {
+            // check middle
+            char c1 = w.charAt(0);
+            char c2 = w.charAt(1);
+            String reverse = new String(new char[]{c2, c1});
+            if (c1 == c2) {
+                middleNums[c1 - 'a']++;
+            } else if (prefix.containsKey(w) || !prefix.containsKey(reverse)) {
+                int num = prefix.getOrDefault(w, 0);
+                prefix.put(w, num + 1);
+
+                int pNum = subffix.getOrDefault(reverse, 0);
+                if (pNum >= num + 1) {
+                    len += 4;
+                }
+            } else {
+                int num = subffix.getOrDefault(w, 0);
+                subffix.put(w, num + 1);
+                String originWord = new String(new char[]{c2, c1});
+                int pNum = prefix.getOrDefault(originWord, 0);
+                if (pNum >= num + 1) {
+                    len += 4;
+                }
+            }
+        }
+        int maxMiddle = 0;
+
+        for (int m : middleNums) {
+            len += ((m / 2) * 4);
+            maxMiddle = Math.max(m * 2, maxMiddle);
+        }
+        len -= ((maxMiddle/4) * 4);
+        return len + maxMiddle;
     }
 
     public static void main(String[] args) {
         Solution5 s5 = new Solution5();
 
-        s5.countBadPairs(new int[]{64,6,81,7,16,15,99,47,56,39,91,85,34,24,77,99,77,11,64,63,83,5,28});
+        var answer = s5.longestPalindrome(new String[]{"nn","nn","hg","gn","nn","hh","gh","nn","nh","nh"});
+        System.out.println(answer);
     }
 
 
